@@ -40,8 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+         'student' => [
+        'driver' => 'jwt',
+        'provider' => 'students',
     ],
 
+    ],
+
+   
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -63,6 +69,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'students' =>[
+            'driver' => 'eloquent',
+            'model'  => App\Models\student\Lbstudent::class,
         ],
 
         // 'users' => [
