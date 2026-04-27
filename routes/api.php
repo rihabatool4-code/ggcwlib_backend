@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
