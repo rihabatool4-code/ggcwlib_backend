@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,10 +11,14 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
+| routes are loaded by the RouteServiceProvider and all of them will`   
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+/////////////////***************Student Routes **************//////////////////
+
+Route::post("/student/auth/registerStudent", [StudentAuthController::class, "registerStudent"]);
+
 
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
