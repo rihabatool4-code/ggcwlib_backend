@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 /////////////////***************Student Routes **************//////////////////
 
-Route::post("/student/auth/registerStudent", [StudentAuthController::class, "registerStudent"]);
+Route::post("/student/auth/studentRegister", [StudentAuthController::class, "studentRegister"]);
+Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 
 
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
