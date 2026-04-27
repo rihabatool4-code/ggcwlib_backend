@@ -19,6 +19,6 @@ class Lbstudent extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return ["guard" =>"student"];
+        return ["guard" => "student"];
     }
 }
