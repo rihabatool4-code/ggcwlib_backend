@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lbteacher extends Model
 {
-    protected $fillable = ['full_name','email','password','phone_no'];
+    protected $fillable = ['name','email','phone','password'];
     use HasFactory;
 }
