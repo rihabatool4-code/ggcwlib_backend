@@ -16,6 +16,7 @@ class GuardMiddleware
      */
     public function handle(Request $request, Closure $next, $guard): Response
     {
+
         try{
             $payload = JWTAuth::parseToken()->getPayload();
             $tokenGuard = $payload->get('guard');
@@ -23,6 +24,14 @@ class GuardMiddleware
                 return response()->json(["message" => "This request is forbidden"], 403);
             }
         } catch(\Exception $e){
+        try {
+            $payload = JWTAuth::parseToken()->getPayload();
+            $tokenGuard = $payload->get('guard');
+            if ($tokenGuard !== $guard) {
+                return response()->json(["message" => "This request is forbidden"], 403);
+            }
+        } catch (\Exception $e) {
+      
             return response()->json(["message" => "Unauthorized"], 401);
         }
         return $next($request);

@@ -2,7 +2,7 @@
 
 return [
 
-    /*
+/*
     |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------
@@ -40,14 +40,24 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
          'Lbstudent' => [
         'driver' => 'jwt',
         'provider' => 'students',
     ],
 
+        'student' => [
+            'driver' => 'jwt',
+            'provider' => 'students',
+        ],
+
+        'teacher' => [
+            'driver' => 'jwt',
+            'provider' => 'teacher',
+        ],
     ],
 
-   
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -71,9 +81,16 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'students' =>[
+        'students' => [
             'driver' => 'eloquent',
             'model'  => App\Models\student\Lbstudent::class,
+        ],
+
+
+
+        'teacher' => [
+            'driver' => 'eloquent',
+            'model'  => App\Models\teacher\Lbteacher::class,
         ],
 
         // 'users' => [
