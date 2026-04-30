@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->integer("phone")->nullable();
             $table->string("password")->nullable();
+            $table->string("status")->default("active");
             $table->timestamps();
         });
     }
