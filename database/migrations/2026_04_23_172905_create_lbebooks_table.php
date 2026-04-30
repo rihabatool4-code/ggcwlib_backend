@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("title")->nullable();
             $table->string("author")->nullable();
             $table->string("dept")->nullable();
-            $table->boolean("pdf_file")->nullable();
+            $table->string("pdf_file")->nullable();
             $table->timestamps();
         });
     }

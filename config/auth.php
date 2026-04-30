@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+         'Lbstudent' => [
+        'driver' => 'jwt',
+        'provider' => 'students',
+    ],
+
         'student' => [
             'driver' => 'jwt',
             'provider' => 'students',
