@@ -45,6 +45,11 @@ return [
         'provider' => 'students',
     ],
 
+    'admin' => [
+        'driver' => 'jwt',
+        'provider' => 'admins',
+    ],
+
     ],
 
    
@@ -75,6 +80,12 @@ return [
             'driver' => 'eloquent',
             'model'  => App\Models\student\Lbstudent::class,
         ],
+
+        'admins' =>[
+            'driver' => 'eloquent',
+            'model'  => App\Models\admin\Lbadmin::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
