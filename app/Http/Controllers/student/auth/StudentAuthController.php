@@ -5,6 +5,7 @@ namespace App\Http\Controllers\student\auth;
 use App\Http\Controllers\Controller;
 use App\Models\student\Lbstudent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentAuthController extends Controller
 {
@@ -13,14 +14,17 @@ class StudentAuthController extends Controller
         // return response()->json(["request"=>$request->toArray()]);
 
         try {
-            $student = Lbstudent::create($request->all());
+            $student = Lbstudent::create($request->except('password'));
             if ($student != null) {
+                 $student->update([
+                    "password" => Hash::make($request->password)
+                ]);
                 return response()->json(["success" => true, "message" => "Student created successfully", "student" => $student]);
             } else {
                 return response()->json(["success" => false, "message" => "Account cannot created at the moment"]);
             }
         } catch (\Exception $e) {
-            // return $e->getMessage();
+            return response()->json(["erorr" => $e->getMessage()]);
         }
     }
 
@@ -28,13 +32,20 @@ class StudentAuthController extends Controller
     {
         // return response()->json(['request'=>$request->toArray()]);
         try {
-            $student = Lbstudent::where(["email" => $request->email, "password" => $request->password])->first();
-
-            if ($student != null) {
-                return response()->json(["success" => true, "student" => $student]);
-            } else {
-                return response()->json(["success" => falase, "message" => "Wrong credentials, try again"]);
+             $credentials = $request->only('email', 'password');
+            if (!$token = auth('Lbstudent')->attempt($credentials)) {
+                return response()->json(["Message" => "Invalid credentials"]);
             }
+            $student = Lbstudent::where(["email" => $request->email, "password" =>  Hash::make($request->password)])->first();
+             return response()->json(["token" => $token,"student" => $student]);
+
+            //$student = Lbstudent::where(["email" => $request->email, "password" =>  $request->password])->first();
+
+            //if ($student != null) {
+                //return response()->json(["success" => true, "student" => $student]);
+            //} else {
+                //return response()->json(["success" => false, "message" => "Wrong credentials, try again"]);
+            //}
         } catch (\Exception $e) {
             return $e->getMessage();
         }
