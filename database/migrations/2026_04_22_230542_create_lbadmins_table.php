@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string("name")->nullable();
             $table->string("email")->nullable();
             $table->string("password")->nullable();
-            $table->boolean("inApp_notif")->nullable();
-            $table->boolean("email_notif")->nullable();
+            $table->string("inApp_notif")->nullable();
+            $table->string("email_notif")->nullable();
             $table->timestamps();
         });
     }
