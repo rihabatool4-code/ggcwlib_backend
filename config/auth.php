@@ -46,6 +46,13 @@ return [
         'provider' => 'students',
     ],
 
+
+    'admin' => [
+        'driver' => 'jwt',
+        'provider' => 'admins',
+    ],
+
+
         'student' => [
             'driver' => 'jwt',
             'provider' => 'students',
@@ -55,6 +62,7 @@ return [
             'driver' => 'jwt',
             'provider' => 'teacher',
         ],
+
     ],
 
 
@@ -85,6 +93,14 @@ return [
             'driver' => 'eloquent',
             'model'  => App\Models\student\Lbstudent::class,
         ],
+
+
+        'admins' =>[
+            'driver' => 'eloquent',
+            'model'  => App\Models\admin\Lbadmin::class,
+        ],
+
+
 
 
 
