@@ -37,3 +37,4 @@ class GuardMiddleware
         return $next($request);
     }
 }
+}
