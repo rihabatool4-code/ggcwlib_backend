@@ -27,9 +27,16 @@ Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studen
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
 // });
 
+
+Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
+
+
+Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
+
 /////////////////***************Teacher Routes **************//////////////////
 
 Route::post("/staff/login" ,[TeacherAuthController::class, "teacherLogin"]);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -12,11 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+
+         $this->call(LbadminSeeder::class);
+
          $this->call(LbstudentSeeder::class);
          $this->call(LbnoteSeeder::class);
          $this->call(LbebookSeeder::class);
          $this->call(LbteacherSeeder::class);
          $this->call(LbadminSeeder::class);
+
 
         // \App\Models\User::factory(10)->create();
 
