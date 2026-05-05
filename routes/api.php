@@ -1,5 +1,7 @@
 <?php
 
+// use App\Http\Controllers\admin\AdminBookController;
+use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
@@ -37,3 +39,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 
+Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);

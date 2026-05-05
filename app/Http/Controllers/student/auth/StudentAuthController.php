@@ -29,25 +29,28 @@ class StudentAuthController extends Controller
     }
 
     public function studentLogin(Request $request)
-    {
-        // return response()->json(['request'=>$request->toArray()]);
-        try {
-             $credentials = $request->only('email', 'password');
-            if (!$token = auth('Lbstudent')->attempt($credentials)) {
-                return response()->json(["Message" => "Invalid credentials"]);
-            }
-            $student = Lbstudent::where(["email" => $request->email, "password" =>  Hash::make($request->password)])->first();
-             return response()->json(["token" => $token,"student" => $student]);
+{
+    // return response()->json(["request" => $request->toArray()]);
+    try {
+        $credentials = $request->only('email', 'password');
 
-            //$student = Lbstudent::where(["email" => $request->email, "password" =>  $request->password])->first();
-
-            //if ($student != null) {
-                //return response()->json(["success" => true, "student" => $student]);
-            //} else {
-                //return response()->json(["success" => false, "message" => "Wrong credentials, try again"]);
-            //}
-        } catch (\Exception $e) {
-            return $e->getMessage();
+        if (!$token = auth('Lbstudent')->attempt($credentials)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Invalid credentials"
+            ]);
         }
+
+        $student = auth('Lbstudent')->user();
+
+        return response()->json([
+            "success" => true,
+            "token" => $token,
+            "student" => $student
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json(["error" => $e->getMessage()]);
     }
+}
 }

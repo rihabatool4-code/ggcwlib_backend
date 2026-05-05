@@ -3,13 +3,15 @@
 namespace Database\Seeders;
 
 use App\Models\student\Lbstudent;
+use Database\Factories\LbstudentFactory;
 use Illuminate\Database\Seeder;
 
 class LbstudentSeeder extends Seeder
 {
     public function run(): void
     {
-        $testings = array(
+        LbstudentFactory::factory()->count(100)->create();
+       /* $testings = array(
             array(
                 "fullName"=>"Student 1",
                 "email"=>"student1@gmail.com",
@@ -105,6 +107,6 @@ class LbstudentSeeder extends Seeder
         foreach($testings as $testing)
         {
             Lbstudent::create($testing);   
-        }
+        }*/
     }
 }

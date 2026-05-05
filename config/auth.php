@@ -46,11 +46,7 @@ return [
         'provider' => 'students',
     ],
 
-        'student' => [
-            'driver' => 'jwt',
-            'provider' => 'students',
-        ],
-
+       
         'teacher' => [
             'driver' => 'jwt',
             'provider' => 'teacher',
