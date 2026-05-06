@@ -47,6 +47,14 @@ return [
     ],
 
 
+
+        'Lbteacher' => [
+    'driver'   => 'jwt',
+    'provider' => 'teachers',
+],
+
+
+
     'admin' => [
         'driver' => 'jwt',
         'provider' => 'admins',
@@ -100,7 +108,7 @@ return [
 
 
 
-        'teacher' => [
+        'teachers' => [
             'driver' => 'eloquent',
             'model'  => App\Models\teacher\Lbteacher::class,
         ],

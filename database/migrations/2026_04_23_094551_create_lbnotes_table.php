@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("title")->nullable();
             $table->string("subject")->nullable();
             $table->string("pdf_file")->nullable();
+            $table->unsignedBigInteger("Lbteacher_id")->nullable();
             $table->timestamps();
         });
         
