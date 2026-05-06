@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string("title")->nullable();
             $table->string("author")->nullable();
-            $table->integer("accession_no")->nullable();
+            $table->string("accession_no")->nullable();
             $table->string("dept")->nullable();
             $table->integer("total_copies")->nullable();
             $table->string("img")->nullable();
-            $table->string("description")->nullable();
             $table->boolean("is_donated")->nullable();
             $table->timestamps();
         });

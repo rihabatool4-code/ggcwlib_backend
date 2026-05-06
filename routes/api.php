@@ -48,6 +48,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 
+Route::prefix('admin/books')->group(function () {
+    Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
+    Route::post('/addBook', [AdminBookController::class, 'addBook']);  // 'add' se 'addBook' karo
+    Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
+    Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
+});
+=======
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 
 //////////////////Crud of notes //////////////////////////////////
