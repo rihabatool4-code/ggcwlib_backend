@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
+use App\Http\Controllers\admin\auth\AdminAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
