@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lbnote extends Model
 {
-    protected $fillable =['title', 'subject', 'pdf_file'];
+    protected $fillable =['title', 'subject', 'pdf_file', 'Lbteacher_id'];
     use HasFactory;
 }

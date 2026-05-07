@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\teacher\Lbteacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -13,11 +14,11 @@ class AdminUserController extends Controller
         try {
             // return response()->json(["request" => $request->toArray()]);
             // Step 7: Password ko Hash karna zaroori hai
-            // $teacherData = $request->all();
-            // $teacherData['password'] = \Illuminate\Support\Facades\Hash::make($request->password);
+            $teacherData = $request->all();
+            $teacherData['password']=Hash::make($request->password);
 
-            // $teacher = Lbteacher::create($teacherData);
-            $teacher = Lbteacher::create($request->all());
+            $teacher = Lbteacher::create($teacherData);
+            // $teacher = Lbteacher::create($request->all());
 
             if ($teacher != null) {
                 return response()->json(["success" => true, "message" => "Teacher created successfully", "Teacher" => $teacher]);

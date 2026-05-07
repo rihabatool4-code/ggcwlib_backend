@@ -3,9 +3,14 @@
 // use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
+use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
+
 use App\Http\Controllers\admin\auth\AdminAuthController;
+
+use App\Http\Controllers\Teacher\notes\TeacherNotesController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +41,7 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 /////////////////***************Teacher Routes **************//////////////////
 
-Route::post("/staff/login" ,[TeacherAuthController::class, "teacherLogin"]);
+Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -47,4 +52,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 
+Route::prefix('admin/books')->group(function () {
+    Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
+    Route::post('/addBook', [AdminBookController::class, 'addBook']);  // 'add' se 'addBook' karo
+    Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
+    Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
+});
+
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
+
+//////////////////Crud of notes //////////////////////////////////
+
+Route::post('/teacher/notes/uploadNote',          [TeacherNotesController::class, 'uploadNote']);
+Route::get('/teacher/notes/loadAllNotes',         [TeacherNotesController::class, 'loadAllNotes']);
+Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::class,'loadAllNotes']);
+Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
+Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
