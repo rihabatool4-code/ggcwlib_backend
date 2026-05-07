@@ -6,7 +6,11 @@ use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
+
+use App\Http\Controllers\admin\auth\AdminAuthController;
+
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,7 +58,7 @@ Route::prefix('admin/books')->group(function () {
     Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
     Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
 });
-=======
+
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 
 //////////////////Crud of notes //////////////////////////////////
