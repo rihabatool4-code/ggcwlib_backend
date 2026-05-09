@@ -7,7 +7,6 @@ use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
-use App\Http\Controllers\admin\auth\AdminAuthController;
 
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 
