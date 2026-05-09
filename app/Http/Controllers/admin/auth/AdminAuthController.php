@@ -11,7 +11,7 @@ class AdminAuthController extends Controller
 {
     public function adminLogin(Request $request)
     {
-        return response()->json(["request" => $request->toArray()]);
+       // return response()->json(["request" => $request->toArray()]);
         try {
             $credentials = $request->only('email', 'password');
 
