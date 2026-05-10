@@ -21,4 +21,8 @@ class Lbstudent extends Authenticatable implements JWTSubject
     {
         return ["guard" => "student"];
     }
+
+      public function lbbookings(){
+        return $this->hasMany(Lbstudent::class);
+    }
 }
