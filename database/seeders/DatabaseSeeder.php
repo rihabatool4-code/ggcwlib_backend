@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
     {
 
 
-         $this->call(LbadminSeeder::class);
 
          $this->call(LbstudentSeeder::class);
          $this->call(LbnoteSeeder::class);
