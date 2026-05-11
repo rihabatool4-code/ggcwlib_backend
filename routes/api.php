@@ -12,6 +12,8 @@ use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 
+use App\Http\Controllers\general\mydispute\MyDisputeController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -69,3 +71,12 @@ Route::get('/teacher/notes/loadAllNotes',         [TeacherNotesController::class
 Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::class,'loadAllNotes']);
 Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
 Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
+
+
+
+
+Route::get('/mydisputes', [MyDisputeController::class, 'index']);
+Route::post('/mydisputes', [MyDisputeController::class, 'store']);
+Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
+Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
+Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
