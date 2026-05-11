@@ -9,4 +9,8 @@ class Lbbook extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'author', 'accession_no', 'dept', 'total_copies', 'img', 'is_donated'];
+
+      public function lbbookings(){
+        return $this->hasMany(Lbbook::class);
+    }
 }

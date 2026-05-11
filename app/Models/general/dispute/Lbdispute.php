@@ -1,6 +1,10 @@
 <?php
 
+
 namespace App\Models\general\dispute;
+
+namespace App\Models\dispute;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
