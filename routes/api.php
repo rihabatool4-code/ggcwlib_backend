@@ -11,6 +11,7 @@ use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
+use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
 use App\Http\Controllers\general\mydispute\MyDisputeController;
 
@@ -84,3 +85,11 @@ Route::post('/mydisputes', [MyDisputeController::class, 'store']);
 Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
 Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
 Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
+
+
+
+Route::get('/staffdisputes', [StaffDisputeController::class, 'index']);
+Route::post('/staffdisputes', [StaffDisputeController::class, 'store']);
+Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
+Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
+Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
