@@ -55,7 +55,7 @@ return [
 
 
 
-    'admin' => [
+    'Lbadmin' => [
         'driver' => 'jwt',
         'provider' => 'admins',
     ],
