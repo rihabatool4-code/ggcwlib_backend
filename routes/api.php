@@ -54,7 +54,6 @@ Route::prefix('admin/books')->group(function () {
     Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
     Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
 });
-=======
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 
 //////////////////Crud of notes //////////////////////////////////
