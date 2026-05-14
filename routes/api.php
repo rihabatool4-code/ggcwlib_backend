@@ -12,6 +12,9 @@ use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
+use App\Http\Controllers\general\mydispute\StaffDisputeController;
+
+use App\Http\Controllers\general\mydispute\MyDisputeController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,6 +68,13 @@ Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllB
 Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 //Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
+ 
+Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
+
+Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
+
+ 
+
 //////////////////Crud of notes //////////////////////////////////
 
 Route::post('/teacher/notes/uploadNote',          [TeacherNotesController::class, 'uploadNote']);
@@ -73,11 +83,24 @@ Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::c
 Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
 Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
 
-
 Route::prefix('admin/ebooks')->group(function () {
     Route::post('upload',        [AdminDigiBooksController::class, 'uploadEbook']);
     Route::get('all',            [AdminDigiBooksController::class, 'loadAllEbooks']);
     Route::post('update/{id}',   [AdminDigiBooksController::class, 'updateEbook']);
     Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
 });
- 
+
+
+Route::get('/mydisputes', [MyDisputeController::class, 'index']);
+Route::post('/mydisputes', [MyDisputeController::class, 'store']);
+Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
+Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
+Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
+
+
+
+Route::get('/staffdisputes', [StaffDisputeController::class, 'index']);
+Route::post('/staffdisputes', [StaffDisputeController::class, 'store']);
+Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
+Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
+Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
