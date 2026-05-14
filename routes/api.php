@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 // use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
+use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
@@ -55,6 +56,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
+Route::get("/admin/studentAuth/loadAllStudents",[AdminAuthController::class,"loadAllStudents"]);
 
 Route::prefix('/admin/books')->group(function () {
     Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
@@ -62,6 +64,10 @@ Route::prefix('/admin/books')->group(function () {
     Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
     Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
 });
+Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
+Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
+//Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
+
  
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 
@@ -77,7 +83,12 @@ Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::c
 Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
 Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
 
-
+Route::prefix('admin/ebooks')->group(function () {
+    Route::post('upload',        [AdminDigiBooksController::class, 'uploadEbook']);
+    Route::get('all',            [AdminDigiBooksController::class, 'loadAllEbooks']);
+    Route::post('update/{id}',   [AdminDigiBooksController::class, 'updateEbook']);
+    Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
+});
 
 
 Route::get('/mydisputes', [MyDisputeController::class, 'index']);
