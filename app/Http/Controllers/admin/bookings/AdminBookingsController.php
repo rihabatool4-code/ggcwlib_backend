@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class AdminBookingsController extends Controller
 {
-    public function fetchAllBookings () {
-        $bookings = lbbooking::with('lbstudent','lbbook')->get();
+    public function fetchAllBookings (Request $request) {
+        $bookings = lbbooking::with('lbstudent','lbbook')->where(['status' => $request->status])->get();
 
         if($bookings){
             return response()->json(["success" => true, "bookings" => $bookings]);
