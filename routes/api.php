@@ -100,7 +100,7 @@ Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
 
 
 Route::get('/staffdisputes', [StaffDisputeController::class, 'index']);
-Route::post('/staffdisputes', [StaffDisputeController::class, 'store']);
+Route::post('/teacher/disputes/viewAllDisputes', [StaffDisputeController::class, 'viewAllDisputes']);
 Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
 Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
 Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
