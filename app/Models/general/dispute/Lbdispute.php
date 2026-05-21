@@ -3,7 +3,7 @@
 
 namespace App\Models\general\dispute;
 
-//namespace App\Models\dispute;
+// namespace App\Models\dispute;
 
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;

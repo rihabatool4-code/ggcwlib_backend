@@ -11,6 +11,15 @@ class StaffDisputeController extends Controller
     // // =========================
     // FETCH ALL DISPUTES
     // =========================
+
+    public function viewAllDisputes(Request $request)
+    {
+        // return response()->json(["request" => $request->toArray()]);
+        $disputes = Lbdispute::where(["lbteacher_id"=> $request->lbteacher_id])->get();
+        return response()->json(["disputes" => $disputes]);
+    }
+    
+    
     public function index()
     {
         return response()->json(Lbdispute::all());
