@@ -11,6 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lbdispute extends Model
 {
-    protected $fillable =['lbteacher_id','lbstudent_id','subject', 'lbbook_id', 'category','description', 'status'];
+    protected $fillable =[ 'lbstudent_id', 'lbteacher_id', 'lbbook_id','raisedby', 'subject', 'category','description', 'status'];
     use HasFactory;
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
+use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
@@ -34,6 +35,10 @@ use Illuminate\Support\Facades\Route;
 Route::post("/student/auth/studentRegister", [StudentAuthController::class, "studentRegister"]);
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 
+
+Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
+Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
+
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
 // });
@@ -56,7 +61,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
-Route::get("/admin/studentAuth/loadAllStudents",[AdminAuthController::class,"loadAllStudents"]);
+Route::get("/admin/studentAuth/loadAllStudents",[AdminUserController::class,"loadAllStudents"]);
 
 Route::prefix('/admin/books')->group(function () {
     Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
@@ -66,7 +71,7 @@ Route::prefix('/admin/books')->group(function () {
 });
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
-//Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
+// Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
  
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
