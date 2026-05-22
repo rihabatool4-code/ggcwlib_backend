@@ -12,13 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lbdisputes', function (Blueprint $table) {
-           $table->id();
+            $table->id();
             $table->unsignedBigInteger("lbteacher_id")->nullable();
             $table->unsignedBigInteger("lbstudent_id")->nullable();
+            $table->unsignedBigInteger("lbbook_id")->nullable();
+            $table->string("raisedby")->nullable();
             $table->string("subject")->nullable();
-            $table->string("relatedbooks")->nullable();
             $table->string("category")->nullable();
             $table->string("description")->nullable();
+            $table->string("status")->default("open");
             $table->timestamps();
         });
     }
