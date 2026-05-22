@@ -19,6 +19,9 @@ use App\Http\Controllers\general\mydispute\MyDisputeController;
 use App\Http\Controllers\general\mydispute\AdminDisputeController;
 
 
+
+use App\Http\Controllers\Teacher\reviewController\ReviewController;
+// use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +83,10 @@ Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllB
 
 Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
+Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
+Route::post("/admin/bookings/rejectReservation",  [AdminBookingsController::class, "rejectReservation"]);
+Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+
  
 
 //////////////////Crud of notes //////////////////////////////////
@@ -113,7 +120,12 @@ Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
 Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
 
 
+
 // Admin Disputes
 Route::get('/admin/disputes', [AdminDisputeController::class, 'index']);
 Route::patch('/admin/disputes/{id}/resolve', [AdminDisputeController::class, 'resolve']);
 Route::delete('/admin/disputes/{id}', [AdminDisputeController::class, 'destroy']);
+
+
+Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
+
