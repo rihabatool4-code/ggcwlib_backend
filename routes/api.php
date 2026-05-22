@@ -78,6 +78,10 @@ Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllB
 
 Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
+Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
+Route::post("/admin/bookings/rejectReservation",  [AdminBookingsController::class, "rejectReservation"]);
+Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+
  
 
 //////////////////Crud of notes //////////////////////////////////
