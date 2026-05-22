@@ -16,6 +16,10 @@ use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
 use App\Http\Controllers\general\mydispute\MyDisputeController;
+use App\Http\Controllers\general\mydispute\AdminDisputeController;
+
+
+
 use App\Http\Controllers\Teacher\reviewController\ReviewController;
 // use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
@@ -117,4 +121,11 @@ Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy'])
 
 
 
+// Admin Disputes
+Route::get('/admin/disputes', [AdminDisputeController::class, 'index']);
+Route::patch('/admin/disputes/{id}/resolve', [AdminDisputeController::class, 'resolve']);
+Route::delete('/admin/disputes/{id}', [AdminDisputeController::class, 'destroy']);
+
+
 Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
+
