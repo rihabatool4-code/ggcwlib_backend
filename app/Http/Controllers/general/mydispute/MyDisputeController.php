@@ -8,23 +8,33 @@ use App\Models\general\dispute\Lbdispute;
 
 class MyDisputeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Lbdispute::all());
+        $studentId = $request->query('student_id');
+
+        $disputes = Lbdispute::when($studentId, function ($query) use ($studentId) {
+                return $query->where('lbstudent_id', $studentId);
+            })
+            ->get();
+
+        return response()->json($disputes);
     }
 
     public function store(Request $request)
     {
         $dispute = Lbdispute::create([
-            'subject' => $request->subject,
-            'relatedbooks' => $request->relatedbooks,
-            'category' => $request->category,
-            'description' => $request->description,
+            'lbstudent_id' => $request->lbstudent_id,
+            'lbbook_id'    => $request->lbbook_id,
+            'raisedby'     => $request->raisedby,
+            'subject'      => $request->subject,
+            'category'     => $request->category,
+            'description'  => $request->description,
+            'status'       => 'open',
         ]);
 
         return response()->json([
             'message' => 'Dispute Added Successfully',
-            'data' => $dispute
+            'data'    => $dispute
         ]);
     }
 
@@ -38,15 +48,17 @@ class MyDisputeController extends Controller
         $dispute = Lbdispute::find($id);
 
         $dispute->update([
-            'subject' => $request->subject,
-            'relatedbooks' => $request->relatedbooks,
-            'category' => $request->category,
+            'lbbook_id'   => $request->lbbook_id,
+            'raisedby'    => $request->raisedby,
+            'subject'     => $request->subject,
+            'category'    => $request->category,
             'description' => $request->description,
+            'status'      => $request->status,
         ]);
 
         return response()->json([
             'message' => 'Dispute Updated Successfully',
-            'data' => $dispute
+            'data'    => $dispute
         ]);
     }
 
