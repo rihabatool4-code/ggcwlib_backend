@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('lbdisputes', function (Blueprint $table) {
            $table->id();
+            $table->unsignedBigInteger("lbteacher_id")->nullable();
+            $table->unsignedBigInteger("lbstudent_id")->nullable();
             $table->string("subject")->nullable();
             $table->string("relatedbooks")->nullable();
             $table->string("category")->nullable();
