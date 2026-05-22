@@ -15,7 +15,8 @@ use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
 use App\Http\Controllers\general\mydispute\MyDisputeController;
-
+use App\Http\Controllers\Teacher\reviewController\ReviewController;
+// use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -104,3 +105,7 @@ Route::post('/teacher/disputes/viewAllDisputes', [StaffDisputeController::class,
 Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
 Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
 Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
+
+
+
+Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
