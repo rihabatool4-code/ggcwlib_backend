@@ -40,4 +40,23 @@ class StudentBookingController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function fetchAllBooks()
+    {
+        try {
+            $books = Lbbook::latest()->get();
+
+            return response()->json([
+                "success" => true,
+                "books"   => $books
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "Failed to fetch books.",
+                "error"   => $e->getMessage()
+            ], 500);
+        }
+    }
 }
