@@ -59,6 +59,14 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 
+Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
+
+use App\Http\Controllers\student\notes\StudentSavedNotesController;
+
+Route::post('/student/notes/saveNote',                    [StudentSavedNotesController::class, 'saveNote']);
+Route::get('/student/notes/getSavedNotes/{student_id}',   [StudentSavedNotesController::class, 'getSavedNotes']);
+Route::delete('/student/notes/removeSavedNote/{id}',      [StudentSavedNotesController::class, 'removeSavedNote']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

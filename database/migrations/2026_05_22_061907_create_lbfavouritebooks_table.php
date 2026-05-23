@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lbreviews', function (Blueprint $table) {
+        Schema::create('lbfavouritebooks', function (Blueprint $table) {
             $table->id();
-             $table->unsignedBigInteger("lbteacher_id")->nullable();
-             $table->unsignedBigInteger("lbstudent_id")->nullable();
-              $table->string("rating")->nullable();
-               $table->string("review")->nullable();
-               $table->string("status")->nullable();
+            $table->unsignedBigInteger("lbstudent_id")->nullable();
+            $table->unsignedBigInteger("lbteacher_id")->nullable();
+            $table->unsignedBigInteger("lbebook_id")->nullable();
+            $table->unsignedBigInteger("lbnote_id")->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lbreviews');
+        Schema::dropIfExists('lbfavouritebooks');
     }
 };
