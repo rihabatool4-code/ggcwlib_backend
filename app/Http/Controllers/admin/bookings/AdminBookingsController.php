@@ -12,7 +12,7 @@ class AdminBookingsController extends Controller
     /* ── Fetch All Bookings by status ── */
     public function fetchAllBookings(Request $request)
     {
-        $bookings = lbbooking::with('lbstudent', 'lbbook')
+        $bookings = lbbooking::with('lbstudent','lbteacher', 'lbbook')
             ->where(['status' => $request->status])
             ->get();
 
@@ -27,8 +27,7 @@ class AdminBookingsController extends Controller
     public function approveReservation(Request $request)
     {
         try {
-            $booking = lbbooking::find($request->booking_id);
-
+            $booking = lbbooking::where('id', $request->booking_id)->first();
             if (!$booking) {
                 return response()->json(["success" => false, "message" => "Booking not found."]);
             }
@@ -56,7 +55,7 @@ class AdminBookingsController extends Controller
     public function rejectReservation(Request $request)
     {
         try {
-            $booking = lbbooking::find($request->booking_id);
+            $booking = lbbooking::where('id', $request->booking_id)->first();
 
             if (!$booking) {
                 return response()->json(["success" => false, "message" => "Booking not found."]);
@@ -81,7 +80,7 @@ class AdminBookingsController extends Controller
     public function returnBook(Request $request)
     {
         try {
-            $booking = lbbooking::find($request->booking_id);
+            $booking = lbbooking::where('id', $request->booking_id)->first();
 
             if (!$booking) {
                 return response()->json(["success" => false, "message" => "Booking not found."]);

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lbebook extends Model
 {
-    protected $fillable = ['title', 'author', 'dept', 'pdf_file'];
+    protected $fillable = ['title', 'author', 'dept', 'pdf_file','img'];
     use HasFactory;
 }
