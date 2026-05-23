@@ -39,6 +39,7 @@ Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studen
 
 Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
 Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
+Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, "fetchAllBooks"]);
 
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
