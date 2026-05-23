@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\auth\AdminAuthController;
 // use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+use App\Http\Controllers\general\books\PublicBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
@@ -49,6 +50,8 @@ Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, 
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
 // });
 
+
+Route::get("/general/books/fetchAllBooks",[PublicBooksController::class, "fetchAllBooks"]);
 
 Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
 

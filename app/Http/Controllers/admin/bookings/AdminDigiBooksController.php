@@ -11,36 +11,54 @@ class AdminDigiBooksController extends Controller
 {
     // ── 1. Upload Ebook ──
     public function uploadEbook(Request $request)
-    {
-        try {
-            if ($request->hasFile('pdf_file')) {
-                $file     = $request->file('pdf_file');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $path     = $file->storeAs('public/ebooks', $fileName);
+{
+    try {
 
-                $ebook = Lbebook::create([
-                    'title'    => $request->title,
-                    'author'   => $request->author,
-                    'dept'     => $request->dept,
-                    'pdf_file' => $fileName,
-                ]);
+        $pdfName = null;
+        $imgName = null;
 
-                if ($ebook) {
-                    return response()->json([
-                        "success" => true,
-                        "message" => "Ebook uploaded successfully",
-                        "ebook"   => $ebook
-                    ]);
-                }
-            }
-            return response()->json([
-                "success" => false,
-                "message" => "File not received"
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(["error" => $e->getMessage()]);
+        // PDF Upload
+        if ($request->hasFile('pdf_file')) {
+
+            $pdf = $request->file('pdf_file');
+
+            $pdfName = time() . '_' . $pdf->getClientOriginalName();
+
+            $pdf->storeAs('public/ebooks', $pdfName);
         }
+
+        // IMAGE Upload
+        if ($request->hasFile('img')) {
+
+            $img = $request->file('img');
+
+            $imgName = time() . '_' . $img->getClientOriginalName();
+
+            $img->storeAs('public/ebookimages', $imgName);
+        }
+
+        $ebook = Lbebook::create([
+            'title'    => $request->title,
+            'author'   => $request->author,
+            'dept'     => $request->dept,
+            'pdf_file' => $pdfName,
+            'img'      => 'ebookimages/' . $imgName,
+        ]);
+
+        return response()->json([
+            "success" => true,
+            "message" => "Ebook uploaded successfully",
+            "ebook"   => $ebook
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
     }
+}
 
     // ── 2. Load All Ebooks ──
     public function loadAllEbooks()
