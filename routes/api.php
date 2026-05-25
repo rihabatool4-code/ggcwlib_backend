@@ -97,7 +97,7 @@ Route::prefix('admin/ebooks')->group(function () {
     Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
 });
 
-
+// Student Disputes
 Route::get('/mydisputes', [MyDisputeController::class, 'index']);
 Route::post('/mydisputes', [MyDisputeController::class, 'store']);
 Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
@@ -105,8 +105,9 @@ Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
 Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
 
 
-
+// Staff Disputes
 Route::get('/staffdisputes', [StaffDisputeController::class, 'index']);
+Route::post('/staffdisputes', [StaffDisputeController::class, 'store']);
 Route::post('/teacher/disputes/viewAllDisputes', [StaffDisputeController::class, 'viewAllDisputes']);
 Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
 Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
