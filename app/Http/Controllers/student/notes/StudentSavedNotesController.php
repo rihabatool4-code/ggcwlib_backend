@@ -24,11 +24,8 @@ class StudentSavedNotesController extends Controller
                 ]);
             }
 
-            $saved = Lbfavouritebook::create([
-                'lbstudent_id' => $request->student_id,
-                'lbnote_id'    => $request->note_id,
-            ]);
-
+            // create 
+               $saved = Lbfavouritebook::create($request->all());
             return response()->json([
                 'success' => true,
                 'message' => 'Note saved successfully',
