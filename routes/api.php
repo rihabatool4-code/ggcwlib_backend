@@ -57,6 +57,14 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 /////////////////***************Teacher Routes **************//////////////////
 
+
+
+Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
+Route::post('/admin/reviews/approve',        [ReviewController::class, 'approveReview']);
+Route::post('/admin/reviews/reject',         [ReviewController::class, 'rejectReview']);
+Route::post('/admin/reviews/delete',         [ReviewController::class, 'deleteReview']);
+Route::post('/teacher/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+
 Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
