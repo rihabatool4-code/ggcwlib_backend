@@ -76,6 +76,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 /////////////////***************Admin Routes **************//////////////////
 
+Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegister"]);
+Route::post("/admin/auth/adminLogin",    [AdminAuthController::class, "adminLogin"]);
+Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
+
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 Route::get("/admin/studentAuth/loadAllStudents",[AdminUserController::class,"loadAllStudents"]);
