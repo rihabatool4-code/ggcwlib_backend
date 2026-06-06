@@ -5,11 +5,11 @@ namespace App\Models\admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\contracts\JWTSubject;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Lbadmin extends Authenticatable implements JWTSubject
 {
-    protected $fillable = ['name', 'email', 'password', 'inApp_notif', 'email_notif'];
+    protected $fillable = ['name', 'email', 'role', 'status', 'password', 'inApp_notif', 'email_notif'];
     
     use HasFactory;
 
