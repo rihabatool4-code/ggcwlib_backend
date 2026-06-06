@@ -13,6 +13,7 @@ use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
+use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
@@ -143,6 +144,9 @@ Route::post('/teacher/disputes/viewAllDisputes', [StaffDisputeController::class,
 Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
 Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
 Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
+Route::post("/teacher/booking/newReservation", [TeacherBookingController::class, "newReservation"]);
+Route::post("/teacher/booking/loadMyBookings", [TeacherBookingController::class, "loadMyBookings"]);
+
 
 
 
