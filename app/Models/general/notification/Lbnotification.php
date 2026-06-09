@@ -10,7 +10,7 @@ use App\Models\admin\Lbadmin;
 
 class Lbnotification extends Model
 {
-    protected $fillable =[ 'lbstudent_id', 'lbteacher_id', 'lbadmin_id','title','subtitle','notification_for','status'];
+    protected $fillable =[ 'lbstudent_id', 'lbteacher_id', 'lbadmin_id','title','subtitle','for','status'];
     use HasFactory;
 
 
