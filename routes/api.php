@@ -5,11 +5,14 @@ use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 // use App\Http\Controllers\admin\bookings\AdminBookingsController;
+use App\Http\Controllers\Admin\blogs\AdminBlogsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\general\books\PublicBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\student\booking\StudentBookingController;
+use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
@@ -46,6 +49,9 @@ Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studen
 Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
 Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
 Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, "fetchAllBooks"]);
+Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
+Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
+
 
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
@@ -111,6 +117,18 @@ Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, 
 Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
 Route::post("/admin/bookings/rejectReservation",  [AdminBookingsController::class, "rejectReservation"]);
 Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+
+// ********************************ADMIN NOTIFICATIONS***********************************
+Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
+Route::post("/admin/notification/markAllAsRead", [AdminNotificationController::class, "markAllAsRead"]);
+
+
+Route::prefix('admin/blogs')->group(function () {
+    Route::get('/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
+    Route::post('/addBlog',      [AdminBlogsController::class, 'addBlog']);
+    Route::post('/update/{id}',  [AdminBlogsController::class, 'updateBlog']);
+    Route::delete('/delete/{id}',[AdminBlogsController::class, 'deleteBlog']);
+});
 
  
 
