@@ -95,6 +95,8 @@ Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegi
 Route::post("/admin/auth/adminLogin",    [AdminAuthController::class, "adminLogin"]);
 Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
 
+Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 Route::get("/admin/studentAuth/loadAllStudents",[AdminUserController::class,"loadAllStudents"]);
