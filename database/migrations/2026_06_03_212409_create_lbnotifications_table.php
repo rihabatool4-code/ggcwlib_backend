@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger("lbadmin_id")->nullable();
             $table->string("title")->nullable();
             $table->string("subtitle")->nullable();
-            $table->string("notification_for")->nullable();
+            $table->string("for")->nullable();
             $table->string('status')->default('unread');
             $table->timestamps();
         });
