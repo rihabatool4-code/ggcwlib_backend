@@ -80,6 +80,7 @@ Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teache
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
 
 use App\Http\Controllers\student\notes\StudentSavedNotesController;
+use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 
 Route::post('/student/notes/saveNote',                    [StudentSavedNotesController::class, 'saveNote']);
 Route::get('/student/notes/getSavedNotes/{student_id}',   [StudentSavedNotesController::class, 'getSavedNotes']);
@@ -177,4 +178,7 @@ Route::delete('/admin/disputes/{id}', [AdminDisputeController::class, 'destroy']
 
 
 Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
+
+Route::post('/teacher/notifications/fetchAllNotifications',[TeacherNotificationController::class,'fetchAllNotifications'] );
+Route::post('/teacher/notifications/markAllAsRead',[TeacherNotificationController::class,'markAllAsRead'] );
 
