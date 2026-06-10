@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Teacher\reviewController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\general\reviews\LbReview;
+use App\Models\teacher\Lbteacher;
+use App\Models\student\Lbstudent;
+use Illuminate\Support\Facades\Log;
 
 class ReviewController extends Controller
 {
@@ -25,12 +28,41 @@ class ReviewController extends Controller
     }
 
     // Load all reviews
-    public function loadAllReviews(Request $request)
+   public function loadAllReviews(Request $request)
 {
-    $reviews = LbReview::where('lbteacher_id', $request->lbteacher_id)->get();
-    return response()->json(['success' => true, 'reviews' => $reviews]);
-}
+    $reviews = LbReview::get();
 
+    foreach ($reviews as $review) {
+
+        if ($review->lbteacher_id) {
+
+            $teacher = Lbteacher::where('id', $review->lbteacher_id)->first();
+
+            $review->reviewer_name = $teacher ? $teacher->name : "Unknown Teacher";
+            $review->reviewer_role = "Teacher";
+
+        }
+        elseif ($review->lbstudent_id) {
+
+            $student = Lbstudent::where('id', $review->lbstudent_id)->first();
+
+            $review->reviewer_name = $student ? $student->fullName : "Unknown Student";
+            $review->reviewer_role = "Student";
+
+        }
+        else {
+
+            $review->reviewer_name = "Unknown User";
+            $review->reviewer_role = "Unknown";
+
+        }
+    }
+Log::info($reviews->toArray());
+    return response()->json([
+        'success' => true,
+        'reviews' => $reviews
+    ]);
+}
     // Approve
     public function approveReview(Request $request)
     {
