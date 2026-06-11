@@ -22,9 +22,7 @@ use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
 use App\Http\Controllers\general\mydispute\MyDisputeController;
 use App\Http\Controllers\general\mydispute\AdminDisputeController;
-
-
-
+use App\Http\Controllers\student\studentReviewController\StudentReviewController;
 use App\Http\Controllers\Teacher\reviewController\ReviewController;
 // use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
@@ -52,12 +50,14 @@ Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, 
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
 Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
+Route::post('/student/reviews/loadAllReviews',[StudentReviewController::class, 'loadAllReviews']);
 
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
 // });
 
 
+Route::get('/home/loadReviews',[ReviewController::class, 'loadHomeReviews']);
 Route::get("/general/books/fetchAllBooks",[PublicBooksController::class, "fetchAllBooks"]);
 
 Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
@@ -67,7 +67,7 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 /////////////////***************Teacher Routes **************//////////////////
 
-
+Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
 
 Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
 Route::post('/admin/reviews/approve',        [ReviewController::class, 'approveReview']);
