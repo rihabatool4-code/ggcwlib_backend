@@ -17,7 +17,7 @@ return new class extends Migration
              $table->unsignedBigInteger("lbstudent_id")->nullable();
               $table->string("rating")->nullable();
                $table->string("review")->nullable();
-               $table->string("status")->nullable();
+               $table->string("status")->default("Approved");
             $table->timestamps();
         });
     }

@@ -13,6 +13,7 @@ class ReviewController extends Controller
     // Submit review
     public function submitReview(Request $request)
     {
+        // return response()->json((['request' => $request->toArray()]));
         $review = LbReview::create([
             'lbteacher_id' => $request->lbteacher_id,
             'rating'       => $request->rating,
@@ -83,4 +84,39 @@ Log::info($reviews->toArray());
         LbReview::where('id', $request->review_id)->delete();
         return response()->json(['success' => true]);
     }
+    public function loadHomeReviews()
+{
+    $reviews = LbReview::where('status','approved')
+        ->orderBy('rating','desc')
+        ->orderBy('created_at','desc')
+        ->get();
+
+    foreach ($reviews as $review) {
+
+        if ($review->lbteacher_id) {
+
+            $teacher = Lbteacher::find($review->lbteacher_id);
+
+            $review->reviewer_name =
+                $teacher ? $teacher->name : "Unknown Teacher";
+
+            $review->reviewer_role = "Teacher";
+        }
+
+        elseif ($review->lbstudent_id) {
+
+            $student = Lbstudent::find($review->lbstudent_id);
+
+            $review->reviewer_name =
+                $student ? $student->fullName : "Unknown Student";
+
+            $review->reviewer_role = "Student";
+        }
+    }
+
+    return response()->json([
+        'success' => true,
+        'reviews' => $reviews
+    ]);
+}
 }
