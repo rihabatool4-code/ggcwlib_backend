@@ -31,7 +31,8 @@ class ReviewController extends Controller
     // Load all reviews
    public function loadAllReviews(Request $request)
 {
-    $reviews = LbReview::get();
+    $reviews = LbReview::where(['lbteacher_id' => $request->lbteacher_id])->get();
+    // $reviews = LbReview::all();
 
     foreach ($reviews as $review) {
 
@@ -86,7 +87,7 @@ Log::info($reviews->toArray());
     }
     public function loadHomeReviews()
 {
-    $reviews = LbReview::where('status','approved')
+    $reviews = LbReview::where('status','Activate ')
         ->orderBy('rating','desc')
         ->orderBy('created_at','desc')
         ->get();
