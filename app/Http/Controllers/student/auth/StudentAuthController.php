@@ -53,4 +53,25 @@ class StudentAuthController extends Controller
         return response()->json(["error" => $e->getMessage()]);
     }
 }
+public function updateProfile(Request $request)
+{
+    $student = Lbstudent::find($request->student_id);
+
+    if (!$student) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Student not found'
+        ]);
+    }
+
+    $student->fullName = $request->fullName;
+    $student->phone    = $request->phone;
+
+    $student->save();
+
+    return response()->json([
+        'success' => true,
+        'student' => $student
+    ]);
+}
 }

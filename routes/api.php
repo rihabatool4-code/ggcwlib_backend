@@ -43,6 +43,8 @@ Route::post("/student/auth/studentRegister", [StudentAuthController::class, "stu
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 
 ///////////////******************Student Booking **************////////////////
+
+Route::post('/student/updateProfile',[StudentAuthController::class, 'updateProfile']);
 Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
 Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
 Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, "fetchAllBooks"]);
