@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\Route;
 Route::post("/student/auth/studentRegister", [StudentAuthController::class, "studentRegister"]);
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 
+Route::post('/student/updateProfile',[StudentAuthController::class, 'updateProfile']);
 
 Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
 Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
