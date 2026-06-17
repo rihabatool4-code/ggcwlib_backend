@@ -8,15 +8,18 @@ use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\blogs\AdminBlogsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+use App\Http\Controllers\Admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\general\books\PublicBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\student\booking\StudentBookingController;
+use App\Http\Controllers\student\chat\StudentChatController;
 use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 
 
 use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
+use App\Http\Controllers\Teacher\chat\TeacherChatController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 
@@ -52,7 +55,9 @@ Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, 
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
 Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
-
+//////////////////////*********** Student Chat Routes*************/////////////////
+Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
+Route::post('/student/disputes/{dispute}/chats', [StudentChatController::class, 'store']);
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
 // });
@@ -133,7 +138,11 @@ Route::prefix('admin/blogs')->group(function () {
     Route::delete('/delete/{id}',[AdminBlogsController::class, 'deleteBlog']);
 });
 
- 
+///////////////*************Admin Chat Routes****************///////////////
+Route::get('/admin/disputes/{dispute}/chats',  [AdminChatController::class, 'index']);
+Route::post('/admin/disputes/{dispute}/chats', [AdminChatController::class, 'store']);
+
+
 
 //////////////////Crud of notes //////////////////////////////////
 
@@ -168,7 +177,9 @@ Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy'])
 Route::post("/teacher/booking/newReservation", [TeacherBookingController::class, "newReservation"]);
 Route::post("/teacher/booking/loadMyBookings", [TeacherBookingController::class, "loadMyBookings"]);
 
-
+////////////////////**************Teacher Chat Routes *****************////////////////////
+Route::get('/teacher/disputes/{dispute}/chats',  [TeacherChatController::class, 'index']);
+Route::post('/teacher/disputes/{dispute}/chats', [TeacherChatController::class, 'store']);
 
 
 // Admin Disputes
