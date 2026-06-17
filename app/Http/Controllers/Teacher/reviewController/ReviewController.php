@@ -18,7 +18,7 @@ class ReviewController extends Controller
             'lbteacher_id' => $request->lbteacher_id,
             'rating'       => $request->rating,
             'review'       => $request->review,
-            'status'       => 'pending',
+            'status'       => 'Activate',
         ]);
 
         return response()->json([
@@ -31,7 +31,7 @@ class ReviewController extends Controller
     // Load all reviews
    public function loadAllReviews(Request $request)
 {
-    $reviews = LbReview::where(['lbteacher_id' => $request->lbteacher_id])->get();
+    $reviews = LbReview::orderBy('id', 'desc')->get();
     // $reviews = LbReview::all();
 
     foreach ($reviews as $review) {
@@ -67,17 +67,15 @@ Log::info($reviews->toArray());
 }
     // Approve
     public function approveReview(Request $request)
-    {
-        LbReview::where('id', $request->review_id)->update(['status' => 'approved']);
-        return response()->json(['success' => true]);
-    }
+{
+    LbReview::where('id', $request->review_id)->update(['status' => 'Activate']);return response()->json(['success' => true]);
+}
 
     // Reject
     public function rejectReview(Request $request)
-    {
-        LbReview::where('id', $request->review_id)->update(['status' => 'rejected']);
-        return response()->json(['success' => true]);
-    }
+{
+    LbReview::where('id', $request->review_id)->update(['status' => 'DeActivate']);return response()->json(['success' => true]);
+}
 
     // Delete
     public function deleteReview(Request $request)
@@ -87,7 +85,7 @@ Log::info($reviews->toArray());
     }
     public function loadHomeReviews()
 {
-    $reviews = LbReview::where('status','Activate ')
+    $reviews = LbReview::where('status','Activate')
         ->orderBy('rating','desc')
         ->orderBy('created_at','desc')
         ->get();

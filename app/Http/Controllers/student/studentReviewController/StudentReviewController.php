@@ -11,7 +11,7 @@ class StudentReviewController extends Controller
     public function submitReview(Request $request)
 {
     $data = $request->all();
-    $data['status'] = 'pending';
+    $data['status'] = 'Activate';
 
     $review = LbReview::create($data);
 
