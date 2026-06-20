@@ -21,41 +21,16 @@ class StudentChatController extends Controller
      * we confirm this dispute's lbstudent_id actually matches the student
      * making the request.
      */
-    public function index(Request $request, $disputeId)
+    public function fetchAllChats(Request $request)
     {
-        $studentId = $request->query('student_id');
 
-        if (!$studentId) {
-            return response()->json(['message' => 'student_id is required'], 422);
-        }
+        // return response()->json(['request' => $request->toArray()]);
+        $converstaion = Lbconversation::where(['lbstudent_id' => $request->lbstudent_id, 'lbdispute_id' => $request->lbdispute_id, 'type' => $request->type])->first();
 
-        $dispute = Lbdispute::where('id', $disputeId)
-            ->where('lbstudent_id', $studentId)
-            ->first();
+        $chats = Lbchat::where(['lbconversation_id' => $converstaion->id])->get(); 
 
-        if (!$dispute) {
-            return response()->json(['message' => 'Dispute not found or access denied'], 404);
-        }
+        return response()->json(['success' => true, 'chats' => $chats]);
 
-        // firstOrCreate = "find this conversation, or make it if it doesn't exist yet"
-        // in one atomic call. This means the very first time a student opens
-        // the chat modal, a conversation row gets created automatically —
-        // you never have to create it manually when the dispute is first raised.
-        $conversation = Lbconversation::firstOrCreate(
-            ['lbdispute_id' => $disputeId],
-            [
-                'lbstudent_id' => $studentId,
-                'type' => 'dispute',
-            ]
-        );
-
-        // orderBy created_at asc = oldest message first, like a normal chat thread
-        $chats = $conversation->chats()->orderBy('created_at', 'asc')->get();
-
-        return response()->json([
-            'conversation_id' => $conversation->id,
-            'chats' => $chats,
-        ]);
     }
 
     /**
@@ -64,37 +39,42 @@ class StudentChatController extends Controller
      *
      * Student sends a new message into their own dispute's conversation.
      */
-    public function store(Request $request, $disputeId)
-    {
-        $request->validate([
-            'student_id' => 'required|integer',
-            'message'    => 'required|string|max:2000',
-        ]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'lbstudent_id' => 'required|integer',
+        'lbdispute_id' => 'required|integer',
+        'message' => 'required|string|max:2000',
+        'type' => 'required'
+    ]);
 
-        // Same ownership check as index() — never trust the frontend alone.
-        $dispute = Lbdispute::where('id', $disputeId)
-            ->where('lbstudent_id', $request->student_id)
-            ->first();
+    // Check dispute belongs to student
+    $dispute = Lbdispute::where([ 'id' => $request->lbdispute_id,'lbstudent_id' => $request->lbstudent_id
+     ])->first();
 
-        if (!$dispute) {
-            return response()->json(['message' => 'Dispute not found or access denied'], 404);
-        }
-
-        $conversation = Lbconversation::firstOrCreate(
-            ['lbdispute_id' => $disputeId],
-            [
-                'lbstudent_id' => $request->student_id,
-                'type' => 'dispute',
-            ]
-        );
-
-        $chat = Lbchat::create([
-            'lbconversation_id' => $conversation->id,
-            'message' => $request->message,
-            'type'    => 'text',
-            'sender'  => 'student', // hardcoded — never trust a sender value sent from frontend
-        ]);
-
-        return response()->json($chat, 201);
+    if (!$dispute) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Dispute not found or access denied'
+        ], 404);
     }
+
+    $conversation = Lbconversation::firstOrCreate([
+        'lbstudent_id' => $request->lbstudent_id,
+        'lbdispute_id' => $request->lbdispute_id,
+        'type' => $request->type
+    ]);
+
+    $chat = Lbchat::create([
+        'lbconversation_id' => $conversation->id,
+        'message' => $request->message,
+        'type' => 'text',
+        'sender' => 'student'
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'chat' => $chat
+    ]);
+}
 }

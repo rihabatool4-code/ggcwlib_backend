@@ -17,72 +17,61 @@ class TeacherChatController extends Controller
      * lbteacher_id instead of lbstudent_id — a teacher can only open chats
      * for disputes THEY raised.
      */
-    public function index(Request $request, $disputeId)
+    public function fetchAllChats(Request $request)
     {
-        $teacherId = $request->query('teacher_id');
 
-        if (!$teacherId) {
-            return response()->json(['message' => 'teacher_id is required'], 422);
-        }
+        // return response()->json(['request' => $request->toArray()]);
+        $converstaion = Lbconversation::where(['lbteacher_id' => $request->lbteacher_id, 'lbdispute_id' => $request->lbdispute_id, 'type' => $request->type])->first();
 
-        $dispute = Lbdispute::where('id', $disputeId)
-            ->where('lbteacher_id', $teacherId)
-            ->first();
+        $chats = Lbchat::where(['lbconversation_id' => $converstaion->id])->get(); 
 
-        if (!$dispute) {
-            return response()->json(['message' => 'Dispute not found or access denied'], 404);
-        }
+        return response()->json(['success' => true, 'chats' => $chats]);
 
-        $conversation = Lbconversation::firstOrCreate(
-            ['lbdispute_id' => $disputeId],
-            [
-                'lbteacher_id' => $teacherId,
-                'type' => 'dispute',
-            ]
-        );
-
-        $chats = $conversation->chats()->orderBy('created_at', 'asc')->get();
-
-        return response()->json([
-            'conversation_id' => $conversation->id,
-            'chats' => $chats,
-        ]);
     }
 
     /**
      * POST /teacher/disputes/{dispute}/chats
      * body: { teacher_id, message }
      */
-    public function store(Request $request, $disputeId)
-    {
-        $request->validate([
-            'teacher_id' => 'required|integer',
-            'message'    => 'required|string|max:2000',
-        ]);
+  public function store(Request $request)
+{
+    $request->validate([
+        'lbteacher_id' => 'required|integer',
+        'lbdispute_id' => 'required|integer',
+        'message' => 'required|string|max:2000',
+        'type' => 'required'
+    ]);
 
-        $dispute = Lbdispute::where('id', $disputeId)
-            ->where('lbteacher_id', $request->teacher_id)
-            ->first();
+    $dispute = Lbdispute::where([
+        'id' => $request->lbdispute_id,
+        'lbteacher_id' => $request->lbteacher_id
+    ])->first();
 
-        if (!$dispute) {
-            return response()->json(['message' => 'Dispute not found or access denied'], 404);
-        }
-
-        $conversation = Lbconversation::firstOrCreate(
-            ['lbdispute_id' => $disputeId],
-            [
-                'lbteacher_id' => $request->teacher_id,
-                'type' => 'dispute',
-            ]
-        );
-
-        $chat = Lbchat::create([
-            'lbconversation_id' => $conversation->id,
-            'message' => $request->message,
-            'type'    => 'text',
-            'sender'  => 'teacher',
-        ]);
-
-        return response()->json($chat, 201);
+    if (!$dispute) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Dispute not found or access denied'
+        ], 404);
     }
+
+    $conversation = Lbconversation::firstOrCreate(
+        [
+            'lbteacher_id' => $request->lbteacher_id,
+            'lbdispute_id' => $request->lbdispute_id,
+            'type' => $request->type
+        ]
+    );
+
+    $chat = Lbchat::create([
+        'lbconversation_id' => $conversation->id,
+        'message' => $request->message,
+        'type' => 'text',
+        'sender' => 'teacher'
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'chat' => $chat
+    ]);
+}
 }
