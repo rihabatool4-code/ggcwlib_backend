@@ -4,6 +4,7 @@ namespace App\Http\Controllers\student\booking;
 
 use App\Http\Controllers\Controller;
 use App\Models\general\bookings\lbbooking;
+use App\Models\admin\Lbbook;
 use Illuminate\Http\Request;
 
 class StudentBookingController extends Controller

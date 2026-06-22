@@ -27,39 +27,57 @@ use App\Http\Controllers\general\mydispute\MyDisputeController;
 use App\Http\Controllers\general\mydispute\AdminDisputeController;
 use App\Http\Controllers\student\studentReviewController\StudentReviewController;
 use App\Http\Controllers\Teacher\reviewController\ReviewController;
+use App\Http\Controllers\student\notes\StudentSavedNotesController;
+use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 // use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will`   
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+
+
+
 /////////////////***************Student Routes **************//////////////////
 
+////////////////****************Student Auth  ***************//////////////////
 Route::post("/student/auth/studentRegister", [StudentAuthController::class, "studentRegister"]);
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
-
 Route::post('/student/updateProfile',[StudentAuthController::class, 'updateProfile']);
 
+///////////////******************Student Booking **************////////////////
 Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
 Route::post("/student/booking/loadMyBookings",  [StudentBookingController::class, "loadMyBookings"]); // ← ADD
 Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, "fetchAllBooks"]);
-Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
-Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
+//////////////*******************Student Notification ******************//////////
+Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
+Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRe
 Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
 //////////////////////*********** Student Chat Routes*************/////////////////
 Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
 Route::post('/student/disputes/{dispute}/chats', [StudentChatController::class, 'store']);
 
+
+//////////////////////*********** Student Dispute Chat Routes*************/////////////////
+// Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
+Route::post('/student/chat/store', [StudentChatController::class, 'store']);
+Route::post('/student/chat/fetchAllChats', [StudentChatController::class, 'fetchAllChats']);
+
+////////////////////*************Student Review ****************//////////////////
 Route::post('/student/reviews/loadAllReviews',[StudentReviewController::class, 'loadAllReviews']);
+Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
+
+///////////////////***************Student Notes ******************////////////////////
+Route::post('/student/notes/saveNote',                    [StudentSavedNotesController::class, 'saveNote']);
+Route::get('/student/notes/getSavedNotes/{student_id}',   [StudentSavedNotesController::class, 'getSavedNotes']);
+Route::delete('/student/notes/removeSavedNote/{id}',      [StudentSavedNotesController::class, 'removeSavedNote']);
+
+//////////////////******************Student Disputes***************/////////////////
+Route::get('/mydisputes', [MyDisputeController::class, 'index']);
+Route::post('/mydisputes', [MyDisputeController::class, 'store']);
+// Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
+Route::post('/student/disputes/fetchAllDisputes', [MyDisputeController::class, 'fetchAllDisputes']);
+Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
+Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
 
 // Route::group(['middleware' => 'auth:teacher-api'], function () {
 //     Route::get('/teacher-profile', [TeacherAuthController::class, 'profile']);
@@ -69,37 +87,57 @@ Route::post('/student/reviews/loadAllReviews',[StudentReviewController::class, '
 Route::get('/home/loadReviews',[ReviewController::class, 'loadHomeReviews']);
 Route::get("/general/books/fetchAllBooks",[PublicBooksController::class, "fetchAllBooks"]);
 
-Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
+/////////////////***************Teacher Routes **************//////////////////
 
+/////////////////***************Teacher AUTH **************//////////////////
 
+Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
 
 /////////////////***************Teacher Routes **************//////////////////
 
 Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
 Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
+
+
 /////////////////***************Teacher REVIEWS **************//////////////////
 
 Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
-Route::post('/admin/reviews/approve',        [ReviewController::class, 'approveReview']);
-Route::post('/admin/reviews/reject',         [ReviewController::class, 'rejectReview']);
-Route::post('/admin/reviews/delete',         [ReviewController::class, 'deleteReview']);
 Route::post('/teacher/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+
 Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
 
+Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
 
-/////////////////***************Teacher AUTH **************//////////////////
+////////////////*****************Teacher notes******************////////////////////
 
-Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
-
+Route::post('/teacher/notes/uploadNote',          [TeacherNotesController::class, 'uploadNote']);
+Route::get('/teacher/notes/loadAllNotes',         [TeacherNotesController::class, 'loadAllNotes']);
+Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::class,'loadAllNotes']);
+Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
+Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
 
-use App\Http\Controllers\student\notes\StudentSavedNotesController;
-use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 
-Route::post('/student/notes/saveNote',                    [StudentSavedNotesController::class, 'saveNote']);
-Route::get('/student/notes/getSavedNotes/{student_id}',   [StudentSavedNotesController::class, 'getSavedNotes']);
-Route::delete('/student/notes/removeSavedNote/{id}',      [StudentSavedNotesController::class, 'removeSavedNote']);
+////////////////////****************** Teacher Disputes***************/////////////////
+Route::post('/teacher/disputes/fetchAllDisputes', [StaffDisputeController::class, 'fetchAllDisputes']);
+Route::post('/teacher/disputes/add', [StaffDisputeController::class, 'add']);
+Route::post('/teacher/disputes/update', [StaffDisputeController::class, 'update']);
+Route::post('/teacher/disputes/delete', [StaffDisputeController::class, 'delete']);
+
+///////////////////*****************Teacher Booking ****************//////////////////
+Route::post("/teacher/booking/newReservation", [TeacherBookingController::class, "newReservation"]);
+Route::post("/teacher/booking/loadMyBookings", [TeacherBookingController::class, "loadMyBookings"]);
+
+////////////////////**************Teacher Dispute Chat Routes *****************////////////////////
+// Route::get('/teacher/disputes/{dispute}/chats',  [TeacherChatController::class, 'index']);
+Route::post('/teacher/chat/store', [TeacherChatController::class, 'store']);
+Route::post('/teacher/chat/fetchAllChats', [TeacherChatController::class, 'fetchAllChats']);
+
+/////////////////****************Teacher Notification *************/////////////////////
+Route::post('/teacher/notifications/fetchAllNotifications',[TeacherNotificationController::class,'fetchAllNotifications'] );
+Route::post('/teacher/notifications/markAllAsRead',[TeacherNotificationController::class,'markAllAsRead'] );
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -107,40 +145,45 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 /////////////////***************Admin Routes **************//////////////////
 
+////////////////****************Admin Auth ****************//////////////////
 Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegister"]);
 Route::post("/admin/auth/adminLogin",    [AdminAuthController::class, "adminLogin"]);
 Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
 
+////////////////**************Admin Review *****************///////////////////
 Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+Route::post('/admin/reviews/approve',        [ReviewController::class, 'approveReview']);
+Route::post('/admin/reviews/reject',         [ReviewController::class, 'rejectReview']);
+Route::post('/admin/reviews/delete',         [ReviewController::class, 'deleteReview']);
 
+//////////////****************Admin manage User *************/////////////////////
 Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
 Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
 Route::get("/admin/studentAuth/loadAllStudents",[AdminUserController::class,"loadAllStudents"]);
 
+/////////////****************Admin manage Books **************//////////////////
 Route::prefix('/admin/books')->group(function () {
     Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
     Route::post('/addBook', [AdminBookController::class, 'addBook']);  // 'add' se 'addBook' karo
     Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
     Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
 });
-Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
-Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
-// Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
  
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 
 Route::get("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
 
+//////////////////**************Admin manage Booking *************//////////////////
 Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
 Route::post("/admin/bookings/rejectReservation",  [AdminBookingsController::class, "rejectReservation"]);
 Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
 
-// ********************************ADMIN NOTIFICATIONS***********************************
+///////////////////*************ADMIN NOTIFICATIONS**************/////////////////////
 Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
 Route::post("/admin/notification/markAllAsRead", [AdminNotificationController::class, "markAllAsRead"]);
 
-
+/////////////////***************Admin manage Blogs ***************//////////////////
 Route::prefix('admin/blogs')->group(function () {
     Route::get('/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
     Route::post('/addBlog',      [AdminBlogsController::class, 'addBlog']);
@@ -149,19 +192,10 @@ Route::prefix('admin/blogs')->group(function () {
 });
 
 ///////////////*************Admin Chat Routes****************///////////////
-Route::get('/admin/disputes/{dispute}/chats',  [AdminChatController::class, 'index']);
-Route::post('/admin/disputes/{dispute}/chats', [AdminChatController::class, 'store']);
+Route::post('/admin/chat/fetchAllChats', [AdminChatController::class, 'fetchAllChats']);
+Route::post('/admin/chat/store', [AdminChatController::class, 'store']);
 
-
-
-//////////////////Crud of notes //////////////////////////////////
-
-Route::post('/teacher/notes/uploadNote',          [TeacherNotesController::class, 'uploadNote']);
-Route::get('/teacher/notes/loadAllNotes',         [TeacherNotesController::class, 'loadAllNotes']);
-Route::get('/teacher/notes/loadAllNotes/{teacher_id}',[TeacherNotesController::class,'loadAllNotes']);
-Route::delete('/teacher/notes/deleteNote/{id}',   [TeacherNotesController::class, 'deleteNote']);
-Route::post('/teacher/notes/updateNote/{id}',     [TeacherNotesController::class, 'updateNote']);
-
+/////////////***************Admin manage eBooks *************//////////////
 Route::prefix('admin/ebooks')->group(function () {
     Route::post('upload',        [AdminDigiBooksController::class, 'uploadEbook']);
     Route::get('all',            [AdminDigiBooksController::class, 'loadAllEbooks']);
@@ -169,37 +203,9 @@ Route::prefix('admin/ebooks')->group(function () {
     Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
 });
 
-// Student Disputes
-Route::get('/mydisputes', [MyDisputeController::class, 'index']);
-Route::post('/mydisputes', [MyDisputeController::class, 'store']);
-Route::get('/mydisputes/{id}', [MyDisputeController::class, 'show']);
-Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
-Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
 
-
-// Staff Disputes
-Route::get('/staffdisputes', [StaffDisputeController::class, 'index']);
-Route::post('/staffdisputes', [StaffDisputeController::class, 'store']);
-Route::post('/teacher/disputes/viewAllDisputes', [StaffDisputeController::class, 'viewAllDisputes']);
-Route::get('/staffdisputes/{id}', [StaffDisputeController::class, 'show']);
-Route::put('/staffdisputes/{id}', [StaffDisputeController::class, 'update']);
-Route::delete('/staffdisputes/{id}', [StaffDisputeController::class, 'destroy']);
-Route::post("/teacher/booking/newReservation", [TeacherBookingController::class, "newReservation"]);
-Route::post("/teacher/booking/loadMyBookings", [TeacherBookingController::class, "loadMyBookings"]);
-
-////////////////////**************Teacher Chat Routes *****************////////////////////
-Route::get('/teacher/disputes/{dispute}/chats',  [TeacherChatController::class, 'index']);
-Route::post('/teacher/disputes/{dispute}/chats', [TeacherChatController::class, 'store']);
-
-
-// Admin Disputes
-Route::get('/admin/disputes', [AdminDisputeController::class, 'index']);
-Route::patch('/admin/disputes/{id}/resolve', [AdminDisputeController::class, 'resolve']);
-Route::delete('/admin/disputes/{id}', [AdminDisputeController::class, 'destroy']);
-
-
-Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
-
-Route::post('/teacher/notifications/fetchAllNotifications',[TeacherNotificationController::class,'fetchAllNotifications'] );
-Route::post('/teacher/notifications/markAllAsRead',[TeacherNotificationController::class,'markAllAsRead'] );
+///////////////************* Admin Disputes***************///////////////////
+Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
+Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
+Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
 
