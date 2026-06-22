@@ -54,7 +54,7 @@ Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, 
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
 Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
-
+Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
 //////////////////////*********** Student Chat Routes*************/////////////////
 Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
 Route::post('/student/disputes/{dispute}/chats', [StudentChatController::class, 'store']);
@@ -76,9 +76,8 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 /////////////////***************Teacher Routes **************//////////////////
 
-Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
-
-
+Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
+Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
 /////////////////***************Teacher REVIEWS **************//////////////////
 
 Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
@@ -86,6 +85,7 @@ Route::post('/admin/reviews/approve',        [ReviewController::class, 'approveR
 Route::post('/admin/reviews/reject',         [ReviewController::class, 'rejectReview']);
 Route::post('/admin/reviews/delete',         [ReviewController::class, 'deleteReview']);
 Route::post('/teacher/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
 
 
 /////////////////***************Teacher AUTH **************//////////////////

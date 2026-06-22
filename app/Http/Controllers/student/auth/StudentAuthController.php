@@ -74,4 +74,35 @@ public function updateProfile(Request $request)
         'student' => $student
     ]);
 }
+public function changePassword(Request $request)
+{
+    $student = Lbstudent::find($request->lbstudent_id);
+
+    if (!$student) {
+
+        return response()->json([
+            "success" => false,
+            "message" => "Student not found"
+        ]);
+
+    }
+
+    if (!Hash::check($request->current_password, $student->password)) {
+
+        return response()->json([
+            "success" => false,
+            "message" => "Current password is incorrect"
+        ]);
+
+    }
+
+    $student->password = Hash::make($request->new_password);
+    $student->save();
+
+    return response()->json([
+        "success" => true,
+        "message" => "Password updated successfully",
+        "student" => $student
+    ]);
+}
 }
