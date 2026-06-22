@@ -50,7 +50,11 @@ Route::post("/student/booking/fetchAllBooks", [StudentBookingController::class, 
 
 //////////////*******************Student Notification ******************//////////
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
-Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
+Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRe
+Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
+//////////////////////*********** Student Chat Routes*************/////////////////
+Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
+Route::post('/student/disputes/{dispute}/chats', [StudentChatController::class, 'store']);
 
 
 //////////////////////*********** Student Dispute Chat Routes*************/////////////////
@@ -90,11 +94,19 @@ Route::get("/general/books/fetchAllBooks",[PublicBooksController::class, "fetchA
 Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
 
+/////////////////***************Teacher Routes **************//////////////////
+
+Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
+Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
+
 
 /////////////////***************Teacher REVIEWS **************//////////////////
 
 Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
 Route::post('/teacher/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+
+Route::post( '/student/reviews/submitReview',[StudentReviewController::class, 'submitReview']);
+
 Route::post('/teacher/reviews/submitReview',[ReviewController::class,'submitReview'] );
 
 ////////////////*****************Teacher notes******************////////////////////
