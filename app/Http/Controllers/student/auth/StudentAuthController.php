@@ -11,8 +11,6 @@ class StudentAuthController extends Controller
 {
     public function studentRegister(Request $request)
     {
-        // return response()->json(["request"=>$request->toArray()]);
-
         try {
             $student = Lbstudent::create($request->except('password'));
             if ($student != null) {
@@ -29,38 +27,49 @@ class StudentAuthController extends Controller
     }
 
     public function studentLogin(Request $request)
-{
-    // return response()->json(["request" => $request->toArray()]);
-    try {
-        $credentials = $request->only('email', 'password');
+    {
+        try {
+            $credentials = $request->only('email', 'password');
 
-        if (!$token = auth('Lbstudent')->attempt($credentials)) {
+            if (!$token = auth('Lbstudent')->claims(['guard' => 'student'])->attempt($credentials)) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "Invalid credentials"
+                ]);
+            }
+
+            $student = auth('Lbstudent')->user();
+
             return response()->json([
-                "success" => false,
-                "message" => "Invalid credentials"
+                "success" => true,
+                "token" => $token,
+                "student" => $student
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()]);
+        }
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $student = Lbstudent::find($request->student_id);
+
+        if (!$student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Student not found'
             ]);
         }
 
-        $student = auth('Lbstudent')->user();
+        $student->fullName = $request->fullName;
+        $student->phone    = $request->phone;
+
+        $student->save();
 
         return response()->json([
-            "success" => true,
-            "token" => $token,
-            "student" => $student
-        ]);
-
-    } catch (\Exception $e) {
-        return response()->json(["error" => $e->getMessage()]);
-    }
-}
-public function updateProfile(Request $request)
-{
-    $student = Lbstudent::find($request->student_id);
-
-    if (!$student) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Student not found'
+            'success' => true,
+            'student' => $student
         ]);
     }
 

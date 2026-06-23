@@ -36,38 +36,26 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
 
-         'Lbstudent' => [
+    'Lbstudent' => [
         'driver' => 'jwt',
         'provider' => 'students',
     ],
 
-
-
-        'Lbteacher' => [
-    'driver'   => 'jwt',
-    'provider' => 'teachers',
-],
-
-
+    'Lbteacher' => [
+        'driver'   => 'jwt',
+        'provider' => 'teachers',
+    ],
 
     'Lbadmin' => [
         'driver' => 'jwt',
         'provider' => 'admins',
     ],
-
-
-
-        'teacher' => [
-            'driver' => 'jwt',
-            'provider' => 'teacher',
-        ],
-
-    ],
+],
 
 
     /*
