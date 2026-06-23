@@ -11,8 +11,6 @@ class AdminAuthController extends Controller
 {
     public function adminRegister(Request $request)
     {
-        // return response()->json(["request"=>$request->toArray()]);
-
         try {
             $admin = Lbadmin::create($request->except('password'));
             if ($admin != null) {
@@ -28,14 +26,12 @@ class AdminAuthController extends Controller
         }
     }
 
-
     public function adminLogin(Request $request)
     {
-       // return response()->json(["request" => $request->toArray()]);
         try {
             $credentials = $request->only('email', 'password');
 
-            if (!$token = auth('Lbadmin')->attempt($credentials)) {
+            if (!$token = auth('Lbadmin')->claims(['guard' => 'admin'])->attempt($credentials)) {
                 return response()->json([
                     "success" => false,
                     "message" => "Invalid credentials"
@@ -57,11 +53,10 @@ class AdminAuthController extends Controller
             ]);
         }
     }
-    // 👇 Yeh naya function add karein saare subadmins ka data lane ke liye
+
     public function loadAllSubAdmins()
     {
         try {
-            // Database se saare admins ka data fetch karein
             $subadmins = Lbadmin::all();
 
             return response()->json([

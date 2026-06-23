@@ -13,7 +13,7 @@ class TeacherAuthController extends Controller
         try {
             $credentials = $request->only('email', 'password');
 
-            if (!$token = auth('Lbteacher')->attempt($credentials)) {
+            if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
                 return response()->json([
                     "success" => false,
                     "message" => "Invalid credentials"
