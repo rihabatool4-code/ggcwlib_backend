@@ -38,12 +38,21 @@ Route::post("/student/auth/studentRegister", [StudentAuthController::class, "stu
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 
 
+
 Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
 
     Route::post('/student/updateProfile',[StudentAuthController::class, 'updateProfile']);
 
 
     Route::post('/student/dashboard/fetchStudentStatsForDashboard',[StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
+//////////////*******************Student Notification ******************//////////
+Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
+Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRe
+Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
+
+//////////////////////*********** Student Chat Routes*************/////////////////
+Route::get('/student/disputes/{dispute}/chats',  [StudentChatController::class, 'index']);
+Route::post('/student/disputes/{dispute}/chats', [StudentChatController::class, 'store']);
 
     ///////////////******************Student Booking **************////////////////
     Route::post("/student/booking/newReservation", [StudentBookingController::class, "newReservation"]);
@@ -94,6 +103,11 @@ Route::get("/general/books/fetchAllBooks",[PublicBooksController::class, "fetchA
 Route::post("/teacher/auth/teacherLogin" , [TeacherAuthController::class,'teacherLogin']);
 // NOTE: ye "registerteacher" method TeacherAuthController mein exist nahi karta abhi - is route ko hit karne pe error aayega
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
+
+/////////////////***************Teacher Routes **************//////////////////
+
+Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
+Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
 
 
 Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
