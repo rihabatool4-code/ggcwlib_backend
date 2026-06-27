@@ -43,9 +43,12 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
 
     Route::post('/student/updateProfile',[StudentAuthController::class, 'updateProfile']);
 
+////////////////****************Student Dashboard  ***************//////////////////
 
     Route::post('/student/dashboard/fetchStudentStatsForDashboard',[StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
-//////////////*******************Student Notification ******************//////////
+    Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
+
+    //////////////*******************Student Notification ******************//////////
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
 Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
