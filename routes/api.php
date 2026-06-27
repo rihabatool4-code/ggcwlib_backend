@@ -8,17 +8,22 @@ use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
 use App\Http\Controllers\Admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
+use App\Http\Controllers\admin\dashboard\AdminDashboardController;
+
 use App\Http\Controllers\general\books\PublicBooksController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\student\chat\StudentChatController;
 use App\Http\Controllers\student\dashboard\StudentDashboardController;
 use App\Http\Controllers\student\notification\StudentNotificationController;
+
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
 use App\Http\Controllers\Teacher\chat\TeacherChatController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
+use App\Http\Controllers\Teacher\dashboard\TeacherDashboardController;
+
 use App\Http\Controllers\general\mydispute\MyDisputeController;
 use App\Http\Controllers\general\mydispute\AdminDisputeController;
 use App\Http\Controllers\student\studentReviewController\StudentReviewController;
@@ -229,4 +234,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
     Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
     Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
+        ///////////////************* Admin Dashboard***************///////////////////
+    Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
+    Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
 });
