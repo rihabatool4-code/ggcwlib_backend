@@ -47,7 +47,7 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/dashboard/fetchStudentStatsForDashboard',[StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
 //////////////*******************Student Notification ******************//////////
 Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
-Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRe
+Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
 
 //////////////////////*********** Student Chat Routes*************/////////////////
@@ -153,6 +153,10 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+    ///////////////////*****************Teacher Dashboard ****************//////////////////
+Route::post('/teacher/dashboard/stats',    [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
+Route::post('/teacher/dashboard/disputes', [TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 /////////////////***************Admin Routes **************//////////////////
 
