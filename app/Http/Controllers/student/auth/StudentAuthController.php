@@ -72,18 +72,7 @@ class StudentAuthController extends Controller
             'student' => $student
         ]);
     }
-
-    $student->fullName = $request->fullName;
-    $student->phone    = $request->phone;
-
-    $student->save();
-
-    return response()->json([
-        'success' => true,
-        'student' => $student
-    ]);
-}
-public function changePassword(Request $request)
+    public function changePassword(Request $request)
 {
     $student = Lbstudent::find($request->lbstudent_id);
 
@@ -111,6 +100,28 @@ public function changePassword(Request $request)
     return response()->json([
         "success" => true,
         "message" => "Password updated successfully",
+        "student" => $student
+    ]);
+}
+public function updateNotifications(Request $request)
+{
+    $student = Lbstudent::find($request->lbstudent_id);
+
+    if (!$student) {
+        return response()->json([
+            "success" => false,
+            "message" => "Student not found"
+        ]);
+    }
+
+    $student->email_notifications = $request->email_notifications;
+    $student->inapp_notifications = $request->inapp_notifications;
+
+    $student->save();
+
+    return response()->json([
+        "success" => true,
+        "message" => "Notification settings updated successfully",
         "student" => $student
     ]);
 }
