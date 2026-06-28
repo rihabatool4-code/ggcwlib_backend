@@ -163,8 +163,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
     ///////////////////*****************Teacher Dashboard ****************//////////////////
-Route::post('/teacher/dashboard/stats',    [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
-Route::post('/teacher/dashboard/disputes', [TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
+    
+Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
+Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 /////////////////***************Admin Routes **************//////////////////
 
