@@ -13,7 +13,7 @@ class AdminDisputeController extends Controller
     // =========================
     public function fetchAllDisputes()
     {
-        $disputes = Lbdispute::orderBy('created_at', 'desc')->get();
+        $disputes = Lbdispute::with(['lbteacher', 'lbstudent'])->orderBy('created_at', 'desc')->get();
 
         return response()->json([
             'success' => true,
