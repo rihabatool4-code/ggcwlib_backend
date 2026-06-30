@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\blogs\AdminBlogsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+use App\Http\Controllers\admin\books\AdminBookController;
 use App\Http\Controllers\Admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\admin\dashboard\AdminDashboardController;
@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 /////////////////*************** Public Routes **************//////////////////
 
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
-Route::get("/general/books/fetchAllBooks", [PublicBooksController::class, "fetchAllBooks"]);
+Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
 
 /////////////////*************** Student Auth (Public) **************//////////////////
@@ -176,7 +176,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
     /////////////****************Admin Manage Books **************//////////////////
     Route::prefix('/admin/books')->group(function () {
-        Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
+        // Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
         Route::post('/addBook', [AdminBookController::class, 'addBook']);
         Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
         Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
