@@ -107,6 +107,11 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     // Profile & Password
     Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
     Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
+    
+    ///////////////////*****************Teacher Dashboard ****************//////////////////
+    
+Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
+Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
     // Teacher Reviews
     Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
@@ -143,11 +148,6 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
 
 /////////////////*************** Admin Auth (Public) **************//////////////////
 
-
-    ///////////////////*****************Teacher Dashboard ****************//////////////////
-    
-Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
-Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 /////////////////***************Admin Routes **************//////////////////
 
