@@ -12,9 +12,10 @@ class TeacherAuthController extends Controller
     public function teacherLogin(Request $request)
     {
         try {
+
             $credentials = $request->only('email', 'password');
 
-            if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
+            if (!$token = auth('Lbteacher')->attempt($credentials)) {
                 return response()->json([
                     "success" => false,
                     "message" => "Invalid credentials"
@@ -30,58 +31,59 @@ class TeacherAuthController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json(["error" => $e->getMessage()]);
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ]);
         }
     }
+
     public function updateProfile(Request $request)
-{
-    $teacher = lbteacher::find($request->teacher_id);
+    {
+        $teacher = Lbteacher::find($request->teacher_id);
 
-    if (!$teacher) {
+        if (!$teacher) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Teacher not found'
+            ]);
+        }
+
+        $teacher->name = $request->name;
+        $teacher->phone = $request->phone;
+        $teacher->save();
+
         return response()->json([
-            'success' => false,
-            'message' => 'Teacher not found'
+            'success' => true,
+            'teacher' => $teacher
         ]);
     }
 
-    $teacher->name = $request->name;
-    $teacher->phone = $request->phone;
-    $teacher->save();
+    public function changePassword(Request $request)
+    {
+        $teacher = Lbteacher::find($request->teacher_id);
 
-    return response()->json([
-        'success' => true,
-        'teacher' => $teacher
-    ]);
-}
-public function changePassword(Request $request)
-{
-    $teacher = Lbteacher::find($request->teacher_id);
+        if (!$teacher) {
+            return response()->json([
+                "success" => false,
+                "message" => "Teacher not found"
+            ]);
+        }
 
-    if (!$teacher) {
+        if (!Hash::check($request->current_password, $teacher->password)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Current password is incorrect"
+            ]);
+        }
 
-        return response()->json([
-            "success" => false,
-            "message" => "Teacher not found"
-        ]);
-
-    }
-
-    if (!Hash::check($request->current_password, $teacher->password)) {
+        $teacher->password = Hash::make($request->new_password);
+        $teacher->save();
 
         return response()->json([
-            "success" => false,
-            "message" => "Current password is incorrect"
+            "success" => true,
+            "message" => "Password updated successfully",
+            "teacher" => $teacher
         ]);
-
     }
-
-    $teacher->password = Hash::make($request->new_password);
-    $teacher->save();
-
-    return response()->json([
-        "success" => true,
-        "message" => "Password updated successfully",
-        "teacher" => $teacher
-    ]);
-}
 }
