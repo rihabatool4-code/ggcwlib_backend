@@ -12,30 +12,53 @@ class StudentAuthController extends Controller
     public function studentRegister(Request $request)
     {
         try {
+
             $student = Lbstudent::create($request->except('password'));
+
             if ($student != null) {
-                 $student->update([
+
+                $student->update([
                     "password" => Hash::make($request->password)
                 ]);
-                return response()->json(["success" => true, "message" => "Student created successfully", "student" => $student]);
+
+                return response()->json([
+                    "success" => true,
+                    "message" => "Student created successfully",
+                    "student" => $student
+                ]);
+
             } else {
-                return response()->json(["success" => false, "message" => "Account cannot created at the moment"]);
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "Account cannot be created at the moment"
+                ]);
+
             }
+
         } catch (\Exception $e) {
-            return response()->json(["erorr" => $e->getMessage()]);
+
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ]);
+
         }
     }
 
     public function studentLogin(Request $request)
     {
         try {
+
             $credentials = $request->only('email', 'password');
 
             if (!$token = auth('Lbstudent')->claims(['guard' => 'student'])->attempt($credentials)) {
+
                 return response()->json([
                     "success" => false,
                     "message" => "Invalid credentials"
                 ]);
+
             }
 
             $student = auth('Lbstudent')->user();
@@ -47,7 +70,12 @@ class StudentAuthController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json(["error" => $e->getMessage()]);
+
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ]);
+
         }
     }
 
@@ -56,14 +84,16 @@ class StudentAuthController extends Controller
         $student = Lbstudent::find($request->student_id);
 
         if (!$student) {
+
             return response()->json([
                 'success' => false,
                 'message' => 'Student not found'
             ]);
+
         }
 
         $student->fullName = $request->fullName;
-        $student->phone    = $request->phone;
+        $student->phone = $request->phone;
 
         $student->save();
 
@@ -72,57 +102,35 @@ class StudentAuthController extends Controller
             'student' => $student
         ]);
     }
+
     public function changePassword(Request $request)
-{
-    $student = Lbstudent::find($request->lbstudent_id);
+  {
+        $student = Lbstudent::find($request->lbstudent_id);
 
-    if (!$student) {
+        if (!$student) {
+
+            return response()->json([
+                "success" => false,
+                "message" => "Student not found"
+            ]);
+        }
+
+        if (!Hash::check($request->current_password, $student->password)) {
+
+            return response()->json([
+                "success" => false,
+                "message" => "Current password is incorrect"
+            ]);
+
+        }
+
+        $student->password = Hash::make($request->new_password);
+        $student->save();
 
         return response()->json([
-            "success" => false,
-            "message" => "Student not found"
-        ]);
-
-    }
-
-    if (!Hash::check($request->current_password, $student->password)) {
-
-        return response()->json([
-            "success" => false,
-            "message" => "Current password is incorrect"
-        ]);
-
-    }
-
-    $student->password = Hash::make($request->new_password);
-    $student->save();
-
-    return response()->json([
-        "success" => true,
-        "message" => "Password updated successfully",
-        "student" => $student
-    ]);
-}
-public function updateNotifications(Request $request)
-{
-    $student = Lbstudent::find($request->lbstudent_id);
-
-    if (!$student) {
-        return response()->json([
-            "success" => false,
-            "message" => "Student not found"
+            "success" => true,
+            "message" => "Password updated successfully",
+            "student" => $student
         ]);
     }
-
-    $student->email_notifications = $request->email_notifications;
-    $student->inapp_notifications = $request->inapp_notifications;
-
-    $student->save();
-
-    return response()->json([
-        "success" => true,
-        "message" => "Notification settings updated successfully",
-        "student" => $student
-    ]);
-}
-}
+ }
