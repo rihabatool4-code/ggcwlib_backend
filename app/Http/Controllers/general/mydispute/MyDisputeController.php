@@ -64,12 +64,19 @@ class MyDisputeController extends Controller
         }
     }
 
-    public function fetchAllDisputes(Request $request)
-    {
-        // return response()->json(['request' => $request->toArray()]);
-        // return response()->json(Lbdispute::find($request->lbstudent_id));
-        $disputes = Lbdispute::where(['lbstudent_id' => $request->lbstudent_id])->get();
-        return response()->json(['success' => true, 'disputes' => $disputes]);
+   public function fetchAllDisputes(Request $request)
+   {
+    $studentId = $request->lbstudent_id ?? $request->student_id;
+    
+    if (!$studentId) {
+        return response()->json(['success' => false, 'disputes' => [], 'message' => 'Student ID missing']);
+    }
+
+    $disputes = Lbdispute::where('lbstudent_id', $studentId)
+                         ->orderBy('created_at', 'desc')
+                         ->get();
+
+    return response()->json(['success' => true, 'disputes' => $disputes]);
     }
 
     public function update(Request $request, $id)

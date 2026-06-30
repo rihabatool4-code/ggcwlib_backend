@@ -104,7 +104,7 @@ class StudentAuthController extends Controller
     }
 
     public function changePassword(Request $request)
-{
+  {
         $student = Lbstudent::find($request->lbstudent_id);
 
         if (!$student) {
@@ -134,5 +134,3 @@ class StudentAuthController extends Controller
         ]);
     }
  }
-}
-}
