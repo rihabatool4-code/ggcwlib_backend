@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\student\Lbstudent;
 use App\Models\teacher\Lbteacher;
+use App\Models\admin\Lbbook;
 
 class Lbdispute extends Model
 {
@@ -22,4 +23,8 @@ class Lbdispute extends Model
     {
       return $this->belongsTo(Lbstudent::class, 'lbstudent_id');
        }
+       public function lbbook()
+{
+    return $this->belongsTo(Lbbook::class, 'lbbook_id');
+}
 }

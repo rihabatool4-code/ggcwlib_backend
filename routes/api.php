@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\admin\AdminBookController;
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\blogs\AdminBlogsController;
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+
 // use App\Http\Controllers\admin\AdminBookController;
+
+use App\Http\Controllers\admin\books\AdminBookController;
+
 use App\Http\Controllers\Admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\admin\dashboard\AdminDashboardController;
@@ -121,4 +124,104 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     Route::post('/teacher/disputes/add', [StaffDisputeController::class, 'add']);
     Route::post('/teacher/disputes/update', [StaffDisputeController::class, 'update']);
     Route::post('/teacher/disputes/delete', [StaffDisputeController::class, 'delete']);
+
+
+
+    ///////////////////*****************Teacher Booking ****************//////////////////
+    Route::post("/teacher/booking/newReservation", [TeacherBookingController::class, "newReservation"]);
+    Route::post("/teacher/booking/loadMyBookings", [TeacherBookingController::class, "loadMyBookings"]);
+
+    ////////////////////**************Teacher Chat Routes *****************////////////////////
+    Route::post('/teacher/chat/store', [TeacherChatController::class, 'store']);
+    Route::post('/teacher/chat/fetchAllChats', [TeacherChatController::class, 'fetchAllChats']);
+
+    /////////////////****************Teacher Notifications *************/////////////////////
+    Route::post('/teacher/notifications/fetchAllNotifications', [TeacherNotificationController::class, 'fetchAllNotifications']);
+    Route::post('/teacher/notifications/markAllAsRead', [TeacherNotificationController::class, 'markAllAsRead']);
+});
+
+
+/////////////////*************** Admin Auth (Public) **************//////////////////
+
+
+    ///////////////////*****************Teacher Dashboard ****************//////////////////
+    
+Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
+Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
+
+/////////////////***************Admin Routes **************//////////////////
+
+////////////////****************Admin Auth ****************//////////////////
+
+Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegister"]);
+Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
+
+
+/////////////////*************** Admin Protected Routes **************//////////////////
+
+Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
+
+    Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
+
+    ////////////////**************Admin Reviews *****************///////////////////
+    Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
+    Route::post('/admin/reviews/approve', [ReviewController::class, 'approveReview']);
+    Route::post('/admin/reviews/reject', [ReviewController::class, 'rejectReview']);
+    Route::post('/admin/reviews/delete', [ReviewController::class, 'deleteReview']);
+
+    //////////////****************Admin Manage Users *************/////////////////////
+    Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
+    Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
+    Route::get("/admin/studentAuth/loadAllStudents", [AdminUserController::class, "loadAllStudents"]);
+
+    /////////////****************Admin Manage Books **************//////////////////
+    Route::prefix('/admin/books')->group(function () {
+        // Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
+        Route::post('/addBook', [AdminBookController::class, 'addBook']);
+        Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
+        Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
+    });
+
+    //////////////////**************Admin Manage Bookings *************//////////////////
+    Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
+    Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
+    Route::post("/admin/bookings/rejectReservation", [AdminBookingsController::class, "rejectReservation"]);
+    Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+
+    ///////////////////*************Admin Notifications **************/////////////////////
+    Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
+    Route::post("/admin/notification/markAllAsRead", [AdminNotificationController::class, "markAllAsRead"]);
+
+    /////////////////***************Admin Manage Blogs ***************//////////////////
+    Route::prefix('admin/blogs')->group(function () {
+        Route::get('/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
+        Route::post('/addBlog', [AdminBlogsController::class, 'addBlog']);
+        Route::post('/update/{id}', [AdminBlogsController::class, 'updateBlog']);
+        Route::delete('/delete/{id}', [AdminBlogsController::class, 'deleteBlog']);
+    });
+
+    ///////////////*************Admin Chat Routes ****************///////////////
+    Route::post('/admin/chat/fetchAllChats', [AdminChatController::class, 'fetchAllChats']);
+    Route::post('/admin/chat/store', [AdminChatController::class, 'store']);
+
+    /////////////***************Admin Manage eBooks *************//////////////
+    Route::prefix('admin/ebooks')->group(function () {
+        Route::post('upload', [AdminDigiBooksController::class, 'uploadEbook']);
+        Route::get('all', [AdminDigiBooksController::class, 'loadAllEbooks']);
+        Route::post('update/{id}', [AdminDigiBooksController::class, 'updateEbook']);
+        Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
+    });
+
+    ///////////////************* Admin Disputes ***************///////////////////
+    Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
+    Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
+    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
+});
+
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+        ///////////////************* Admin Dashboard***************///////////////////
+    Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
+    Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
 });

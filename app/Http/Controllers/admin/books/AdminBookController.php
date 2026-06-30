@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\admin\books;
 
 use App\Http\Controllers\Controller;
 use App\Models\admin\Lbbook;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AdminBookController extends Controller
 {
-    // GET — Fetch All Books
-  
     public function fetchAllBooks()
     {
         try {

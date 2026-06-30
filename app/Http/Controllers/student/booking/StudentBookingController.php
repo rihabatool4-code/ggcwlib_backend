@@ -23,24 +23,24 @@ class StudentBookingController extends Controller
         }
     }
     public function loadMyBookings(Request $request)
-    {
-        try {
-            $student_id = $request->student_id;
+{
+    try {
+        $student = auth('Lbstudent')->user(); 
+        
+        $bookings = lbbooking::with('lbbook')
+            ->where('lbstudent_id', $student->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-            $bookings = lbbooking::with('lbbook')
-                ->where('lbstudent_id', $student_id)
-                ->orderBy('created_at', 'desc')
-                ->get();
+        return response()->json([
+            'success'  => true,
+            'bookings' => $bookings
+        ]);
 
-            return response()->json([
-                'success'  => true,
-                'bookings' => $bookings
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
     }
+}
 
     public function fetchAllBooks()
     {
