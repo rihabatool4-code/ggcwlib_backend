@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Teacher\dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\general\bookings\Lbbooking;
+use App\Models\note\Lbnote;
+
 use Illuminate\Http\Request;
 
 class TeacherDashboardController extends Controller
@@ -17,17 +20,17 @@ class TeacherDashboardController extends Controller
     {
         $teacherId = $request->lbteacher_id;
 
-        $totalIssuedBooks = lbbooking::where([
+        $totalIssuedBooks = Lbbooking::where([
             'lbteacher_id' => $teacherId,
             'status'       => 'issued',
         ])->count();
 
-        $totalReservedBooks = lbbooking::where([
+        $totalReservedBooks = Lbbooking::where([
             'lbteacher_id' => $teacherId,
             'status'       => 'reserved',
         ])->count();
 
-        $totalNotesUploaded = lbnotes::where('lbteacher_id', $teacherId)->count();
+        $totalNotesUploaded = Lbnote::where('lbteacher_id', $teacherId)->count();
 
         return response()->json([
             'success'            => true,
@@ -45,7 +48,7 @@ class TeacherDashboardController extends Controller
     {
         $teacherId = $request->lbteacher_id;
 
-        $disputes = lbdispute::where('lbteacher_id', $teacherId)
+        $disputes = Lbdispute::where('lbteacher_id', $teacherId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get([
