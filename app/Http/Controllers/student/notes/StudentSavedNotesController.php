@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class StudentSavedNotesController extends Controller
 {
-    // ── Save a note ──
+    // ── Save a note (or an ebook) ──
     public function saveNote(Request $request)
     {
         try {
@@ -55,7 +55,27 @@ class StudentSavedNotesController extends Controller
         }
     }
 
-    // ── Remove saved note ──
+    // ── Get all saved ebooks of a student ──
+    // Same table (Lbfavouritebook), just filtered on lbebook_id instead of lbnote_id.
+    public function getSavedEbooks($student_id)
+    {
+        try {
+            $saved = Lbfavouritebook::where('lbstudent_id', $student_id)
+                                     ->whereNotNull('lbebook_id')
+                                     ->with('ebook')
+                                     ->latest()
+                                     ->get();
+
+            return response()->json([
+                'success' => true,
+                'ebooks'  => $saved
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    // ── Remove saved note or ebook (same table, same delete logic) ──
     public function removeSavedNote($id)
     {
         try {

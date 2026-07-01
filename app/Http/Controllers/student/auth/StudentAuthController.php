@@ -79,6 +79,39 @@ class StudentAuthController extends Controller
         }
     }
 
+    // ── AUTO-LOGIN ENDPOINT ──
+    // Frontend refresh hone par localStorage se token uthayega aur is endpoint ko
+    // call karega. Yeh token verify karke logged-in student ka data wapas bhej deta hai.
+    public function me(Request $request)
+    {
+        try {
+
+            $student = auth('Lbstudent')->user();
+
+            if (!$student) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "Unauthenticated"
+                ], 401);
+
+            }
+
+            return response()->json([
+                "success" => true,
+                "student" => $student
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ], 401);
+
+        }
+    }
+
     public function updateProfile(Request $request)
     {
         $student = Lbstudent::find($request->student_id);
