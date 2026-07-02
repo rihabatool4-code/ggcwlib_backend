@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\admin\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\general\books\lbbooks;
-use App\Models\general\bookings\lbbooking;
-use App\Models\general\notes\lbnotes;
-use App\Models\general\disputes\lbdispute;
-use App\Models\student\lbstudent;
-use App\Models\teacher\lbteacher;
+use App\Models\admin\Lbbook;
+use App\Models\general\bookings\Lbbooking;
+use App\Models\note\Lbnote;
+use App\Models\general\dispute\Lbdispute;
+use App\Models\student\Lbstudent;
+use App\Models\teacher\Lbteacher;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -25,19 +25,19 @@ class AdminDashboardController extends Controller
      */
     public function fetchAdminStatsForDashboard(Request $request)
     {
-        $totalBooks = lbbooks::count();
+        $totalBooks = Lbbook::count();
 
-        $totalStudents = lbstudent::count();
-        $totalTeachers = lbteacher::count();
+        $totalStudents = Lbstudent::count();
+        $totalTeachers = Lbteacher::count();
         $activeUsers   = $totalStudents + $totalTeachers;
 
-        $pendingReservations = lbbooking::where('status', 'reserved')->count();
+        $pendingReservations = Lbbooking::where('status', 'reserved')->count();
 
-        $overdueBooks = lbbooking::where('status', 'overdue')->count();
+        $overdueBooks = Lbbooking::where('status', 'overdue')->count();
 
-        $notesUploaded = lbnotes::count();
+        $notesUploaded = Lbnote::count();
 
-        $booksIssuedToday = lbbooking::where('status', 'issued')
+        $booksIssuedToday = Lbbooking::where('status', 'issued')
             ->whereDate('created_at', Carbon::today())
             ->count();
 
@@ -58,7 +58,7 @@ class AdminDashboardController extends Controller
      */
     public function fetchAdminRecentDisputes(Request $request)
     {
-        $disputes = lbdispute::orderBy('created_at', 'desc')
+        $disputes = Lbdispute::orderBy('created_at', 'desc')
             ->limit(5)
             ->get([
                 'id',
