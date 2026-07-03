@@ -20,6 +20,7 @@ use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
 use App\Http\Controllers\Teacher\chat\TeacherChatController;
+use App\Http\Controllers\teacher\ebooks\TeacherSavedPdfsController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 use App\Http\Controllers\Teacher\dashboard\TeacherDashboardController;
@@ -121,6 +122,11 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     Route::delete('/teacher/notes/deleteNote/{id}', [TeacherNotesController::class, 'deleteNote']);
     Route::post('/teacher/notes/updateNote/{id}', [TeacherNotesController::class, 'updateNote']);
 
+    ///////////////////*****************Teacher Saved Ebooks / PDFs ****************//////////////////
+    Route::post('/teacher/ebooks/saveEbook', [TeacherSavedPdfsController::class, 'saveEbook']);
+    Route::get('/teacher/ebooks/getSavedEbooks/{teacher_id}', [TeacherSavedPdfsController::class, 'getSavedEbooks']);
+    Route::delete('/teacher/ebooks/removeSavedEbook/{id}', [TeacherSavedPDFsController::class, 'removeSavedEbook']);
+
     ////////////////////****************** Teacher Disputes ***************/////////////////
     Route::post('/teacher/disputes/fetchAllDisputes', [StaffDisputeController::class, 'fetchAllDisputes']);
     Route::post('/teacher/disputes/add', [StaffDisputeController::class, 'add']);
@@ -142,7 +148,7 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     ///////////////////*****************Teacher Dashboard ****************//////////////////
     Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard', [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
     // Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
-});
+  });
 
 
 /////////////////***************Admin Routes **************//////////////////
