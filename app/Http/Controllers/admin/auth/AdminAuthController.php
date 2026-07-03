@@ -54,6 +54,40 @@ class AdminAuthController extends Controller
         }
     }
 
+    // ── AUTO-LOGIN ENDPOINT ──
+    // Same pattern as StudentAuthController::me(). Frontend refresh hone
+    // par localStorage se token uthayega aur is endpoint ko call karega.
+    // Yeh token verify karke logged-in admin ka data wapas bhej deta hai.
+    public function me(Request $request)
+    {
+        try {
+
+            $admin = auth('Lbadmin')->user();
+
+            if (!$admin) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "Unauthenticated"
+                ], 401);
+
+            }
+
+            return response()->json([
+                "success" => true,
+                "admin" => $admin
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ], 401);
+
+        }
+    }
+
     public function loadAllSubAdmins()
     {
         try {

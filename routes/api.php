@@ -83,6 +83,9 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/chat/store', [StudentChatController::class, 'store']);
     Route::post('/student/chat/fetchAllChats', [StudentChatController::class, 'fetchAllChats']);
 
+    Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
+Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
+
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
     Route::post('/student/reviews/submitReview', [StudentReviewController::class, 'submitReview']);
@@ -180,6 +183,7 @@ Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]
 Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
+    Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
 
     ////////////////**************Admin Reviews *****************///////////////////
     Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
