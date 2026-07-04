@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Teacher\Booking;
 use App\Http\Controllers\Controller;
 use App\Models\general\bookings\lbbooking;
 use App\Models\admin\Lbbook;
+use App\Models\teacher\Lbteacher;
+use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
+use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use Illuminate\Http\Request;
 
 class TeacherBookingController extends Controller
@@ -21,7 +24,6 @@ class TeacherBookingController extends Controller
                 ]);
             }
 
-            // Same availability guard as the student flow.
             if ($book->available_copies <= 0) {
                 return response()->json([
                     "success" => false,
@@ -32,6 +34,21 @@ class TeacherBookingController extends Controller
             $booking = lbbooking::create($request->all());
 
             if ($booking != null) {
+                $teacher = Lbteacher::find($booking->lbteacher_id);
+
+                TeacherNotificationController::notifyTeacher(
+                    $booking->lbteacher_id,
+                    'Reservation Placed',
+                    "Your reservation for \"{$book->title}\" has been placed successfully.",
+                    'book'
+                );
+
+                AdminNotificationController::notifyAllAdmins(
+                    'New Reservation',
+                    ($teacher->name ?? 'A teacher') . " reserved \"{$book->title}\".",
+                    'book'
+                );
+
                 return response()->json(['success' => true, "booking" => $booking]);
             } else {
                 return response()->json(['success' => false, "message" => "Cannot Reserve book at the moment please try again later"]);

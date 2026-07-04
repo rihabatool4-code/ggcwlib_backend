@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string("subtitle")->nullable();
             $table->string("for")->nullable();
             $table->string('status')->default('unread');
+            $table->string('type')->nullable();
+            $table->json('detail')->nullable();
             $table->timestamps();
         });
     }
