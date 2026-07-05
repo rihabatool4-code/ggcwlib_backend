@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin\books;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Models\admin\Lbbook;
 use Illuminate\Http\Request;
 

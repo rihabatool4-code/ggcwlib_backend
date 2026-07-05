@@ -73,6 +73,8 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
     Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
+    Route::post('/student/notification/markOneAsRead', [StudentNotificationController::class, 'markOneAsRead']);
+    Route::post('/student/notification/deleteNotification', [StudentNotificationController::class, 'deleteNotification']);
 
     // Student Booking
     Route::post('/student/booking/newReservation', [StudentBookingController::class, 'newReservation']);
@@ -163,6 +165,8 @@ Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::cl
     /////////////////****************Teacher Notifications *************/////////////////////
     Route::post('/teacher/notifications/fetchAllNotifications', [TeacherNotificationController::class, 'fetchAllNotifications']);
     Route::post('/teacher/notifications/markAllAsRead', [TeacherNotificationController::class, 'markAllAsRead']);
+    Route::post('/teacher/notifications/markOneAsRead', [TeacherNotificationController::class, 'markOneAsRead']);
+    Route::post('/teacher/notifications/deleteNotification', [TeacherNotificationController::class, 'deleteNotification']);
 
     ///////////////////*****************Teacher Dashboard ****************//////////////////
     Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard', [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
@@ -213,6 +217,8 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     ///////////////////*************Admin Notifications **************/////////////////////
     Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
     Route::post("/admin/notification/markAllAsRead", [AdminNotificationController::class, "markAllAsRead"]);
+    Route::post('/admin/notification/markOneAsRead', [AdminNotificationController::class, 'markOneAsRead']);
+    Route::post('/admin/notification/deleteNotification', [AdminNotificationController::class, 'deleteNotification']);
 
     /////////////////***************Admin Manage Blogs ***************//////////////////
     Route::prefix('admin/blogs')->group(function () {

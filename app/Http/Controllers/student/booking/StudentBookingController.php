@@ -5,6 +5,8 @@ namespace App\Http\Controllers\student\booking;
 use App\Http\Controllers\Controller;
 use App\Models\general\bookings\lbbooking;
 use App\Models\admin\Lbbook;
+use App\Http\Controllers\student\notification\StudentNotificationController;
+use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use Illuminate\Http\Request;
 
 class StudentBookingController extends Controller
@@ -21,10 +23,6 @@ class StudentBookingController extends Controller
                 ]);
             }
 
-            // Block reservation if no copies are currently available.
-            // available_copies is computed live (total_copies − active
-            // reserved/issued bookings), so this stays correct even if
-            // two students try to reserve around the same time.
             if ($book->available_copies <= 0) {
                 return response()->json([
                     "success" => false,
@@ -35,6 +33,21 @@ class StudentBookingController extends Controller
             $booking = lbbooking::create($request->all());
 
             if ($booking != null) {
+                $student = auth('Lbstudent')->user();
+
+                StudentNotificationController::notifyStudent(
+                    $booking->lbstudent_id,
+                    'Reservation Placed',
+                    "Your reservation for \"{$book->title}\" has been placed successfully.",
+                    'book'
+                );
+
+                AdminNotificationController::notifyAllAdmins(
+                    'New Reservation',
+                    ($student->fullName ?? 'A student') . " reserved \"{$book->title}\".",
+                    'book'
+                );
+
                 return response()->json(['success' => true, "booking" => $booking]);
             } else {
                 return response()->json(['success' => false, "message" => "Cannot Reserve book at the moment please try again later"]);
