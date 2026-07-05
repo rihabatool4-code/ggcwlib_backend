@@ -20,6 +20,8 @@ use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\student\chat\StudentChatController;
 use App\Http\Controllers\student\dashboard\StudentDashboardController;
 use App\Http\Controllers\student\notification\StudentNotificationController;
+use App\Http\Controllers\general\flashcard\StudentFlashCardController;
+
 
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
@@ -66,6 +68,10 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
     Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
 
+   
+    ///////////////////***************Student Flash Cards ******************////////////////////
+Route::post('/student/flashcards/fetchAllFlashCards', [StudentFlashCardController::class, 'fetchAllFlashCards']);
+Route::post('/student/flashcards/deleteFlashCard',    [StudentFlashCardController::class, 'deleteFlashCard']);
 
     //////////////*******************Student Notification ******************//////////
 
