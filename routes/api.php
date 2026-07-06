@@ -30,6 +30,8 @@ use App\Http\Controllers\teacher\ebooks\TeacherSavedPdfsController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 use App\Http\Controllers\Teacher\dashboard\TeacherDashboardController;
+use App\Http\Controllers\general\flashcard\TeacherFlashcardController;
+
 
 use App\Http\Controllers\general\mydispute\MyDisputeController;
 use App\Http\Controllers\general\mydispute\AdminDisputeController;
@@ -134,6 +136,10 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     
 Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
 Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
+
+///////////////////***************Teacher Flash Cards ******************////////////////////
+Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
+Route::post('/teacher/flashcards/deleteFlashCard',    [TeacherFlashCardController::class, 'deleteFlashCard']);
 
     // Teacher Reviews
     Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
