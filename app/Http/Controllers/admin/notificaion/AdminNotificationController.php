@@ -75,6 +75,16 @@ class AdminNotificationController extends Controller
             return response()->json(['Error' => $e->getMessage()]);
         }
     }
+    /* ── Delete ALL notifications for this admin ── */
+     public function deleteAllNotifications(Request $request)
+  {
+    try {
+        Lbnotification::where(['lbadmin_id' => $request->lbadmin_id, 'for' => 'admin'])->delete();
+        return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
+    } catch (\Exception $e) {
+        return response()->json(['Error' => $e->getMessage()]);
+    }
+  }
 
     /* ── Create a notification for ALL admins — called from other controllers ── */
     public static function notifyAllAdmins($title, $subtitle, $type = null, $detail = null)

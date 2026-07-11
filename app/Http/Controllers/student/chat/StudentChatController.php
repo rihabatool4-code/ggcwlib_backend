@@ -21,17 +21,23 @@ class StudentChatController extends Controller
      * we confirm this dispute's lbstudent_id actually matches the student
      * making the request.
      */
-    public function fetchAllChats(Request $request)
-    {
+   public function fetchAllChats(Request $request)
+  {
+    $conversation = Lbconversation::where([ 'lbstudent_id' => $request->lbstudent_id, 'lbdispute_id' => $request->lbdispute_id,
+        'type' => $request->type])->first();
 
-        // return response()->json(['request' => $request->toArray()]);
-        $converstaion = Lbconversation::where(['lbstudent_id' => $request->lbstudent_id, 'lbdispute_id' => $request->lbdispute_id, 'type' => $request->type])->first();
-
-        $chats = Lbchat::where(['lbconversation_id' => $converstaion->id])->get(); 
-
-        return response()->json(['success' => true, 'chats' => $chats]);
-
+    // Agar conversation exist nahi karti
+    if (!$conversation) {
+        return response()->json(['success' => true,'chats' => [] ]);
     }
+
+    $chats = Lbchat::where( 'lbconversation_id', $conversation->id)->get();
+
+    return response()->json([
+        'success' => true,
+        'chats' => $chats
+    ]);
+  }
 
     /**
      * POST /student/disputes/{dispute}/chats

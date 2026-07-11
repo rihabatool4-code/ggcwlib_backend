@@ -51,6 +51,8 @@ Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllP
 
 Route::post("/student/auth/studentRegister", [StudentAuthController::class, "studentRegister"]);
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
+Route::post("/student/auth/forgotPassword", [StudentAuthController::class, "forgotPassword"]);
+Route::post("/student/auth/resetPassword", [StudentAuthController::class, "resetPassword"]);
 
 
 /////////////////*************** Student Protected Routes **************//////////////////
@@ -75,6 +77,8 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
     Route::post('/student/notification/markOneAsRead', [StudentNotificationController::class, 'markOneAsRead']);
     Route::post('/student/notification/deleteNotification', [StudentNotificationController::class, 'deleteNotification']);
+    Route::post('/student/notification/deleteAllNotifications', [StudentNotificationController::class, 'deleteAllNotifications']);
+
 
     // Student Booking
     Route::post('/student/booking/newReservation', [StudentBookingController::class, 'newReservation']);
@@ -167,6 +171,8 @@ Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::cl
     Route::post('/teacher/notifications/markAllAsRead', [TeacherNotificationController::class, 'markAllAsRead']);
     Route::post('/teacher/notifications/markOneAsRead', [TeacherNotificationController::class, 'markOneAsRead']);
     Route::post('/teacher/notifications/deleteNotification', [TeacherNotificationController::class, 'deleteNotification']);
+    Route::post('/teacher/notifications/deleteAllNotifications', [TeacherNotificationController::class, 'deleteAllNotifications']);
+
 
     ///////////////////*****************Teacher Dashboard ****************//////////////////
     Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard', [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
@@ -219,6 +225,8 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::post("/admin/notification/markAllAsRead", [AdminNotificationController::class, "markAllAsRead"]);
     Route::post('/admin/notification/markOneAsRead', [AdminNotificationController::class, 'markOneAsRead']);
     Route::post('/admin/notification/deleteNotification', [AdminNotificationController::class, 'deleteNotification']);
+    Route::post('/admin/notification/deleteAllNotifications', [AdminNotificationController::class, 'deleteAllNotifications']);
+
 
     /////////////////***************Admin Manage Blogs ***************//////////////////
     Route::prefix('admin/blogs')->group(function () {

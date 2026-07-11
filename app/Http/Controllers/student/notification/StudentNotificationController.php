@@ -74,6 +74,16 @@ class StudentNotificationController extends Controller
             return response()->json(['Error' => $e->getMessage()]);
         }
     }
+    /* ── Delete ALL notifications for this student ── */
+public function deleteAllNotifications(Request $request)
+  {
+    try {
+        Lbnotification::where(['lbstudent_id' => $request->lbstudent_id, 'for' => 'student'])->delete();
+        return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
+    } catch (\Exception $e) {
+        return response()->json(['Error' => $e->getMessage()]);
+    }
+  }
 
     /* ── Create a notification for a student — called from other controllers ── */
     public static function notifyStudent($studentId, $title, $subtitle, $type = null, $detail = null)

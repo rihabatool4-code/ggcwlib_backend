@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Teacher\Lbteacher;
+use App\Models\general\conversation\Lbconversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,13 +21,16 @@ class TeacherAuthController extends Controller
                     "message" => "Invalid credentials"
                 ]);
             }
+             $teacher = auth('Lbteacher')->user();
 
-            $teacher = auth('Lbteacher')->user();
+            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
+            ->first();
 
             return response()->json([
                 "success" => true,
                 "token"   => $token,
-                "teacher" => $teacher
+                "teacher" => $teacher,
+                "lbconversation" =>$conversation
             ]);
 
         } catch (\Exception $e) {
@@ -41,14 +45,18 @@ class TeacherAuthController extends Controller
     public function me(Request $request)
     {
         try {
-
             $teacher = auth('Lbteacher')->user();
+
+            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
+            ->first();
+
 
             if (!$teacher) {
 
                 return response()->json([
                     "success" => false,
-                    "message" => "Unauthenticated"
+                    "message" => "Unauthenticated",
+                    "lbconversation" =>$conversation
                 ], 401);
 
             }

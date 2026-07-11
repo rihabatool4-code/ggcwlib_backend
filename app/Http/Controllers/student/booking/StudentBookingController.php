@@ -30,6 +30,33 @@ class StudentBookingController extends Controller
                 ]);
             }
 
+            $studentId = $request->lbstudent_id;
+
+            // ── Same book already reserved/issued (not yet returned) ──
+            $alreadyHasThisBook = lbbooking::where('lbstudent_id', $studentId)
+                ->where('lbbook_id', $request->lbbook_id)
+                ->whereIn('status', ['reserved', 'issued'])
+                ->exists();
+
+            if ($alreadyHasThisBook) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "You have already reserved this book. Please return it before reserving it again."
+                ]);
+            }
+
+            // ── Max 5 active reservations for a student ──
+            $activeCount = lbbooking::where('lbstudent_id', $studentId)
+                ->whereIn('status', ['reserved', 'issued'])
+                ->count();
+
+            if ($activeCount >= 5) {
+                return response()->json([
+                    "success" => false,
+                    "message" => "You have reached the maximum limit of 5 active reservations. Please return a book before reserving another."
+                ]);
+            }
+
             $booking = lbbooking::create($request->all());
 
             if ($booking != null) {
