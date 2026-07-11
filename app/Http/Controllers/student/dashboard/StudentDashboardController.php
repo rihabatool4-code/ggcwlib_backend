@@ -3,26 +3,33 @@
 namespace App\Http\Controllers\student\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\general\bookings\lbbooking;
+use App\Models\general\bookings\Lbbooking;
+use App\Models\general\dispute\Lbdispute;
 use Illuminate\Http\Request;
 
 class StudentDashboardController extends Controller
 {
+    /**
+     * Fetch all dashboard stats for a student:
+     *  - Total issued books
+     *  - Total reserved books
+     *  - Total overdue books
+     */
     public function fetchStudentStatsForDashboard(Request $request)
     {
         $studentId = $request->lbstudent_id;
 
-        $totalIssuedBooks = lbbooking::where([
+        $totalIssuedBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
             'status'       => 'issued',
         ])->count();
 
-        $totalReservedBooks = lbbooking::where([
+        $totalReservedBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
             'status'       => 'reserved',
         ])->count();
 
-        $totalOverdueBooks = lbbooking::where([
+        $totalOverdueBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
             'status'       => 'overdue',
         ])->count();
@@ -43,7 +50,7 @@ class StudentDashboardController extends Controller
     {
         $studentId = $request->lbstudent_id;
 
-        $disputes = lbdispute::where('lbstudent_id', $studentId)
+        $disputes = Lbdispute::where('lbstudent_id', $studentId)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get([

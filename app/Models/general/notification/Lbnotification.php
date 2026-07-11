@@ -10,11 +10,11 @@ use App\Models\admin\Lbadmin;
 
 class Lbnotification extends Model
 {
-    protected $fillable =[ 'lbstudent_id', 'lbteacher_id', 'lbadmin_id','title','subtitle','for','status'];
+    protected $fillable = ['lbstudent_id', 'lbteacher_id', 'lbadmin_id', 'title', 'subtitle', 'for', 'status', 'type', 'detail'];
+    protected $casts = ['detail' => 'array'];
     use HasFactory;
 
-
-     public function student() {
+    public function student() {
         return $this->belongsTo(Lbstudent::class, 'lbstudent_id');
     }
     public function teacher() {
