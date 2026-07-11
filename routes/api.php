@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\blogs\AdminBlogsController;
+
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
 
@@ -36,6 +37,8 @@ use App\Http\Controllers\student\notes\StudentSavedNotesController;
 use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
+use App\Http\Controllers\admin\bookConfig\BookConfigController;
 
 
 /////////////////*************** Public Routes **************//////////////////
@@ -176,11 +179,36 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
     /////////////****************Admin Manage Books **************//////////////////
     Route::prefix('/admin/books')->group(function () {
-        // Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
         Route::post('/addBook', [AdminBookController::class, 'addBook']);
         Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
         Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
+    });   // ← books group yahin band ho jaye
+
+    /////////////****************Library Configuration **************//////////////////
+    Route::prefix('/admin/libraryConfig')->group(function () {   // ✅ ab books se bahar, admin group ke andar
+        Route::post('/getLibraryConfiguration', [LibraryConfigController::class, 'getLibraryConfiguration']);
+        Route::post('/updateLibraryConfiguration', [LibraryConfigController::class, 'updateLibraryConfiguration']);
     });
+   /*
+/*
+|--------------------------------------------------------------------------
+| Book Configuration
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    "/admin/bookConfig/getBookConfiguration",
+    [BookConfigController::class, "getBookConfiguration"]
+);
+
+Route::post(
+    "/admin/bookConfig/updateBookConfiguration",
+    [BookConfigController::class, "updateBookConfiguration"]
+);
+
+
+
+
 
     //////////////////**************Admin Manage Bookings *************//////////////////
     Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
@@ -215,8 +243,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     ///////////////************* Admin Disputes ***************///////////////////
     Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
     Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
-    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
-});
+    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

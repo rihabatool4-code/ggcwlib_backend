@@ -13,7 +13,7 @@ class TeacherNotesController extends Controller
     public function uploadNote(Request $request)
 
     {
-          dd(auth('Lbteacher')->user());
+        
         try {
             if ($request->hasFile('pdf_file')) {
                 $file     = $request->file('pdf_file');
