@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string("program")->nullable();
             $table->string("session")->nullable();
             $table->string("password")->nullable();
+            $table->string("emailNotifications")->default(0);
+            $table->string("inappNotifications")->default(0);
             $table->timestamps();
         });
     }

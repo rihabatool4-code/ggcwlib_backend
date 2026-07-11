@@ -178,6 +178,7 @@ class StudentAuthController extends Controller
             "student" => $student
         ]);
     }
+
     public function forgotPassword(Request $request)
     {
         try {
