@@ -28,6 +28,28 @@ class TeacherFlashcardController extends Controller
             'flashCards' => $flashCards,
         ]);
     }
+
+    /**
+     * Store a flash card generated from AI chat.
+     * Frontend sends: lbteacher_id, title, subtitle, type, descryption
+     */
+    public function storeFlashCard(Request $request)
+    {
+        $card = Lbflashcard::create([
+            'lbteacher_id' => $request->lbteacher_id,
+            'title'        => $request->title,
+            'subtitle'     => $request->subtitle ?? null,
+            'type'         => $request->type     ?? 'AI Chat',
+            'descryption'  => $request->descryption,
+        ]);
+ 
+        return response()->json([
+            'success' => true,
+            'message' => 'Flash card saved successfully.',
+            'card'    => $card,
+        ]);
+    }
+ 
  
     public function deleteFlashCard(Request $request)
     {
