@@ -74,6 +74,8 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     ///////////////////***************Student Flash Cards ******************////////////////////
 Route::post('/student/flashcards/fetchAllFlashCards', [StudentFlashCardController::class, 'fetchAllFlashCards']);
 Route::post('/student/flashcards/deleteFlashCard',    [StudentFlashCardController::class, 'deleteFlashCard']);
+Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::class, 'storeFlashCard']);
+
 
     //////////////*******************Student Notification ******************//////////
 
@@ -140,6 +142,8 @@ Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::cl
 ///////////////////***************Teacher Flash Cards ******************////////////////////
 Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
 Route::post('/teacher/flashcards/deleteFlashCard',    [TeacherFlashCardController::class, 'deleteFlashCard']);
+Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::class, 'storeFlashCard']);
+
 
     // Teacher Reviews
     Route::post('/teacher/reviews/submitReview', [ReviewController::class, 'submitReview']);
