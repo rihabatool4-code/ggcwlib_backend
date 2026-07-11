@@ -5,6 +5,7 @@ namespace App\Models\student;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\general\conversation\Lbconversation;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Lbstudent extends Authenticatable implements JWTSubject
@@ -24,5 +25,11 @@ class Lbstudent extends Authenticatable implements JWTSubject
 
       public function lbbookings(){
         return $this->hasMany(Lbstudent::class);
+    }
+
+    public function aiConversation()
+   {
+    return $this->hasMany(Lbconversation::class,'lbstudent_id'
+    )->where('type', 'ai');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Teacher\Lbteacher;
+use App\Models\general\conversation\Lbconversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,16 +22,53 @@ class TeacherAuthController extends Controller
                     "message" => "Invalid credentials"
                 ]);
             }
+             $teacher = auth('Lbteacher')->user();
 
-            $teacher = auth('Lbteacher')->user();
+            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
+            ->first();
 
             return response()->json([
                 "success" => true,
                 "token"   => $token,
+                "teacher" => $teacher,
+                "lbconversation" =>$conversation
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()]);
+        }
+    }
+
+    // ── AUTO-LOGIN ENDPOINT ──
+    // Frontend refresh hone par localStorage se authToken uthayega, token decode
+    // karke guard='teacher' nikalega, aur is endpoint ko call karega. Yeh token
+    // verify karke logged-in teacher ka data wapas bhej deta hai.
+    public function me(Request $request)
+    {
+        try {
+            $teacher = auth('Lbteacher')->user();
+
+            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
+            ->first();
+
+
+            if (!$teacher) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "Unauthenticated",
+                    "lbconversation" =>$conversation
+                ], 401);
+
+            }
+
+            return response()->json([
+                "success" => true,
                 "teacher" => $teacher
             ]);
 
         } catch (\Exception $e) {
+
             return response()->json([
                 "success" => false,
                 "error" => $e->getMessage()
