@@ -5,7 +5,7 @@ namespace App\Models\teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\contracts\JWTSubject;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Lbteacher extends Authenticatable implements JWTSubject
 {
