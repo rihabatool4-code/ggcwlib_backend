@@ -82,6 +82,7 @@ class StudentSavedNotesController extends Controller
         }
     }
 
+
     // ── Get all saved ebooks of a student ──
     public function getSavedEbooks($student_id)
     {
@@ -101,6 +102,7 @@ class StudentSavedNotesController extends Controller
         }
     }
 
+ 
     // ── Remove saved note ──
     public function removeSavedNote($id)
     {

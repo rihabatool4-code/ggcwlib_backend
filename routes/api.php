@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
 use App\Http\Controllers\Admin\blogs\AdminBlogsController;
+
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
 use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
 
@@ -41,13 +42,14 @@ use App\Http\Controllers\student\notes\StudentSavedNotesController;
 use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
+use App\Http\Controllers\admin\bookConfig\BookConfigController;
 
 
 /////////////////*************** Public Routes **************//////////////////
 
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
-Route::get('admin/ebooks/all', [AdminDigiBooksController::class, 'loadAllEbooks']);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
 
 
@@ -64,11 +66,15 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     // Profile & Password
     Route::post('/student/updateProfile', [StudentAuthController::class, 'updateProfile']);
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
-    Route::get('/student/auth/me', [StudentAuthController::class, 'me']);
 
     // Student Dashboard
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
     Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
+
+
+    // Student Notification
+    Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
+    Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
    
     ///////////////////***************Student Flash Cards ******************////////////////////
@@ -83,6 +89,7 @@ Route::post('/student/flashcards/deleteFlashCard',    [StudentFlashCardControlle
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
     Route::post('/student/notification/markOneAsRead', [StudentNotificationController::class, 'markOneAsRead']);
     Route::post('/student/notification/deleteNotification', [StudentNotificationController::class, 'deleteNotification']);
+
 
     // Student Booking
     Route::post('/student/booking/newReservation', [StudentBookingController::class, 'newReservation']);
@@ -100,12 +107,9 @@ Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesControl
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
     Route::post('/student/reviews/submitReview', [StudentReviewController::class, 'submitReview']);
 
-
-    ///////////////////***************Student Notes / Saved Notes & Ebooks ******************////////////////////
-
+    // Student Notes
     Route::post('/student/notes/saveNote', [StudentSavedNotesController::class, 'saveNote']);
     Route::get('/student/notes/getSavedNotes/{student_id}', [StudentSavedNotesController::class, 'getSavedNotes']);
-    Route::get('/student/notes/getSavedEbooks/{student_id}', [StudentSavedNotesController::class, 'getSavedEbooks']);
     Route::delete('/student/notes/removeSavedNote/{id}', [StudentSavedNotesController::class, 'removeSavedNote']);
 
     // Student Disputes
@@ -127,15 +131,9 @@ Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "reg
 
 Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
 
-    Route::get('/teacher/auth/me', [App\Http\Controllers\Teacher\auth\TeacherAuthController::class, 'me']);
-
+    // Profile & Password
     Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
     Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
-    
-    ///////////////////*****************Teacher Dashboard ****************//////////////////
-    
-Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
-Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 ///////////////////***************Teacher Flash Cards ******************////////////////////
 Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
@@ -177,6 +175,7 @@ Route::post('/teacher/flashcards/deleteFlashCard',    [TeacherFlashCardControlle
     /////////////////****************Teacher Notifications *************/////////////////////
     Route::post('/teacher/notifications/fetchAllNotifications', [TeacherNotificationController::class, 'fetchAllNotifications']);
     Route::post('/teacher/notifications/markAllAsRead', [TeacherNotificationController::class, 'markAllAsRead']);
+ 
     Route::post('/teacher/notifications/markOneAsRead', [TeacherNotificationController::class, 'markOneAsRead']);
     Route::post('/teacher/notifications/deleteNotification', [TeacherNotificationController::class, 'deleteNotification']);
 
@@ -185,6 +184,15 @@ Route::post('/teacher/flashcards/deleteFlashCard',    [TeacherFlashCardControlle
     // Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
   });
 
+
+
+/////////////////*************** Admin Auth (Public) **************//////////////////
+
+
+    ///////////////////*****************Teacher Dashboard ****************//////////////////
+    
+Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
+Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 /////////////////***************Admin Routes **************//////////////////
 
@@ -214,11 +222,36 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
     /////////////****************Admin Manage Books **************//////////////////
     Route::prefix('/admin/books')->group(function () {
-        // Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
         Route::post('/addBook', [AdminBookController::class, 'addBook']);
         Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
         Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
+    });   // ← books group yahin band ho jaye
+
+    /////////////****************Library Configuration **************//////////////////
+    Route::prefix('/admin/libraryConfig')->group(function () {   // ✅ ab books se bahar, admin group ke andar
+        Route::post('/getLibraryConfiguration', [LibraryConfigController::class, 'getLibraryConfiguration']);
+        Route::post('/updateLibraryConfiguration', [LibraryConfigController::class, 'updateLibraryConfiguration']);
     });
+   /*
+/*
+|--------------------------------------------------------------------------
+| Book Configuration
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    "/admin/bookConfig/getBookConfiguration",
+    [BookConfigController::class, "getBookConfiguration"]
+);
+
+Route::post(
+    "/admin/bookConfig/updateBookConfiguration",
+    [BookConfigController::class, "updateBookConfiguration"]
+);
+
+
+
+
 
     //////////////////**************Admin Manage Bookings *************//////////////////
     Route::post("/admin/bookings/fetchAllBookings", [AdminBookingsController::class, "fetchAllBookings"]);
@@ -247,7 +280,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     /////////////***************Admin Manage eBooks *************//////////////
     Route::prefix('admin/ebooks')->group(function () {
         Route::post('upload', [AdminDigiBooksController::class, 'uploadEbook']);
-        // Route::get('all', [AdminDigiBooksController::class, 'loadAllEbooks']); // public route (top of file) already covers this
+        Route::get('all', [AdminDigiBooksController::class, 'loadAllEbooks']);
         Route::post('update/{id}', [AdminDigiBooksController::class, 'updateEbook']);
         Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
     });
@@ -255,14 +288,12 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     ///////////////************* Admin Disputes ***************///////////////////
     Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
     Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
-    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
-
-    ///////////////************* Admin Dashboard ***************///////////////////
-    Route::post('/admin/dashboard/fetchAdminStatsForDashboard', [AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
-    Route::post('/admin/dashboard/fetchAdminRecentDisputes', [AdminDashboardController::class, 'fetchAdminRecentDisputes']);
-});
+    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+        ///////////////************* Admin Dashboard***************///////////////////
+    Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
+    Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
 });
