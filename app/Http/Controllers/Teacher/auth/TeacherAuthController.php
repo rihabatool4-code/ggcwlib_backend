@@ -13,9 +13,10 @@ class TeacherAuthController extends Controller
     public function teacherLogin(Request $request)
     {
         try {
+
             $credentials = $request->only('email', 'password');
 
-            if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
+            if (!$token = auth('Lbteacher')->attempt($credentials)) {
                 return response()->json([
                     "success" => false,
                     "message" => "Invalid credentials"
@@ -71,14 +72,13 @@ class TeacherAuthController extends Controller
             return response()->json([
                 "success" => false,
                 "error" => $e->getMessage()
-            ], 401);
-
+            ]);
         }
     }
 
     public function updateProfile(Request $request)
     {
-        $teacher = lbteacher::find($request->teacher_id);
+        $teacher = Lbteacher::find($request->teacher_id);
 
         if (!$teacher) {
             return response()->json([
@@ -96,26 +96,23 @@ class TeacherAuthController extends Controller
             'teacher' => $teacher
         ]);
     }
+
     public function changePassword(Request $request)
     {
         $teacher = Lbteacher::find($request->teacher_id);
 
         if (!$teacher) {
-
             return response()->json([
                 "success" => false,
                 "message" => "Teacher not found"
             ]);
-
         }
 
         if (!Hash::check($request->current_password, $teacher->password)) {
-
             return response()->json([
                 "success" => false,
                 "message" => "Current password is incorrect"
             ]);
-
         }
 
         $teacher->password = Hash::make($request->new_password);

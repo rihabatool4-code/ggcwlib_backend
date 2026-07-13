@@ -11,7 +11,9 @@ class TeacherNotesController extends Controller
 {
     // ── 1. Upload Note ──
     public function uploadNote(Request $request)
+
     {
+        
         try {
             if ($request->hasFile('pdf_file')) {
                 $file     = $request->file('pdf_file');
