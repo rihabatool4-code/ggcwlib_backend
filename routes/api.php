@@ -107,7 +107,8 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
     Route::post('/student/chat/fetchAllChats', [StudentChatController::class, 'fetchAllChats']);
 
     Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
-Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
+      Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
+    Route::post('/student/smartlib-ai/chat', [StudentChatController::class, 'smartLibChat']);
 
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);

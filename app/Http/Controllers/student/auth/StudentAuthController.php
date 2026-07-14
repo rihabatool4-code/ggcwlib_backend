@@ -183,7 +183,7 @@ class StudentAuthController extends Controller
     {
         try {
 
-            $student = Lbstudent::where('email', $request->email)->first();
+            $student = Lbstudent::where(['email', $request->email])->first();
 
             if (!$student) {
 
