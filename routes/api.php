@@ -51,7 +51,7 @@ use App\Http\Controllers\admin\bookConfig\BookConfigController;
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
-
+Route::post('/contact/getLibraryInfo', [LibraryConfigController::class, 'getLibraryConfiguration']);
 
 /////////////////*************** Student Auth (Public) **************//////////////////
 
@@ -268,6 +268,8 @@ Route::post(
     Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
     Route::post("/admin/bookings/rejectReservation", [AdminBookingsController::class, "rejectReservation"]);
     Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+    Route::post("/admin/bookings/markAsLost", [AdminBookingsController::class, "markAsLost"]);      
+Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "markAsDamaged"]);
 
     ///////////////////*************Admin Notifications **************/////////////////////
     Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
