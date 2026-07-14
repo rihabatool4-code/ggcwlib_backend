@@ -8,6 +8,7 @@ use App\Models\admin\Lbbook;
 use App\Models\teacher\Lbteacher;
 use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
+use App\Models\admin\bookConfig\LbBookconfig;
 use Illuminate\Http\Request;
 
 class TeacherBookingController extends Controller
@@ -46,17 +47,21 @@ class TeacherBookingController extends Controller
                 ]);
             }
 
-            // ── Max 7 active reservations for a teacher ──
-            $activeCount = lbbooking::where('lbteacher_id', $teacherId)
-                ->whereIn('status', ['reserved', 'issued'])
-                ->count();
+            // ── Book config se max allowed books nikalein ──
+$bookConfig = LbBookconfig::first();
+$maxBooksAllowed = $bookConfig->max_books_staff ?? 7;   // agar config na mile to 7 default
 
-            if ($activeCount >= 7) {
-                return response()->json([
-                    "success" => false,
-                    "message" => "You have reached the maximum limit of 7 active reservations. Please return a book before reserving another."
-                ]);
-            }
+// ── Max active reservations for a teacher (ab dynamic) ──
+$activeCount = lbbooking::where('lbteacher_id', $teacherId)
+    ->whereIn('status', ['reserved', 'issued'])
+    ->count();
+
+if ($activeCount >= $maxBooksAllowed) {
+    return response()->json([
+        "success" => false,
+        "message" => "You have reached the maximum limit of {$maxBooksAllowed} active reservations. Please return a book before reserving another."
+    ]);
+}
 
             $booking = lbbooking::create($request->all());
 

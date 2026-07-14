@@ -6,12 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\general\conversation\Lbconversation;
+
+use App\Models\general\bookings\Lbbooking;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 use Tymon\JWTAuth\contracts\JWTSubject;
+
 
 class Lbteacher extends Authenticatable implements JWTSubject
 {
-    protected $fillable = ['name','email','phone','password',"status"];
     use HasFactory;
+
+    protected $fillable = ['name', 'email', 'phone', 'password', 'status'];
 
     public function getJWTIdentifier()
     {
@@ -22,13 +28,15 @@ class Lbteacher extends Authenticatable implements JWTSubject
     {
         return ["guard" => "teacher"];
     }
-    public function lbbookings(){
-        return $this->hasMany(Lbteacher::class);
+
+    public function lbbookings()
+    {
+        return $this->hasMany(Lbbooking::class, 'lbteacher_id');
     }
+
     public function aiConversation()
     {
-    return $this->hasMany(Lbconversation::class,
-        'lbteacher_id'
-    )->where('type', 'ai');
+        return $this->hasMany(Lbconversation::class, 'lbteacher_id')
+            ->where('type', 'ai');
     }
 }
