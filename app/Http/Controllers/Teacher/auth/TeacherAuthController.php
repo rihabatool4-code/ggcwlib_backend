@@ -16,12 +16,13 @@ class TeacherAuthController extends Controller
 
             $credentials = $request->only('email', 'password');
 
-            if (!$token = auth('Lbteacher')->attempt($credentials)) {
-                return response()->json([
-                    "success" => false,
-                    "message" => "Invalid credentials"
-                ]);
-            }
+             if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
+
+             return response()->json([
+             "success" => false,
+             "message" => "Invalid credentials"
+            ]);
+             }
              $teacher = auth('Lbteacher')->user();
 
             $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
