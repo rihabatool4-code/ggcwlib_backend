@@ -7,6 +7,7 @@ use App\Models\general\bookings\lbbooking;
 use App\Models\admin\Lbbook;
 use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
+use App\Models\admin\bookConfig\LbBookconfig;
 use Illuminate\Http\Request;
 
 class StudentBookingController extends Controller
@@ -45,17 +46,21 @@ class StudentBookingController extends Controller
                 ]);
             }
 
-            // ── Max 5 active reservations for a student ──
-            $activeCount = lbbooking::where('lbstudent_id', $studentId)
-                ->whereIn('status', ['reserved', 'issued'])
-                ->count();
+            // ── Book config se max allowed books nikalein ──
+$bookConfig = LbBookconfig::first();
+$maxBooksAllowed = $bookConfig->max_books_student ?? 5;   // agar config na mile to 5 default
 
-            if ($activeCount >= 5) {
-                return response()->json([
-                    "success" => false,
-                    "message" => "You have reached the maximum limit of 5 active reservations. Please return a book before reserving another."
-                ]);
-            }
+// ── Max active reservations for a student (ab dynamic) ──
+$activeCount = lbbooking::where('lbstudent_id', $studentId)
+    ->whereIn('status', ['reserved', 'issued'])
+    ->count();
+
+if ($activeCount >= $maxBooksAllowed) {
+    return response()->json([
+        "success" => false,
+        "message" => "You have reached the maximum limit of {$maxBooksAllowed} active reservations. Please return a book before reserving another."
+    ]);
+}
 
             $booking = lbbooking::create($request->all());
 

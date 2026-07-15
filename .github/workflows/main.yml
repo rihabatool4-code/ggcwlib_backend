@@ -22,5 +22,5 @@ jobs:
           port: 21
           security: loose
           local-dir: ./
-          server-dir: /ggcwlibrary.btsportfolio2026.com/backend/
+          server-dir: ./backend/
           timeout: 60000

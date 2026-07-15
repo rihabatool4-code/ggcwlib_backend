@@ -44,7 +44,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
 use App\Http\Controllers\admin\bookConfig\BookConfigController;
-
+use App\Http\Controllers\Api\ContactController;
 
 /////////////////*************** Public Routes **************//////////////////
 
@@ -55,7 +55,8 @@ Route::get('/admin/ebooks/all', [AdminDigiBooksController::class, 'loadAllEbooks
 Route::get('admin/blogs/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
 
 
-
+Route::post('/contact/getLibraryInfo', [LibraryConfigController::class, 'getLibraryConfiguration']);
+Route::post('/contact/sendContactMessage', [ContactController::class, 'sendContactMessage']);
 
 /////////////////*************** Student Auth (Public) **************//////////////////
 
@@ -278,6 +279,8 @@ Route::post(
     Route::post("/admin/bookings/approveReservation", [AdminBookingsController::class, "approveReservation"]);
     Route::post("/admin/bookings/rejectReservation", [AdminBookingsController::class, "rejectReservation"]);
     Route::post("/admin/bookings/returnBook", [AdminBookingsController::class, "returnBook"]);
+    Route::post("/admin/bookings/markAsLost", [AdminBookingsController::class, "markAsLost"]);      
+Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "markAsDamaged"]);
 
     ///////////////////*************Admin Notifications **************/////////////////////
     Route::post("/admin/notification/fetchAllNotifications", [AdminNotificationController::class, "fetchAllNotifications"]);
