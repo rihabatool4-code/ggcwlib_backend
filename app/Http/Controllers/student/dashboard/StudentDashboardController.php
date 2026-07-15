@@ -6,33 +6,37 @@ use App\Http\Controllers\Controller;
 use App\Models\general\bookings\Lbbooking;
 use App\Models\general\dispute\Lbdispute;
 use Illuminate\Http\Request;
+use Carbon\Carbon; // <--- Yeh line top par lazmi use karein date checking ke liye
 
 class StudentDashboardController extends Controller
 {
     /**
      * Fetch all dashboard stats for a student:
-     *  - Total issued books
-     *  - Total reserved books
-     *  - Total overdue books
      */
     public function fetchStudentStatsForDashboard(Request $request)
     {
         $studentId = $request->lbstudent_id;
 
+        // 1. Total Issued Books
         $totalIssuedBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
             'status'       => 'issued',
         ])->count();
 
+        // 2. Total Reserved Books
         $totalReservedBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
             'status'       => 'reserved',
         ])->count();
 
+        // 3. Total Overdue Books (Dynamic Check)
+        // Woh books jo issued hain aur unki return/due date aaj se pehle ki thi
         $totalOverdueBooks = Lbbooking::where([
             'lbstudent_id' => $studentId,
-            'status'       => 'overdue',
-        ])->count();
+            'status'       => 'issued', 
+        ])
+        ->where('due_date', '<', Carbon::now()) // check if due_date is in the past
+        ->count();
 
         return response()->json([
             'success'       => true,
@@ -42,28 +46,5 @@ class StudentDashboardController extends Controller
         ]);
     }
 
-    /**
-     * Fetch recent disputes raised by this student.
-     * Returns latest 5 disputes, newest first.
-     */
-    public function fetchStudentRecentDisputes(Request $request)
-    {
-        $studentId = $request->lbstudent_id;
-
-        $disputes = Lbdispute::where('lbstudent_id', $studentId)
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get([
-                'id',
-                'title',
-                'description',
-                'status',
-                'created_at',
-            ]);
-
-        return response()->json([
-            'success'  => true,
-            'disputes' => $disputes,
-        ]);
-    }
+    // ... aapka bakaya fetchStudentRecentDisputes method yahan rahega
 }
