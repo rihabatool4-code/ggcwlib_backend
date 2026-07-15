@@ -211,10 +211,7 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
 /////////////////*************** Admin Auth (Public) **************//////////////////
 
 
-    ///////////////////*****************Teacher Dashboard ****************//////////////////
     
-Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard',[TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
-Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
 
 /////////////////***************Admin Routes **************//////////////////
 
@@ -228,6 +225,16 @@ Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]
 
 Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
+///////////////************* Admin Dashboard ***************///////////////////
+
+    Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
+
+    Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
+
+
+    Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
+    Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
+
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
     Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
 
@@ -237,6 +244,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::post('/admin/reviews/reject', [ReviewController::class, 'rejectReview']);
     Route::post('/admin/reviews/delete', [ReviewController::class, 'deleteReview']);
 
+    
     //////////////****************Admin Manage Users *************/////////////////////
     Route::post("/admin/teacherAuth/registerTeacher", [AdminUserController::class, "registerTeacher"]);
     Route::get("/admin/teacherAuth/loadAllTeacher", [AdminUserController::class, "loadAllTeacher"]);
@@ -315,9 +323,3 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
     Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);});
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-        ///////////////************* Admin Dashboard***************///////////////////
-    Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
-    Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
-});
