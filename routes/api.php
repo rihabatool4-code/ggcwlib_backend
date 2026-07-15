@@ -117,7 +117,8 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
     Route::post('/student/smartlib-ai/upload-file', [StudentChatController::class, 'uploadFile']);
 
     Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
-      Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
+    Route::get('/student/notes/getSavedEbooks/{student_id}', [StudentSavedNotesController::class, 'getSavedEbooks']);
+    Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
 
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
