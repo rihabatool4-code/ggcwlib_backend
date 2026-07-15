@@ -13,6 +13,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 
+
+
+
 class Lbteacher extends Authenticatable implements JWTSubject
 {
     use HasFactory;
