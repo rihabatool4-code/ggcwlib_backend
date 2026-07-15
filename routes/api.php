@@ -51,6 +51,10 @@ use App\Http\Controllers\Api\ContactController;
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
+Route::get('/admin/ebooks/all', [AdminDigiBooksController::class, 'loadAllEbooks']);
+Route::get('admin/blogs/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
+
+
 Route::post('/contact/getLibraryInfo', [LibraryConfigController::class, 'getLibraryConfiguration']);
 Route::post('/contact/sendContactMessage', [ContactController::class, 'sendContactMessage']);
 
@@ -69,6 +73,7 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     // Profile & Password
     Route::post('/student/updateProfile', [StudentAuthController::class, 'updateProfile']);
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
+    Route::get('/student/auth/me', [StudentAuthController::class, 'me']);
 
     // Student Dashboard
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
@@ -107,9 +112,12 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
     Route::post('/student/chat/store', [StudentChatController::class, 'store']);
     Route::post('/student/chat/fetchAllChats', [StudentChatController::class, 'fetchAllChats']);
 
+    Route::post('/student/smartlib-ai/chat', [StudentChatController::class, 'smartLibChat']);
+    Route::post('/student/smartlib-ai/generate-image', [StudentChatController::class, 'generateImage']);
+    Route::post('/student/smartlib-ai/upload-file', [StudentChatController::class, 'uploadFile']);
+
     Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
       Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
-    Route::post('/student/smartlib-ai/chat', [StudentChatController::class, 'smartLibChat']);
 
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
@@ -142,6 +150,7 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     // Profile & Password
     Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
     Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
+    Route::post('/teacher/auth/me' , [TeacherAuthController::class, 'me']);
 
 ///////////////////***************Teacher Flash Cards ******************////////////////////
 Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
@@ -283,7 +292,6 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
 
     /////////////////***************Admin Manage Blogs ***************//////////////////
     Route::prefix('admin/blogs')->group(function () {
-        Route::get('/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
         Route::post('/addBlog', [AdminBlogsController::class, 'addBlog']);
         Route::post('/update/{id}', [AdminBlogsController::class, 'updateBlog']);
         Route::delete('/delete/{id}', [AdminBlogsController::class, 'deleteBlog']);
@@ -296,7 +304,6 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
     /////////////***************Admin Manage eBooks *************//////////////
     Route::prefix('admin/ebooks')->group(function () {
         Route::post('upload', [AdminDigiBooksController::class, 'uploadEbook']);
-        Route::get('all', [AdminDigiBooksController::class, 'loadAllEbooks']);
         Route::post('update/{id}', [AdminDigiBooksController::class, 'updateEbook']);
         Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);
     });
