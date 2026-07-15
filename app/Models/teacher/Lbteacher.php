@@ -10,6 +10,12 @@ use App\Models\general\conversation\Lbconversation;
 use App\Models\general\bookings\Lbbooking;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
+
+
+
+
+
 class Lbteacher extends Authenticatable implements JWTSubject
 {
     use HasFactory;
