@@ -44,7 +44,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
 use App\Http\Controllers\admin\bookConfig\BookConfigController;
-
+use App\Http\Controllers\Api\ContactController;
 
 /////////////////*************** Public Routes **************//////////////////
 
@@ -52,6 +52,7 @@ Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
 Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
 Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
 Route::post('/contact/getLibraryInfo', [LibraryConfigController::class, 'getLibraryConfiguration']);
+Route::post('/contact/sendContactMessage', [ContactController::class, 'sendContactMessage']);
 
 /////////////////*************** Student Auth (Public) **************//////////////////
 
