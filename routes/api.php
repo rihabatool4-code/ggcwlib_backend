@@ -145,6 +145,8 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
 
 Route::post("/teacher/auth/teacherLogin", [TeacherAuthController::class, 'teacherLogin']);
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
+Route::post("/teacher/auth/forgotPassword", [TeacherAuthController::class, "forgotPassword"]);
+Route::post("/teacher/auth/resetPassword", [TeacherAuthController::class, "resetPassword"]);
 
 
 /////////////////*************** Teacher Protected Routes **************//////////////////
@@ -224,6 +226,8 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
 
 Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegister"]);
 Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
+Route::post("/admin/auth/forgotPassword", [AdminAuthController::class, "forgotPassword"]);
+Route::post("/admin/auth/resetPassword", [AdminAuthController::class, "resetPassword"]);
 
 
 /////////////////*************** Admin Protected Routes **************//////////////////
