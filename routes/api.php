@@ -78,6 +78,9 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     // Student Dashboard
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
     Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
+    
+    Route::post('/student/dashboard/fetchStudentOutstandingFine', [StudentDashboardController::class, 'fetchStudentOutstandingFine']);
+    Route::post('/student/dashboard/fetchStudentReturnAlerts', [StudentDashboardController::class, 'fetchStudentReturnAlerts']);
 
 
     // Student Notification
@@ -204,6 +207,8 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
     ///////////////////*****************Teacher Dashboard ****************//////////////////
     Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard', [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
     // Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
+    Route::post('/teacher/dashboard/fetchTeacherReturnAlerts', [TeacherDashboardController::class, 'fetchTeacherReturnAlerts']);
+    Route::post('/teacher/dashboard/fetchTeacherRecentDisputes', [TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
   });
 
 
@@ -230,6 +235,10 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
 
     Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
+
+    Route::post('/admin/dashboard/fetchAdminOverdueAlerts', [AdminDashboardController::class, 'fetchAdminOverdueAlerts']);
+    Route::post('/admin/dashboard/fetchAdminRecentReviews', [AdminDashboardController::class, 'fetchAdminRecentReviews']);
+    Route::post('/admin/dashboard/fetchAdminRecentRequests', [AdminDashboardController::class, 'fetchAdminRecentRequests']);
 
 
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);

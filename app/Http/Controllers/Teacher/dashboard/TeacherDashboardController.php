@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Teacher\dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
-// Models ko yahan import kiya gaya hai:
-use App\Models\general\bookings\Lbbooking; 
+use App\Models\general\bookings\Lbbooking;
 use App\Models\general\dispute\Lbdispute;
-// Agar aapke notes model ka namespace different hai toh uske mutabiq adjust karein, standard yehi hoga:
-use App\Models\note\Lbnote; 
+use App\Models\note\Lbnote;
 
 class TeacherDashboardController extends Controller
 {
@@ -44,27 +43,120 @@ class TeacherDashboardController extends Controller
     }
 
     /**
+     * Fetch return date alerts for currently issued books (teacher).
+     */
+    public function fetchTeacherReturnAlerts(Request $request)
+    {
+        try {
+
+            $teacherId = $request->lbteacher_id;
+            $today = Carbon::today();
+
+            $alerts = Lbbooking::with('lbbook')
+                ->where('lbteacher_id', $teacherId)
+                ->where('status', 'issued')
+                ->orderBy('due_date', 'asc')
+                ->limit(5)
+                ->get()
+                ->map(function ($booking) use ($today) {
+
+                    $dueDate  = Carbon::parse($booking->due_date)->startOfDay();
+                    $daysLeft = $today->diffInDays($dueDate, false); // negative = overdue
+
+                    if ($daysLeft < 0) {
+                        $type  = 'danger';
+                        $badge = abs($daysLeft) . ' days overdue';
+                    } elseif ($daysLeft <= 3) {
+                        $type  = 'warning';
+                        $badge = $daysLeft . ' days left';
+                    } else {
+                        $type  = 'success';
+                        $badge = $daysLeft . ' days left';
+                    }
+
+                    return [
+                        'id'    => $booking->id,
+                        'title' => optional($booking->lbbook)->title,
+                        'due'   => $booking->due_date,
+                        'badge' => $badge,
+                        'type'  => $type,
+                    ];
+                });
+
+            return response()->json([
+
+                'success' => true,
+
+                'alerts' => $alerts,
+
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+
+                'success' => false,
+
+                'message' => 'Error while fetching return date alerts.',
+
+                'error' => $e->getMessage(),
+
+                'line' => $e->getLine(),
+
+                'file' => $e->getFile(),
+
+            ], 500);
+        }
+    }
+
+    /**
      * Fetch recent disputes raised against / by this teacher.
-     * Returns latest 5 disputes, newest first.
+     * Returns latest 3 disputes, newest first.
      */
     public function fetchTeacherRecentDisputes(Request $request)
     {
-        $teacherId = $request->lbteacher_id;
+        try {
 
-        $disputes = Lbdispute::where('lbteacher_id', $teacherId)
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get([
-                'id',
-                'title',
-                'description',
-                'status',
-                'created_at',
-            ]);
+            $teacherId = $request->lbteacher_id;
 
-        return response()->json([
-            'success'  => true,
-            'disputes' => $disputes,
-        ]);
+            $disputes = Lbdispute::where('lbteacher_id', $teacherId)
+                ->orderBy('created_at', 'desc')
+                ->limit(3)
+                ->get()
+                ->map(function ($dispute) {
+
+                    return [
+                        'id'          => $dispute->id,
+                        'title'       => $dispute->subject,
+                        'description' => $dispute->description,
+                        'status'      => $dispute->status,
+                        'created_at'  => $dispute->created_at,
+                    ];
+                });
+
+            return response()->json([
+
+                'success' => true,
+
+                'disputes' => $disputes,
+
+            ], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+
+                'success' => false,
+
+                'message' => 'Error while fetching teacher recent disputes.',
+
+                'error' => $e->getMessage(),
+
+                'line' => $e->getLine(),
+
+                'file' => $e->getFile(),
+
+            ], 500);
+        }
     }
 }
