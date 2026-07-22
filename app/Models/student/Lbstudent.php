@@ -29,7 +29,6 @@ class Lbstudent extends Authenticatable implements JWTSubject
 
     public function aiConversation()
    {
-    return $this->hasMany(Lbconversation::class,'lbstudent_id'
-    )->where('type', 'ai');
+    return $this->hasMany(Lbconversation::class,'lbstudent_id')->where('type', 'ai');
     }
 }
