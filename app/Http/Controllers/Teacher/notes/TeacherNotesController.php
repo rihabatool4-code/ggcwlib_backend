@@ -11,9 +11,7 @@ class TeacherNotesController extends Controller
 {
     // ── 1. Upload Note ──
     public function uploadNote(Request $request)
-
     {
-        
         try {
             if ($request->hasFile('pdf_file')) {
                 $file     = $request->file('pdf_file');
@@ -21,10 +19,10 @@ class TeacherNotesController extends Controller
                 $path     = $file->storeAs('public/notes', $fileName);
 
                 $note = Lbnote::create([
-                    'title'    => $request->title,
-                    'subject'  => $request->subject,
-                    'pdf_file' => $fileName,
-                      'Lbteacher_id' => $request->Lbteacher_id,
+                    'title'        => $request->title,
+                    'subject'      => $request->subject,
+                    'pdf_file'     => $fileName,
+                    'Lbteacher_id' => $request->Lbteacher_id,
                 ]);
 
                 if ($note) {
@@ -48,9 +46,8 @@ class TeacherNotesController extends Controller
     public function loadAllNotes($Lbteacher_id)
     {
         try {
-            // $notes = Lbnote::where(['lbteacher_id'=>$request->lbteacher_id])->get();
-                    $notes = Lbnote::where('Lbteacher_id', $Lbteacher_id)->latest()->get(); 
-            // $notes = Lbnote::latest()->get();
+            $notes = Lbnote::with('lbteacher')->where('Lbteacher_id', $Lbteacher_id)->latest()->get();
+
             return response()->json([
                 "success" => true,
                 "notes"   => $notes
@@ -59,20 +56,22 @@ class TeacherNotesController extends Controller
             return response()->json(["error" => $e->getMessage()]);
         }
     }
+
     // ── Load ALL Notes (Public — no teacher filter) ──
-public function loadAllPublicNotes()
-{
-    try {
-        $notes = Lbnote::latest()->get();
-        return response()->json([
-            "success" => true,
-            "notes"   => $notes
-        ]);
-    } catch (\Exception $e) {
-        return response()->json(["error" => $e->getMessage()]);
+    public function loadAllPublicNotes()
+    {
+        try {
+            $notes = Lbnote::with('lbteacher')->latest()->get();
+
+            return response()->json([
+                "success" => true,
+                "notes"   => $notes
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()]);
+        }
     }
-}
- 
+
     // ── 3. Delete Note ──
     public function deleteNote($id)
     {
@@ -108,7 +107,7 @@ public function loadAllPublicNotes()
             }
 
             $note->title   = $request->title   ?? $note->title;
-            $note->subject = $request->subject  ?? $note->subject;
+            $note->subject = $request->subject ?? $note->subject;
 
             if ($request->hasFile('pdf_file')) {
                 Storage::delete('public/notes/' . $note->pdf_file);
@@ -129,4 +128,3 @@ public function loadAllPublicNotes()
         }
     }
 }
-// ── Load ALL Notes (Public — no teacher filter) ──

@@ -104,7 +104,7 @@ public function fetchAdminRecentDisputes(Request $request)
                     'ticket'     => '#DSP-' . str_pad($dispute->id, 3, '0', STR_PAD_LEFT),
                     'name'       => $isStudent
                                         ? optional($dispute->lbstudent)->fullName
-                                        : optional($dispute->lbteacher)->fullName,
+                                        : optional($dispute->lbteacher)->name,
                     'role'       => $isStudent ? 'Student' : 'Teacher',
                     'subject'    => $dispute->subject,
                     'status'     => $dispute->status,
@@ -157,7 +157,7 @@ public function fetchAdminRecentReviews(Request $request)
                     'id'         => $review->id,
                     'name'       => $isStudent
                                         ? optional($review->lbstudent)->fullName
-                                        : optional($review->lbteacher)->fullName,
+                                        : optional($review->lbteacher)->name,
                     'role'       => $isStudent ? 'Student' : 'Teacher',
                     'rating'     => $review->rating,
                     'review'     => $review->review,
@@ -249,7 +249,7 @@ public function fetchAdminOverdueAlerts(Request $request)
 
         $today = Carbon::today();
 
-        $overdue = Lbbooking::with(['lbstudent', 'lbbook'])
+        $overdue = Lbbooking::with(['lbstudent', 'lbteacher', 'lbbook'])
             ->where('status', 'issued')
             ->whereDate('due_date', '<', $today)
             ->orderBy('due_date', 'asc')
@@ -259,11 +259,16 @@ public function fetchAdminOverdueAlerts(Request $request)
 
                 $daysOverdue = Carbon::parse($booking->due_date)->diffInDays($today);
 
+                $isStudent = !is_null($booking->lbstudent_id);
+
                 return [
                     'id'       => $booking->id,
-                    'name'     => optional($booking->lbstudent)->fullName,
-                    'roll_no'  => optional($booking->lbstudent)->roll_no,
-                    'book'     => optional($booking->lbbook)->title, // Lbbook ka title field agar alag naam ho to adjust kar lein
+                    'name'     => $isStudent
+                                    ? optional($booking->lbstudent)->fullName
+                                    : optional($booking->lbteacher)->name,
+                    'roll_no'  => $isStudent ? optional($booking->lbstudent)->roll_no : null,
+                    'role'     => $isStudent ? 'Student' : 'Teacher',
+                    'book'     => optional($booking->lbbook)->title,
                     'due_date' => $booking->due_date,
                     'days'     => $daysOverdue,
                     'fine'     => $booking->fine ?? 0,
@@ -271,27 +276,17 @@ public function fetchAdminOverdueAlerts(Request $request)
             });
 
         return response()->json([
-
             'success' => true,
-
             'overdue' => $overdue,
-
         ], 200);
 
     } catch (\Exception $e) {
-
         return response()->json([
-
             'success' => false,
-
             'message' => 'Error while fetching admin overdue book alerts.',
-
             'error' => $e->getMessage(),
-
             'line' => $e->getLine(),
-
             'file' => $e->getFile(),
-
         ], 500);
     }
 }
