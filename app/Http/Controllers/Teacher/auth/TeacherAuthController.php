@@ -50,37 +50,38 @@ class TeacherAuthController extends Controller
     // karke guard='teacher' nikalega, aur is endpoint ko call karega. Yeh token
     // verify karke logged-in teacher ka data wapas bhej deta hai.
     public function me(Request $request)
-    {
-        try {
-            $teacher = auth('Lbteacher')->user();
+{
+    try {
+        $teacher = auth('Lbteacher')->user();
 
-            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
-            ->first();
-
-
-            if (!$teacher) {
-
-                return response()->json([
-                    "success" => false,
-                    "message" => "Unauthenticated",
-                    "lbconversation" =>$conversation
-                ], 401);
-
-            }
-
-            return response()->json([
-                "success" => true,
-                "teacher" => $teacher
-            ]);
-
-        } catch (\Exception $e) {
+        if (!$teacher) {
 
             return response()->json([
                 "success" => false,
-                "error" => $e->getMessage()
-            ]);
+                "message" => "Unauthenticated"
+            ], 401);
+
         }
+
+        $conversation = Lbconversation::where('lbteacher_id', $teacher->id)
+            ->where('type', 'ai')
+            ->first();
+
+        return response()->json([
+            "success" => true,
+            "teacher" => $teacher,
+            "lbconversation" => $conversation
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
+
     }
+   }
 
     public function updateProfile(Request $request)
     {
