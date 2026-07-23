@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lbstudents', function (Blueprint $table) {
             $table->id();
             $table->string("fullName")->nullable();
-            $table->string("email")->nullable();
+            $table->string("email")->nullable()->unique();
             $table->string("phone")->nullable();
             $table->string("roll_no")->nullable();
             $table->string("program")->nullable();
@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string("emailNotifications")->default(0);
             $table->string("inappNotifications")->default(0);
             $table->timestamps();
+
+            // ✅ Roll No sirf same session ke andar unique hoga —
+            // cross-session duplicate (e.g. different intake years) allowed hai
+            $table->unique(['roll_no', 'session']);
         });
     }
 
