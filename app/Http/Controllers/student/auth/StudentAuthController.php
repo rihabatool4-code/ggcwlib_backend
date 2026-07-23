@@ -12,12 +12,41 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 
 class StudentAuthController extends Controller
 {
     public function studentRegister(Request $request)
     {
         try {
+
+            // ── Email: fully unique across the system ──
+            $existingEmail = Lbstudent::where('email', $request->email)->first();
+
+            if ($existingEmail) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "This email is already registered."
+                ]);
+
+            }
+
+            // ── Roll No: unique only within the same session ──
+            // (e.g. CS-41 can exist in 2022-2026 session AND 2023-2027 session,
+            // but not twice inside the same session)
+            $existingRollNo = Lbstudent::where('roll_no', $request->roll_no)
+          ->where('session', $request->input('session'))
+          ->first();
+  
+            if ($existingRollNo) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "This Roll No is already registered for this session."
+                ]);
+
+            }
 
             $student = Lbstudent::create($request->except('password'));
 
@@ -43,6 +72,23 @@ class StudentAuthController extends Controller
 
             }
 
+        } catch (QueryException $e) {
+
+            // DB-level unique constraint safety net (race condition ya missed check ke liye)
+            if ($e->getCode() == 23000) {
+
+                return response()->json([
+                    "success" => false,
+                    "message" => "This Roll No is already registered for this session, or email already exists."
+                ]);
+
+            }
+
+            return response()->json([
+                "success" => false,
+                "error" => $e->getMessage()
+            ]);
+
         } catch (\Exception $e) {
 
             return response()->json([
@@ -57,26 +103,40 @@ class StudentAuthController extends Controller
     {
         try {
 
-            $credentials = $request->only('email', 'password');
+            // ── Roll No + Password based login ──
+            // Roll No ab session ke andar hi unique hai, isliye ek roll_no
+            // multiple students (different sessions) se match ho sakta hai.
+            // Password check karke exact student identify karte hain.
+            $candidates = Lbstudent::where('roll_no', $request->roll_no)->get();
 
-            if (!$token = auth('Lbstudent')->claims(['guard' => 'student'])->attempt($credentials)) {
+            $student = null;
+
+            foreach ($candidates as $candidate) {
+                if (Hash::check($request->password, $candidate->password)) {
+                    $student = $candidate;
+                    break;
+                }
+            }
+
+            if (!$student) {
 
                 return response()->json([
                     "success" => false,
-                    "message" => "Invalid credentials"
+                    "message" => "Invalid Roll No or password"
                 ]);
 
             }
 
-            $student = auth('Lbstudent')->user();
-            $conversation = Lbconversation::where('lbstudent_id',$student->id)->where('type', 'ai')
+            $token = auth('Lbstudent')->claims(['guard' => 'student'])->login($student);
+
+            $conversation = Lbconversation::where('lbstudent_id', $student->id)->where('type', 'ai')
             ->first();
 
             return response()->json([
                 "success" => true,
                 "token" => $token,
                 "student" => $student,
-                "lbconversation" =>$conversation
+                "lbconversation" => $conversation
             ]);
 
         } catch (\Exception $e) {
@@ -97,21 +157,23 @@ class StudentAuthController extends Controller
         try {
 
             $student = auth('Lbstudent')->user();
-            $conversation = Lbconversation::where('lbstudent_id',$student->id)->where('type', 'ai')
-            ->first();
+
             if (!$student) {
 
                 return response()->json([
                     "success" => false,
-                    "message" => "Unauthenticated",
-                    "lbconversation" =>$conversation
+                    "message" => "Unauthenticated"
                 ], 401);
 
             }
 
+            $conversation = Lbconversation::where('lbstudent_id', $student->id)->where('type', 'ai')
+            ->first();
+
             return response()->json([
                 "success" => true,
-                "student" => $student
+                "student" => $student,
+                "lbconversation" => $conversation
             ]);
 
         } catch (\Exception $e) {
