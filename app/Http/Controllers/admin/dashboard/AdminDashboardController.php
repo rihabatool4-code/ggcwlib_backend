@@ -10,6 +10,7 @@ use App\Models\general\dispute\Lbdispute;
 use App\Models\general\reviews\LbReview;
 use App\Models\student\Lbstudent;
 use App\Models\teacher\Lbteacher;
+use App\Models\admin\bookConfig\LbBookconfig;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -249,17 +250,25 @@ public function fetchAdminOverdueAlerts(Request $request)
 
         $today = Carbon::today();
 
+        // ✅ book config se fine_per_day lo (AdminIssuedBooks page jaisa dynamic)
+        $bookConfig = LbBookconfig::first();
+        $finePerDay = $bookConfig->fine_per_day ?? 10;
+
         $overdue = Lbbooking::with(['lbstudent', 'lbteacher', 'lbbook'])
             ->where('status', 'issued')
             ->whereDate('due_date', '<', $today)
             ->orderBy('due_date', 'asc')
             ->limit(5)
             ->get()
-            ->map(function ($booking) use ($today) {
+            ->map(function ($booking) use ($today, $finePerDay) {
 
                 $daysOverdue = Carbon::parse($booking->due_date)->diffInDays($today);
 
                 $isStudent = !is_null($booking->lbstudent_id);
+
+                // ✅ fine ab live calculate hoti hai, DB ke 'fine' column se nahi
+                // (DB column sirf return/lost/damaged hone par set hota hai)
+                $fine = $isStudent ? ($daysOverdue * $finePerDay) : 0; // teachers pe fine nahi
 
                 return [
                     'id'       => $booking->id,
@@ -271,7 +280,7 @@ public function fetchAdminOverdueAlerts(Request $request)
                     'book'     => optional($booking->lbbook)->title,
                     'due_date' => $booking->due_date,
                     'days'     => $daysOverdue,
-                    'fine'     => $booking->fine ?? 0,
+                    'fine'     => $fine,
                 ];
             });
 
