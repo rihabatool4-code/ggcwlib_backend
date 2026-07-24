@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\general\conversation\Lbconversation;
 use App\Models\general\chat\Lbchat;
 use App\Models\general\dispute\Lbdispute; // adjust this namespace to match wherever your Lbdispute model actually lives
+use App\Models\admin\Lbbook;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Smalot\PdfParser\Parser as PdfParser;
@@ -78,15 +79,46 @@ class StudentChatController extends Controller
 }
 
     /**
+     * Builds a plain-text catalog listing from the real GGCW Library books
+     * table, so SmartLib AI only ever recommends books that actually exist.
+     * Capped at 200 books to keep the prompt from getting too large.
+     */
+    private function libraryBooksContext()
+    {
+        $books = Lbbook::select('id', 'title', 'author', 'dept', 'total_copies')
+            ->take(200)
+            ->get();
+
+        if ($books->isEmpty()) {
+            return "(No books currently found in the catalog.)";
+        }
+
+        return $books->map(function ($book) {
+            $copies = $book->available_copies;
+            $status = $copies > 0 ? "{$copies} copies available" : "currently unavailable";
+            return "- \"{$book->title}\" by {$book->author} (Dept: {$book->dept}) — {$status}";
+        })->implode("\n");
+    }
+
+    /**
      * Shared system prompt so text chat and file-summary calls stay consistent.
+     * Now includes the real library catalog so recommendations are grounded
+     * in actual GGCW Library inventory instead of the model guessing titles.
      */
     private function smartLibSystemPrompt()
     {
+        $booksList = $this->libraryBooksContext();
+
         return "You are SmartLib AI, a friendly and knowledgeable library assistant for GGCW Library.
 You help students with three things only:
 1. Summarizing notes and PDF books
 2. Recommending books from the library
 3. Creating flash cards from summaries
+
+When recommending books, ONLY recommend titles from the catalog below — this is the real, current GGCW Library inventory. Never invent a book or author that isn't in this list. If nothing in the catalog fits what the student is asking for, say so honestly instead of making something up. Mention availability (copies available) when relevant.
+
+GGCW Library Catalog:
+{$booksList}
 
 Formatting rules (IMPORTANT - follow exactly):
 - Use **text** for bold words or headings
@@ -98,25 +130,32 @@ Formatting rules (IMPORTANT - follow exactly):
 
     /**
      * POST /student/smartlib-ai/chat
-     * body: { prompt }
+     * body: { messages: [{role, content}, ...] }
      *
-     * SmartLib AI assistant — summarizes notes/books, recommends books,
-     * and creates flash cards. Talks to OpenAI's chat completions endpoint.
+     * SmartLib AI assistant with conversation memory — sends the recent
+     * chat history so it remembers context across turns.
      */
     public function smartLibChat(Request $request)
     {
         $request->validate([
-            'prompt' => 'required|string|max:2000',
+            'messages' => 'required|array|min:1',
+            'messages.*.role' => 'required|in:user,assistant',
+            'messages.*.content' => 'required|string|max:2000',
         ]);
+
+        // Keep only the last 12 messages (6 exchanges) so token usage stays sane
+        $history = array_slice($request->input('messages'), -12);
+
+        $chatMessages = array_merge(
+            [['role' => 'system', 'content' => $this->smartLibSystemPrompt()]],
+            $history
+        );
 
         $response = Http::withToken(env('OPENAI_API_KEY'))
             ->timeout(30)
             ->post("https://api.openai.com/v1/chat/completions", [
                 "model" => "gpt-5.4-mini",
-                "messages" => [
-                    ['role' => 'system', 'content' => $this->smartLibSystemPrompt()],
-                    ['role' => 'user', 'content' => $request->prompt],
-                ],
+                "messages" => $chatMessages,
                 "temperature" => 0.7,
             ]);
 
@@ -138,49 +177,50 @@ Formatting rules (IMPORTANT - follow exactly):
     }
 
     /**
-     * POST /student/smartlib-ai/generate-image
-     * body: { prompt }
+     * POST /student/smartlib-ai/flashcard-points
+     * body: { content }
      *
-     * Generates an image via OpenAI's image generation endpoint.
+     * Condenses an AI chat reply into short, flash-card style bullet points
+     * (separate lightweight AI call — keeps flash cards clean instead of
+     * dumping the whole chat reply into the card).
      */
-    public function generateImage(Request $request)
+    public function generateFlashcardPoints(Request $request)
     {
         $request->validate([
-            'prompt' => 'required|string|max:1000',
+            'content' => 'required|string|max:4000',
         ]);
 
         $response = Http::withToken(env('OPENAI_API_KEY'))
-            ->timeout(60)
-            ->post("https://api.openai.com/v1/images/generations", [
-                "model" => "gpt-image-1",
-                "prompt" => $request->prompt,
-                "size" => "1024x1024",
-                "n" => 1,
+            ->timeout(30)
+            ->post("https://api.openai.com/v1/chat/completions", [
+                "model" => "gpt-5.4-mini",
+                "messages" => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You condense study material into flash-card style bullet points. '
+                            . 'Rules: return ONLY 4 to 6 short bullet points, each starting with "• ", '
+                            . 'each under 15 words, capturing only the most important facts. '
+                            . 'No headings, no intro text, no bold markers, no extra commentary.'
+                    ],
+                    ['role' => 'user', 'content' => $request->input('content')],
+                ],
+                "temperature" => 0.4,
             ]);
 
         if ($response->failed()) {
-            Log::error('SmartLib AI image generation error: ' . $response->body());
+            Log::error('SmartLib AI flashcard error: ' . $response->body());
             return response()->json([
                 'success' => false,
-                'message' => 'Image generation failed. Please try again later.',
+                'message' => 'Could not generate flash card points.',
             ], 500);
         }
 
         $data = $response->json();
-        $imageBase64 = $data['data'][0]['b64_json'] ?? null;
-        $imageUrl = $data['data'][0]['url'] ?? null;
-
-        if (!$imageBase64 && !$imageUrl) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No image was returned. Please try a different prompt.',
-            ], 500);
-        }
+        $points = $data['choices'][0]['message']['content'] ?? '';
 
         return response()->json([
             'success' => true,
-            'image_base64' => $imageBase64,
-            'image_url' => $imageUrl,
+            'points' => $points,
         ]);
     }
 
@@ -228,7 +268,7 @@ Formatting rules (IMPORTANT - follow exactly):
             ], 422);
         }
 
-        $userPrompt = $request->prompt ?: 'Summarize this document';
+        $userPrompt = $request->input('prompt') ?: 'Summarize this document';
 
         $response = Http::withToken(env('OPENAI_API_KEY'))
             ->timeout(60)

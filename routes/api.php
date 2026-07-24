@@ -79,6 +79,9 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     // Student Dashboard
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
     Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
+    
+    Route::post('/student/dashboard/fetchStudentOutstandingFine', [StudentDashboardController::class, 'fetchStudentOutstandingFine']);
+    Route::post('/student/dashboard/fetchStudentReturnAlerts', [StudentDashboardController::class, 'fetchStudentReturnAlerts']);
 
 
     // Student Notification
@@ -115,11 +118,18 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
 
     Route::post('/student/smartlib-ai/chat', [StudentChatController::class, 'smartLibChat']);
     Route::post('/student/smartlib-ai/generate-image', [StudentChatController::class, 'generateImage']);
+    Route::post('/student/smartlib-ai/flashcard-points', [StudentChatController::class, 'generateFlashcardPoints']);
     Route::post('/student/smartlib-ai/upload-file', [StudentChatController::class, 'uploadFile']);
 
     Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
+
       Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
      Route::get('/student/ebooks/getSavedEbooks/{student_id}',[StudentSavedNotesController::class, 'getSavedEbooks']);
+
+    Route::get('/student/notes/getSavedEbooks/{student_id}', [StudentSavedNotesController::class, 'getSavedEbooks']);
+    Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
+
+
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
     Route::post('/student/reviews/submitReview', [StudentReviewController::class, 'submitReview']);
@@ -144,6 +154,8 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
 
 Route::post("/teacher/auth/teacherLogin", [TeacherAuthController::class, 'teacherLogin']);
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
+Route::post("/teacher/auth/forgotPassword", [TeacherAuthController::class, "forgotPassword"]);
+Route::get("/teacher/auth/resetPassword", [TeacherAuthController::class, "resetPassword"]);
 
 
 /////////////////*************** Teacher Protected Routes **************//////////////////
@@ -153,7 +165,7 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     // Profile & Password
     Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
     Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
-    Route::post('/teacher/auth/me' , [TeacherAuthController::class, 'me']);
+    Route::get('/teacher/auth/me' , [TeacherAuthController::class, 'me']);
 
 ///////////////////***************Teacher Flash Cards ******************////////////////////
 Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
@@ -193,6 +205,9 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
     ////////////////////**************Teacher Chat Routes *****************////////////////////
     Route::post('/teacher/chat/store', [TeacherChatController::class, 'store']);
     Route::post('/teacher/chat/fetchAllChats', [TeacherChatController::class, 'fetchAllChats']);
+    Route::post('/teacher/smartlib-ai/chat', [TeacherChatController::class, 'smartLibChat']);
+    Route::post('/teacher/smartlib-ai/flashcard-points', [TeacherChatController::class, 'generateFlashcardPoints']);
+    Route::post('/teacher/smartlib-ai/upload-file', [TeacherChatController::class, 'uploadFile']);
 
     /////////////////****************Teacher Notifications *************/////////////////////
     Route::post('/teacher/notifications/fetchAllNotifications', [TeacherNotificationController::class, 'fetchAllNotifications']);
@@ -206,6 +221,8 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
     ///////////////////*****************Teacher Dashboard ****************//////////////////
     Route::post('/teacher/dashboard/fetchTeacherStatsForDashboard', [TeacherDashboardController::class, 'fetchTeacherStatsForDashboard']);
     // Route::post('/teacher/disputes/fetchAllDisputes',[TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
+    Route::post('/teacher/dashboard/fetchTeacherReturnAlerts', [TeacherDashboardController::class, 'fetchTeacherReturnAlerts']);
+    Route::post('/teacher/dashboard/fetchTeacherRecentDisputes', [TeacherDashboardController::class, 'fetchTeacherRecentDisputes']);
   });
 
 
@@ -221,6 +238,8 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
 
 Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegister"]);
 Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
+Route::post("/admin/auth/forgotPassword", [AdminAuthController::class, "forgotPassword"]);
+Route::post("/admin/auth/resetPassword", [AdminAuthController::class, "resetPassword"]);
 
 
 /////////////////*************** Admin Protected Routes **************//////////////////
@@ -232,6 +251,10 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::post('/admin/dashboard/fetchAdminStatsForDashboard',[AdminDashboardController::class, 'fetchAdminStatsForDashboard']);
 
     Route::post('/admin/dashboard/fetchAdminRecentDisputes',[AdminDashboardController::class, 'fetchAdminRecentDisputes']);
+
+    Route::post('/admin/dashboard/fetchAdminOverdueAlerts', [AdminDashboardController::class, 'fetchAdminOverdueAlerts']);
+    Route::post('/admin/dashboard/fetchAdminRecentReviews', [AdminDashboardController::class, 'fetchAdminRecentReviews']);
+    Route::post('/admin/dashboard/fetchAdminRecentRequests', [AdminDashboardController::class, 'fetchAdminRecentRequests']);
 
 
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
