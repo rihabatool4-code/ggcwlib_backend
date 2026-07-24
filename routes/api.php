@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
 use App\Http\Controllers\admin\bookConfig\BookConfigController;
 use App\Http\Controllers\Api\ContactController;
 
+
 /////////////////*************** Public Routes **************//////////////////
 
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
@@ -118,7 +119,7 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
 
     Route::post('/student/ebooks/saveEbook', [StudentSavedNotesController::class, 'saveEbook']);
       Route::delete('/student/ebooks/removeSavedEbook/{id}', [StudentSavedNotesController::class, 'removeSavedEbook']);
-
+     Route::get('/student/ebooks/getSavedEbooks/{student_id}',[StudentSavedNotesController::class, 'getSavedEbooks']);
     // Student Review
     Route::post('/student/reviews/loadAllReviews', [StudentReviewController::class, 'loadAllReviews']);
     Route::post('/student/reviews/submitReview', [StudentReviewController::class, 'submitReview']);
@@ -135,6 +136,8 @@ Route::post('/student/flashcards/storeFlashCard', [StudentFlashCardController::c
     Route::put('/mydisputes/{id}', [MyDisputeController::class, 'update']);
     Route::delete('/mydisputes/{id}', [MyDisputeController::class, 'destroy']);
 });
+
+
 
 
 /////////////////*************** Teacher Auth (Public) **************//////////////////

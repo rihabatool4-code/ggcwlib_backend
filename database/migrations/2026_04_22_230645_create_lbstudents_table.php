@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('lbstudents', function (Blueprint $table) {
             $table->id();
             $table->string("fullName")->nullable();
-            $table->string("email")->nullable();
-            $table->string("phone")->nullable();
-            $table->string("roll_no")->nullable();
+            $table->string('email')->unique();
+             $table->string('phone')->unique();
+            $table->string('roll_no')->unique();
             $table->string("program")->nullable();
             $table->string("session")->nullable();
             $table->string("password")->nullable();
