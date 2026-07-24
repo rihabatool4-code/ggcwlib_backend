@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // ── Har 15 minutes baad 24hr purani reservations expire karo ──
+        $schedule->command('bookings:expire-reservations')->everyFifteenMinutes();
     }
 
     /**

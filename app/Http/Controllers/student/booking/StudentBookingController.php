@@ -8,6 +8,7 @@ use App\Models\admin\Lbbook;
 use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Models\admin\bookConfig\LbBookconfig;
+use App\Services\ReservationExpiryService;
 use Illuminate\Http\Request;
 
 class StudentBookingController extends Controller
@@ -93,6 +94,9 @@ if ($activeCount >= $maxBooksAllowed) {
     public function loadMyBookings(Request $request)
     {
         try {
+        
+            ReservationExpiryService::expireOldReservations();
+            
             $student = auth('Lbstudent')->user();
 
             $bookings = lbbooking::with('lbbook')

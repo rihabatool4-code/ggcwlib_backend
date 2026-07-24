@@ -9,6 +9,7 @@ use App\Http\Controllers\student\notification\StudentNotificationController;
 use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Models\admin\bookConfig\LbBookconfig;
+use App\Services\ReservationExpiryService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -17,6 +18,8 @@ class AdminBookingsController extends Controller
     /* ── Fetch All Bookings by status ── */
     public function fetchAllBookings(Request $request)
     {
+        ReservationExpiryService::expireOldReservations();
+
         $bookings = lbbooking::with('lbstudent', 'lbteacher', 'lbbook')
             ->where(['status' => $request->status])
             ->get();
