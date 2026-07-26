@@ -57,20 +57,7 @@ class TeacherNotesController extends Controller
         }
     }
 
-    // ── Load ALL Notes (Public — no teacher filter) ──
-    public function loadAllPublicNotes()
-    {
-        try {
-            $notes = Lbnote::with('lbteacher')->latest()->get();
 
-            return response()->json([
-                "success" => true,
-                "notes"   => $notes
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(["error" => $e->getMessage()]);
-        }
-    }
 
     // ── 3. Delete Note ──
     public function deleteNote($id)

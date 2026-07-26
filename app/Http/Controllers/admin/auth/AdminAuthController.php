@@ -223,4 +223,27 @@ class AdminAuthController extends Controller
 
         }
     }
+    public function updateNotifications(Request $request)
+{
+    $admin = Lbadmin::find($request->lbadmin_id);
+
+    if (!$admin) {
+
+        return response()->json([
+            "success" => false,
+            "message" => "Admin not found"
+        ]);
+
+    }
+
+    $admin->email_notif = $request->email_notifications;
+    $admin->inApp_notif  = $request->inapp_notifications;
+
+    $admin->save();
+
+    return response()->json([
+        "success" => true,
+        "admin" => $admin
+    ]);
+    }
 }

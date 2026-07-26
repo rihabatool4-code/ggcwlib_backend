@@ -14,7 +14,7 @@ class Lbteacher extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'phone', 'password', 'status'];
+    protected $fillable = ['name', 'email', 'phone', 'password', 'status', 'emailNotifications', 'inappNotifications'];
 
     public function getJWTIdentifier()
     {

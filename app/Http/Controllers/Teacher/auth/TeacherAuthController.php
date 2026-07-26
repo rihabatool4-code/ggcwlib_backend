@@ -131,6 +131,29 @@ class TeacherAuthController extends Controller
             "teacher" => $teacher
         ]);
     }
+    public function updateNotifications(Request $request)
+{
+    $teacher = Lbteacher::find($request->lbteacher_id);
+
+    if (!$teacher) {
+
+        return response()->json([
+            "success" => false,
+            "message" => "Teacher not found"
+        ]);
+
+    }
+
+    $teacher->emailNotifications = $request->email_notifications;
+    $teacher->inappNotifications = $request->inapp_notifications;
+
+    $teacher->save();
+
+    return response()->json([
+        "success" => true,
+        "teacher" => $teacher
+    ]);
+   }
     public function forgotPassword(Request $request)
     {
         try {

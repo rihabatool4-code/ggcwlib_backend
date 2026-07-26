@@ -15,7 +15,10 @@ use App\Http\Controllers\Admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\admin\dashboard\AdminDashboardController;
 
+use App\Http\Controllers\general\blogs\PublicBlogsController;
 use App\Http\Controllers\general\books\PublicBooksController;
+use App\Http\Controllers\general\ebooks\PublicEbooksController;
+use App\Http\Controllers\general\notes\PublicNotesController;
 use App\Http\Controllers\student\auth\StudentAuthController;
 use App\Http\Controllers\student\booking\StudentBookingController;
 use App\Http\Controllers\student\chat\StudentChatController;
@@ -49,10 +52,10 @@ use App\Http\Controllers\Api\ContactController;
 /////////////////*************** Public Routes **************//////////////////
 
 Route::get('/home/loadReviews', [ReviewController::class, 'loadHomeReviews']);
-Route::get("/admin/books/fetchAllBooks", [AdminBookController::class, "fetchAllBooks"]);
-Route::get('/notes/getAllPublicNotes', [TeacherNotesController::class, 'loadAllPublicNotes']);
-Route::get('/admin/ebooks/all', [AdminDigiBooksController::class, 'loadAllEbooks']);
-Route::get('admin/blogs/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
+Route::get("/general/books/fetchAllBooks", [PublicBooksController::class, "fetchAllBooks"]);
+Route::get('general/notes/getAllPublicNotes', [PublicNotesController::class, 'loadAllPublicNotes']);
+Route::get('/general/ebooks/all', [PublicEbooksController::class, 'loadAllEbooks']);
+Route::get('general/blogs/fetchAllBlogs', [PublicBlogsController::class, 'fetchAllBlogs']);
 
 
 Route::post('/contact/getLibraryInfo', [LibraryConfigController::class, 'getLibraryConfiguration']);
@@ -74,7 +77,7 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/updateProfile', [StudentAuthController::class, 'updateProfile']);
     Route::post('/student/password/changePassword', [StudentAuthController::class, 'changePassword']);
     Route::get('/student/auth/me', [StudentAuthController::class, 'me']);
-
+    Route::post('/student/notifications/updateNotifications', [StudentAuthController::class, 'updateNotifications']);
     // Student Dashboard
     Route::post('/student/dashboard/fetchStudentStatsForDashboard', [StudentDashboardController::class, 'fetchStudentStatsForDashboard']);
     Route::post('/student/disputes/fetchAllDisputes', [StudentDashboardController::class, 'fetchStudentRecentDisputes']);
@@ -158,6 +161,7 @@ Route::middleware(['auth:Lbteacher', 'guard:teacher'])->group(function () {
     Route::post('/teacher/updateProfile', [TeacherAuthController::class, 'updateProfile']);
     Route::post('/teacher/password/changePassword', [TeacherAuthController::class, 'changePassword']);
     Route::get('/teacher/auth/me' , [TeacherAuthController::class, 'me']);
+    Route::post('/teacher/notifications/updateNotifications', [TeacherAuthController::class, 'updateNotifications']);
 
 ///////////////////***************Teacher Flash Cards ******************////////////////////
 Route::post('/teacher/flashcards/fetchAllFlashCards', [TeacherFlashCardController::class, 'fetchAllFlashCards']);
@@ -249,11 +253,10 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::post('/admin/dashboard/fetchAdminRecentRequests', [AdminDashboardController::class, 'fetchAdminRecentRequests']);
 
 
-    Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
-    Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
 
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
     Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
+    Route::post('/admin/notifications/updateNotifications', [AdminAuthController::class, 'updateNotifications']);
 
     ////////////////**************Admin Reviews *****************///////////////////
     Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);
@@ -269,6 +272,7 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
 
     /////////////****************Admin Manage Books **************//////////////////
     Route::prefix('/admin/books')->group(function () {
+        Route::get('/fetchAllBooks', [AdminBookController::class, 'fetchAllBooks']);
         Route::post('/addBook', [AdminBookController::class, 'addBook']);
         Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
         Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
@@ -318,6 +322,7 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
 
     /////////////////***************Admin Manage Blogs ***************//////////////////
     Route::prefix('admin/blogs')->group(function () {
+        Route::get('/fetchAllBlogs', [AdminBlogsController::class, 'fetchAllBlogs']);
         Route::post('/addBlog', [AdminBlogsController::class, 'addBlog']);
         Route::post('/update/{id}', [AdminBlogsController::class, 'updateBlog']);
         Route::delete('/delete/{id}', [AdminBlogsController::class, 'deleteBlog']);
@@ -329,6 +334,7 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
 
     /////////////***************Admin Manage eBooks *************//////////////
     Route::prefix('admin/ebooks')->group(function () {
+        Route::get('all', [AdminDigiBooksController::class, 'loadAllEbooks']);
         Route::post('upload', [AdminDigiBooksController::class, 'uploadEbook']);
         Route::post('update/{id}', [AdminDigiBooksController::class, 'updateEbook']);
         Route::delete('delete/{id}', [AdminDigiBooksController::class, 'deleteEbook']);

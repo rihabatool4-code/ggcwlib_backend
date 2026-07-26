@@ -240,6 +240,28 @@ class StudentAuthController extends Controller
             "student" => $student
         ]);
     }
+  public function updateNotifications(Request $request)
+{
+    $student = Lbstudent::find($request->lbstudent_id);
+
+    if (!$student) {
+
+        return response()->json([
+            "success" => false,
+            "message" => "Student not found"
+        ]);
+
+    }
+    $student->emailNotifications = $request->email_notifications;
+    $student->inappNotifications = $request->inapp_notifications;
+
+    $student->save();
+
+    return response()->json([
+        "success" => true,
+        "student" => $student
+    ]);
+    }
 
     public function forgotPassword(Request $request)
     {

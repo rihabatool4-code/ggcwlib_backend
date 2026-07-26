@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Teacher\notifications;
 
 use App\Http\Controllers\Controller;
 use App\Models\general\notification\Lbnotification;
+use App\Models\teacher\Lbteacher;
+use App\Mail\NotificationMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class TeacherNotificationController extends Controller
 {
@@ -38,7 +42,6 @@ class TeacherNotificationController extends Controller
         }
     }
 
-    /* ── Mark a single notification as read ── */
     public function markOneAsRead(Request $request)
     {
         try {
@@ -57,7 +60,6 @@ class TeacherNotificationController extends Controller
         }
     }
 
-    /* ── Delete a single notification ── */
     public function deleteNotification(Request $request)
     {
         try {
@@ -74,28 +76,57 @@ class TeacherNotificationController extends Controller
             return response()->json(['Error' => $e->getMessage()]);
         }
     }
-    /* ── Delete ALL notifications for this teacher ── */
-public function deleteAllNotifications(Request $request)
-  {
-    try {
-        Lbnotification::where(['lbteacher_id' => $request->lbteacher_id, 'for' => 'teacher'])->delete();
-        return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
-    } catch (\Exception $e) {
-        return response()->json(['Error' => $e->getMessage()]);
-    }
-   }
 
-    /* ── Create a notification for a teacher — called from other controllers ── */
+    public function deleteAllNotifications(Request $request)
+    {
+        try {
+            Lbnotification::where(['lbteacher_id' => $request->lbteacher_id, 'for' => 'teacher'])->delete();
+            return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
+        } catch (\Exception $e) {
+            return response()->json(['Error' => $e->getMessage()]);
+        }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       Create a notification for a teacher — called from other controllers.
+       Respects emailNotifications / inappNotifications preferences
+       (columns default to '0' — off — until teacher enables them).
+    ══════════════════════════════════════════════════════ */
     public static function notifyTeacher($teacherId, $title, $subtitle, $type = null, $detail = null)
     {
-        return Lbnotification::create([
-            'lbteacher_id' => $teacherId,
-            'title'        => $title,
-            'subtitle'     => $subtitle,
-            'for'          => 'teacher',
-            'status'       => 'unread',
-            'type'         => $type,
-            'detail'       => $detail,
-        ]);
+        $teacher = Lbteacher::find($teacherId);
+
+        if (!$teacher) {
+            return null;
+        }
+
+        $inAppEnabled = in_array($teacher->inappNotifications, [1, "1", true], true);
+        $emailEnabled = in_array($teacher->emailNotifications, [1, "1", true], true);
+
+        $created = null;
+
+        if ($inAppEnabled) {
+            $created = Lbnotification::create([
+                'lbteacher_id' => $teacherId,
+                'title'        => $title,
+                'subtitle'     => $subtitle,
+                'for'          => 'teacher',
+                'status'       => 'unread',
+                'type'         => $type,
+                'detail'       => $detail,
+            ]);
+        }
+
+        if ($emailEnabled && $teacher->email) {
+            try {
+                Mail::to($teacher->email)->send(
+                    new NotificationMail($title, $subtitle, $teacher->name)
+                );
+            } catch (\Exception $e) {
+                Log::error('Teacher notification email failed: ' . $e->getMessage());
+            }
+        }
+
+        return $created;
     }
 }

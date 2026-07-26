@@ -4,7 +4,11 @@ namespace App\Http\Controllers\student\notification;
 
 use App\Http\Controllers\Controller;
 use App\Models\general\notification\Lbnotification;
+use App\Models\student\Lbstudent;
+use App\Mail\NotificationMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class StudentNotificationController extends Controller
 {
@@ -38,7 +42,6 @@ class StudentNotificationController extends Controller
         }
     }
 
-    /* ── Mark a single notification as read ── */
     public function markOneAsRead(Request $request)
     {
         try {
@@ -57,7 +60,6 @@ class StudentNotificationController extends Controller
         }
     }
 
-    /* ── Delete a single notification ── */
     public function deleteNotification(Request $request)
     {
         try {
@@ -74,21 +76,46 @@ class StudentNotificationController extends Controller
             return response()->json(['Error' => $e->getMessage()]);
         }
     }
-    /* ── Delete ALL notifications for this student ── */
-public function deleteAllNotifications(Request $request)
-  {
-    try {
-        Lbnotification::where(['lbstudent_id' => $request->lbstudent_id, 'for' => 'student'])->delete();
-        return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
-    } catch (\Exception $e) {
-        return response()->json(['Error' => $e->getMessage()]);
-    }
-  }
 
-    /* ── Create a notification for a student — called from other controllers ── */
-    public static function notifyStudent($studentId, $title, $subtitle, $type = null, $detail = null)
+    public function deleteAllNotifications(Request $request)
     {
-        return Lbnotification::create([
+        try {
+            Lbnotification::where(['lbstudent_id' => $request->lbstudent_id, 'for' => 'student'])->delete();
+            return response()->json(['success' => true, 'message' => 'All Notifications Cleared']);
+        } catch (\Exception $e) {
+            return response()->json(['Error' => $e->getMessage()]);
+        }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       Create a notification for a student — called from other controllers.
+       Respects the student's email_notifications / inapp_notifications
+       preferences (from MyProfilePage). Null/missing = treated as enabled
+       (default), so existing students without a saved preference still
+       get notified as before.
+    ══════════════════════════════════════════════════════ */
+   /* ══════════════════════════════════════════════════════
+   Create a notification for a student — called from other controllers.
+   Respects the student's emailNotifications / inappNotifications
+   preferences (from MyProfilePage). Columns default to '0' (off),
+   so a student who never touched the toggles gets no notifications
+   until they explicitly enable them.
+══════════════════════════════════════════════════════ */
+public static function notifyStudent($studentId, $title, $subtitle, $type = null, $detail = null)
+{
+    $student = Lbstudent::find($studentId);
+
+    if (!$student) {
+        return null;
+    }
+
+    $inAppEnabled = in_array($student->inappNotifications, [1, "1", true], true);
+    $emailEnabled = in_array($student->emailNotifications, [1, "1", true], true);
+
+    $created = null;
+
+    if ($inAppEnabled) {
+        $created = Lbnotification::create([
             'lbstudent_id' => $studentId,
             'title'        => $title,
             'subtitle'     => $subtitle,
@@ -97,5 +124,18 @@ public function deleteAllNotifications(Request $request)
             'type'         => $type,
             'detail'       => $detail,
         ]);
+    }
+
+    if ($emailEnabled && $student->email) {
+        try {
+            Mail::to($student->email)->send(
+                new NotificationMail($title, $subtitle, $student->fullName)
+            );
+        } catch (\Exception $e) {
+            Log::error('Student notification email failed: ' . $e->getMessage());
+        }
+    }
+
+    return $created;
     }
 }

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('role')->nullable();       // e.g. "Library Manager"
             $table->string('status')->nullable();   
             $table->string("password")->nullable();
-            $table->string("inApp_notif")->nullable();
-            $table->string("email_notif")->nullable();
+            $table->string('email_notif')->default(0);
+            $table->string('inApp_notif')->default(0);
             $table->timestamps();
         });
     }
