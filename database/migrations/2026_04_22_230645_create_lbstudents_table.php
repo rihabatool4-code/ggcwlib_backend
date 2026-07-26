@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("password")->nullable();
             $table->string("emailNotifications")->default(0);
             $table->string("inappNotifications")->default(0);
+            $table->string('status')->default('Active');
             $table->timestamps();
 
             // ✅ Roll No sirf same session ke andar unique hoga —

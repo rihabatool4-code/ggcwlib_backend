@@ -272,6 +272,8 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
     Route::get("/admin/subadmin/list", [AdminAuthController::class, "loadAllSubAdmins"]);
     Route::get("/admin/auth/me", [AdminAuthController::class, "me"]);
     Route::post('/admin/notifications/updateNotifications', [AdminAuthController::class, 'updateNotifications']);
+    Route::post('/admin/studentAuth/toggleStatus', [AdminUserController::class, 'toggleStudentStatus']);
+    Route::post('/admin/teacherAuth/toggleStatus', [AdminUserController::class, 'toggleTeacherStatus']);
 
     ////////////////**************Admin Reviews *****************///////////////////
     Route::post('/admin/reviews/loadAllReviews', [ReviewController::class, 'loadAllReviews']);

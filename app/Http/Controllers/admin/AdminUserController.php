@@ -49,7 +49,6 @@ class AdminUserController extends Controller
         }
     }
 
-    // ─── ADD THIS FUNCTION ───────────────────────────────────────
     public function loadAllStudents()
     {
         try {
@@ -63,5 +62,50 @@ class AdminUserController extends Controller
             return response()->json(["error" => $e->getMessage()]);
         }
     }
-    
+
+    /* ── Toggle Student Suspend/Activate ── */
+    public function toggleStudentStatus(Request $request)
+    {
+        try {
+            $student = Lbstudent::find($request->student_id);
+
+            if (!$student) {
+                return response()->json(["success" => false, "message" => "Student not found"]);
+            }
+
+            $student->status = ($student->status === "Suspended") ? "Active" : "Suspended";
+            $student->save();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Student " . strtolower($student->status) . " successfully",
+                "student" => $student
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()]);
+        }
+    }
+
+    /* ── Toggle Teacher Suspend/Activate ── */
+    public function toggleTeacherStatus(Request $request)
+    {
+        try {
+            $teacher = Lbteacher::find($request->teacher_id);
+
+            if (!$teacher) {
+                return response()->json(["success" => false, "message" => "Teacher not found"]);
+            }
+
+            $teacher->status = ($teacher->status === "Suspended") ? "Active" : "Suspended";
+            $teacher->save();
+
+            return response()->json([
+                "success" => true,
+                "message" => "Teacher " . strtolower($teacher->status) . " successfully",
+                "teacher" => $teacher
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(["error" => $e->getMessage()]);
+        }
+    }
 }

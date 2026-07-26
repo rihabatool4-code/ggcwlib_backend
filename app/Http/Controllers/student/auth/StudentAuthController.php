@@ -100,53 +100,59 @@ class StudentAuthController extends Controller
     }
 
     public function studentLogin(Request $request)
-    {
-        try {
+{
+    try {
 
-            // ── Roll No + Password based login ──
-            // Roll No ab session ke andar hi unique hai, isliye ek roll_no
-            // multiple students (different sessions) se match ho sakta hai.
-            // Password check karke exact student identify karte hain.
-            $candidates = Lbstudent::where('roll_no', $request->roll_no)->get();
+        $candidates = Lbstudent::where('roll_no', $request->roll_no)->get();
 
-            $student = null;
+        $student = null;
 
-            foreach ($candidates as $candidate) {
-                if (Hash::check($request->password, $candidate->password)) {
-                    $student = $candidate;
-                    break;
-                }
+        foreach ($candidates as $candidate) {
+            if (Hash::check($request->password, $candidate->password)) {
+                $student = $candidate;
+                break;
             }
+        }
 
-            if (!$student) {
-
-                return response()->json([
-                    "success" => false,
-                    "message" => "Invalid Roll No or password"
-                ]);
-
-            }
-
-            $token = auth('Lbstudent')->claims(['guard' => 'student'])->login($student);
-
-            $conversation = Lbconversation::where('lbstudent_id', $student->id)->where('type', 'ai')
-            ->first();
-
-            return response()->json([
-                "success" => true,
-                "token" => $token,
-                "student" => $student,
-                "lbconversation" => $conversation
-            ]);
-
-        } catch (\Exception $e) {
+        if (!$student) {
 
             return response()->json([
                 "success" => false,
-                "error" => $e->getMessage()
+                "message" => "Invalid Roll No or password"
             ]);
 
         }
+
+        // ── Block suspended accounts from logging in ──
+        if ($student->status === "Suspended") {
+
+            return response()->json([
+                "success" => false,
+                "message" => "Your account has been suspended. Please contact the library administration."
+            ]);
+
+        }
+
+        $token = auth('Lbstudent')->claims(['guard' => 'student'])->login($student);
+
+        $conversation = Lbconversation::where('lbstudent_id', $student->id)->where('type', 'ai')
+        ->first();
+
+        return response()->json([
+            "success" => true,
+            "token" => $token,
+            "student" => $student,
+            "lbconversation" => $conversation
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            "success" => false,
+            "error" => $e->getMessage()
+        ]);
+
+    }
     }
 
     // ── AUTO-LOGIN ENDPOINT ──
