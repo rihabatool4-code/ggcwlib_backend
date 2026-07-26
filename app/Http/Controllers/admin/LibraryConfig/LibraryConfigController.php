@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\LibraryConfig;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\LibraryConfig\LibraryConfig;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class LibraryConfigController extends Controller
@@ -35,11 +36,21 @@ class LibraryConfigController extends Controller
     /**
      * ============================================
      * Create / Update Library Configuration
+     * Only the admin with id = 1 is allowed to change this.
      * ============================================
      */
 
     public function updateLibraryConfiguration(Request $request)
     {
+        $admin = Auth::guard('Lbadmin')->user();
+
+        if (!$admin || (int) $admin->id !== 1) {
+            return response()->json([
+                "success" => false,
+                "message" => "You are not authorized to update the library configuration.",
+            ], 403);
+        }
+
         Log::info($request->all());
         $validatedData = $request->validate([
 
