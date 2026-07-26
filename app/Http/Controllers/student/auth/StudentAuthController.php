@@ -185,6 +185,22 @@ class StudentAuthController extends Controller
 
         }
     }
+    public function refresh()
+{
+    try {
+        $newToken = JWTAuth::parseToken()->refresh();
+
+        return response()->json([
+            'success' => true,
+            'token' => $newToken,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Token refresh nahi ho saka.',
+        ], 401);
+    }
+ }
 
     public function updateProfile(Request $request)
     {

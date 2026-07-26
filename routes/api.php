@@ -69,6 +69,8 @@ Route::post("/student/auth/studentRegister", [StudentAuthController::class, "stu
 Route::post("/student/auth/studentLogin", [StudentAuthController::class, "studentLogin"]);
 Route::post("/student/auth/forgotPassword", [StudentAuthController::class, "forgotPassword"]);
 Route::post("/student/auth/resetPassword", [StudentAuthController::class, "resetPassword"]);
+Route::post('/student/auth/refresh', [StudentAuthController::class, 'refresh']);
+
 
 
 /////////////////*************** Student Protected Routes **************//////////////////
@@ -160,6 +162,8 @@ Route::post("/teacher/auth/teacherLogin", [TeacherAuthController::class, 'teache
 Route::post("/Teacher/auth/registerteacher", [TeacherAuthController::class, "registerteacher"]);
 Route::post("/teacher/auth/forgotPassword", [TeacherAuthController::class, "forgotPassword"]);
 Route::get("/teacher/auth/resetPassword", [TeacherAuthController::class, "resetPassword"]);
+Route::post('/teacher/auth/refresh', [TeacherAuthController::class, 'refresh']);
+
 
 
 /////////////////*************** Teacher Protected Routes **************//////////////////
@@ -245,6 +249,8 @@ Route::post("/admin/auth/adminRegister", [AdminAuthController::class, "adminRegi
 Route::post("/admin/auth/adminLogin", [AdminAuthController::class, "adminLogin"]);
 Route::post("/admin/auth/forgotPassword", [AdminAuthController::class, "forgotPassword"]);
 Route::post("/admin/auth/resetPassword", [AdminAuthController::class, "resetPassword"]);
+Route::post('/admin/auth/refresh', [AdminAuthController::class, 'refresh']);
+
 
 
 /////////////////*************** Admin Protected Routes **************//////////////////
