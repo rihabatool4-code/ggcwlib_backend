@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string("name")->nullable();
             $table->string("email")->nullable();
-            $table->integer("phone")->nullable();
+            $table->string("phone")->nullable();
             $table->string("password")->nullable();
             $table->string("status")->default("active");
+            $table->string('emailNotifications')->default(0);
+            $table->string('inappNotifications')->default(0);
             $table->timestamps();
         });
     }

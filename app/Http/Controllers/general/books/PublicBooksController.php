@@ -8,13 +8,24 @@ use Illuminate\Http\Request;
 
 class PublicBooksController extends Controller
 {
-    public function fetchAllBooks()
+     public function fetchAllBooks()
     {
-        $books = Lbbook::all();
+        try {
+            $books = Lbbook::latest()->get();
 
-        return response()->json([
-            "status" => 200,
-            "books" => $books
-        ]);
+            return response()->json([
+                "success" => true,
+                "books"   => $books
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "success" => false,
+                "message" => "Failed to fetch books.",
+                "error"   => $e->getMessage()
+            ], 500);
+        }
     }
+
+
 }
