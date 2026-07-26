@@ -47,6 +47,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
 use App\Http\Controllers\admin\bookConfig\BookConfigController;
+use App\Http\Controllers\admin\faq\FaqController;
 use App\Http\Controllers\Api\ContactController;
 
 
@@ -232,7 +233,7 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
 
 
 /////////////////*************** Admin Auth (Public) **************//////////////////
-
+Route::post('/admin/faq/getAllFaqs', [FaqController::class, 'getAllFaqs']);
 
     
 
@@ -285,6 +286,15 @@ Route::middleware(['auth:Lbadmin', 'guard:admin'])->group(function () {
         Route::post('/update/{id}', [AdminBookController::class, 'updateBook']);
         Route::delete('/delete/{id}', [AdminBookController::class, 'deleteBook']);
     });   // ← books group yahin band ho jaye
+
+   Route::prefix('admin/faq')->group(function () {
+
+    
+    Route::post('/createFaq', [FaqController::class, 'createFaq']);
+    Route::post('/updateFaq', [FaqController::class, 'updateFaq']);
+    Route::post('/deleteFaq', [FaqController::class, 'deleteFaq']);
+
+});
 
     /////////////****************Library Configuration **************//////////////////
     Route::prefix('/admin/libraryConfig')->group(function () {   // ✅ ab books se bahar, admin group ke andar
