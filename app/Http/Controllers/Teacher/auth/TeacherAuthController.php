@@ -15,36 +15,48 @@ use Carbon\Carbon;
 
 class TeacherAuthController extends Controller
 {
+
     public function teacherLogin(Request $request)
-    {
-        try {
+{
+    try {
 
-            $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-             if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
+         if (!$token = auth('Lbteacher')->claims(['guard' => 'teacher'])->attempt($credentials)) {
 
-             return response()->json([
-             "success" => false,
-             "message" => "Invalid credentials"
-            ]);
-             }
-             $teacher = auth('Lbteacher')->user();
+         return response()->json([
+         "success" => false,
+         "message" => "Invalid credentials"
+        ]);
+         }
+         $teacher = auth('Lbteacher')->user();
 
-            $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
-            ->first();
+        // ── Block suspended accounts from logging in ──
+        if ($teacher->status === "Suspended") {
+
+            auth('Lbteacher')->logout();
 
             return response()->json([
-                "success" => true,
-                "token"   => $token,
-                "teacher" => $teacher,
-                "lbconversation" =>$conversation
+                "success" => false,
+                "message" => "Your account has been suspended. Please contact the library administration."
             ]);
 
-        } catch (\Exception $e) {
-            return response()->json(["error" => $e->getMessage()]);
         }
-    }
 
+        $conversation = Lbconversation::where('lbteacher_id',$teacher->id)->where('type', 'ai')
+        ->first();
+
+        return response()->json([
+            "success" => true,
+            "token"   => $token,
+            "teacher" => $teacher,
+            "lbconversation" =>$conversation
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json(["error" => $e->getMessage()]);
+    }
+  }
     // ── AUTO-LOGIN ENDPOINT ──
     // Frontend refresh hone par localStorage se authToken uthayega, token decode
     // karke guard='teacher' nikalega, aur is endpoint ko call karega. Yeh token
