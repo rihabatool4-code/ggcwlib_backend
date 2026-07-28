@@ -17,15 +17,24 @@ class StudentChatController extends Controller
 
    public function fetchAllChats(Request $request)
   {
-    $conversation = Lbconversation::where([ 'lbstudent_id' => $request->lbstudent_id, 'lbdispute_id' => $request->lbdispute_id,
-        'type' => $request->type])->first();
+    // ✅ FIX: Match conversation ONLY on lbdispute_id + type — a dispute has
+    // exactly ONE conversation thread, shared by student + admin (and teacher
+    // if raisedby teacher). Matching on lbstudent_id too caused a duplicate
+    // conversation row whenever admin opened the chat before the student did,
+    // which is why messages never synced between the two sides.
+    $conversation = Lbconversation::where([
+        'lbdispute_id' => $request->lbdispute_id,
+        'type' => $request->type,
+    ])->first();
 
     // Agar conversation exist nahi karti
     if (!$conversation) {
         return response()->json(['success' => true,'chats' => [] ]);
     }
 
-    $chats = Lbchat::where( 'lbconversation_id', $conversation->id)->get();
+    $chats = Lbchat::where('lbconversation_id', $conversation->id)
+        ->orderBy('created_at', 'asc')
+        ->get();
 
     return response()->json([
         'success' => true,
@@ -59,11 +68,20 @@ class StudentChatController extends Controller
         ], 404);
     }
 
-    $conversation = Lbconversation::firstOrCreate([
-        'lbstudent_id' => $request->lbstudent_id,
-        'lbdispute_id' => $request->lbdispute_id,
-        'type' => $request->type
-    ]);
+    // ✅ FIX: firstOrCreate matching key is ONLY lbdispute_id + type now, so
+    // this finds the SAME conversation row that admin's controller uses.
+    // lbstudent_id is passed as extra data (2nd arg) so it still gets saved
+    // on first creation, but is never used to decide whether a matching
+    // conversation already exists.
+    $conversation = Lbconversation::firstOrCreate(
+        [
+            'lbdispute_id' => $request->lbdispute_id,
+            'type' => $request->type,
+        ],
+        [
+            'lbstudent_id' => $request->lbstudent_id,
+        ]
+    );
 
     $chat = Lbchat::create([
         'lbconversation_id' => $conversation->id,
