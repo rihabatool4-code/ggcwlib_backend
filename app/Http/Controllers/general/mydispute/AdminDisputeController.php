@@ -16,9 +16,21 @@ class AdminDisputeController extends Controller
     // =========================
     public function fetchAllDisputes()
     {
+        // ✅ FIX: Sort disputes so the one with the most recent chat activity
+        // (from either student or teacher side) shows up on top, not just the
+        // most recently CREATED dispute. Falls back to the dispute's own
+        // created_at when it has no messages yet.
         $disputes = Lbdispute::with(['lbteacher', 'lbstudent', 'lbbook'])
-                             ->orderBy('created_at', 'desc')
-                             ->get();
+            ->select('lbdisputes.*')
+            ->selectSub(function ($query) {
+                $query->from('lbchats')
+                    ->join('lbconversations', 'lbchats.lbconversation_id', '=', 'lbconversations.id')
+                    ->whereColumn('lbconversations.lbdispute_id', 'lbdisputes.id')
+                    ->where('lbconversations.type', 'dispute')
+                    ->selectRaw('MAX(lbchats.created_at)');
+            }, 'last_message_at')
+            ->orderByRaw('COALESCE(last_message_at, lbdisputes.created_at) DESC')
+            ->get();
 
         return response()->json(['success' => true, 'disputes' => $disputes]);
     }
