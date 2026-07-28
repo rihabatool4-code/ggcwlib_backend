@@ -17,6 +17,8 @@ class LbBookconfig extends Model
 
         "max_issue_days",
 
+        "reservation_expiry_hours",
+
         "max_books_student",
 
         "max_books_staff",

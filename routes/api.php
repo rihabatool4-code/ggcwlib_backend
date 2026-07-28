@@ -238,7 +238,7 @@ Route::post('/teacher/flashcards/storeFlashCard', [TeacherFlashCardController::c
 
 /////////////////*************** Admin Auth (Public) **************//////////////////
 Route::post('/admin/faq/getAllFaqs', [FaqController::class, 'getAllFaqs']);
-
+Route::post('/general/bookConfig/getBookConfiguration', [BookConfigController::class, 'getBookConfiguration']);
     
 
 /////////////////***************Admin Routes **************//////////////////
@@ -369,6 +369,7 @@ Route::post("/admin/bookings/markAsDamaged", [AdminBookingsController::class, "m
     ///////////////************* Admin Disputes ***************///////////////////
     Route::get('/admin/disputes/fetchAllDisputes', [AdminDisputeController::class, 'fetchAllDisputes']);
     Route::post('/admin/disputes/resolve', [AdminDisputeController::class, 'resolve']);
-    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);});
+    Route::post('/admin/disputes/delete', [AdminDisputeController::class, 'delete']);
+    });
 
 

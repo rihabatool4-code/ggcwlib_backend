@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('book_configurations', function (Blueprint $table) {
             $table->id();
-            
+
             $table->integer("fine_per_day");
 
             $table->integer("max_issue_days");
+
+            $table->integer("reservation_expiry_hours")->default(24);
 
             $table->integer("max_books_student");
 
@@ -28,8 +30,6 @@ return new class extends Migration
 
             $table->timestamps();
         });
- 
-            
     }
 
     /**
