@@ -29,10 +29,20 @@ class ReviewController extends Controller
     }
 
     // Load all reviews
-   public function loadAllReviews(Request $request)
+  // Load all reviews — teacher ke liye sirf uski apni, admin ke liye sab
+public function loadAllReviews(Request $request)
 {
-    $reviews = LbReview::orderBy('id', 'desc')->get();
-    // $reviews = LbReview::all();
+    $query = LbReview::orderBy('id', 'desc');
+
+    // ✅ Agar request mein lbteacher_id aaya hai (teacher panel se call),
+    //    to sirf usi teacher ki reviews filter karo.
+    //    Admin panel se call hone par lbteacher_id nahi aata, is liye
+    //    admin ko hamesha saari reviews milengi (jaisa pehle tha).
+    if ($request->filled('lbteacher_id')) {
+        $query->where('lbteacher_id', $request->lbteacher_id);
+    }
+
+    $reviews = $query->get();
 
     foreach ($reviews as $review) {
 
@@ -59,7 +69,7 @@ class ReviewController extends Controller
 
         }
     }
-Log::info($reviews->toArray());
+
     return response()->json([
         'success' => true,
         'reviews' => $reviews
