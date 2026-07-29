@@ -243,6 +243,26 @@ Formatting rules (IMPORTANT - follow exactly):
     }
 
     /**
+     * Removes invalid UTF-8 byte sequences from extracted PDF/TXT text.
+     * Some PDFs (custom/embedded font encodings, Word exports, etc.) produce
+     * text with malformed UTF-8 bytes from smalot/pdfparser. That text parses
+     * fine here, but later crashes Guzzle's json_encode() when sending the
+     * OpenAI request — which is why some PDFs summarized fine and others
+     * silently failed with no caught exception.
+     */
+    private function sanitizeUtf8(string $text): string
+    {
+        if ($text !== '' && mb_check_encoding($text, 'UTF-8')) {
+            return $text;
+        }
+
+        // //IGNORE strips invalid byte sequences instead of failing
+        $cleaned = @iconv('UTF-8', 'UTF-8//IGNORE', $text);
+
+        return $cleaned !== false ? $cleaned : mb_convert_encoding($text, 'UTF-8', 'UTF-8');
+    }
+
+    /**
      * POST /student/smartlib-ai/upload-file
      * multipart form-data: { file, prompt? }
      *
@@ -252,7 +272,7 @@ Formatting rules (IMPORTANT - follow exactly):
     public function uploadFile(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|mimes:pdf,txt|max:10240', // 10 MB
+            'file' => 'required|file|mimes:pdf,txt|max:20480', // 20 MB
             'prompt' => 'nullable|string|max:500',
         ]);
 
@@ -268,21 +288,30 @@ Formatting rules (IMPORTANT - follow exactly):
             } else {
                 $extractedText = file_get_contents($file->getRealPath());
             }
-        } catch (\Exception $e) {
-            Log::error('SmartLib AI file parse error: ' . $e->getMessage());
+
+            // ✅ FIX: sanitize right after extraction, before it's used anywhere
+            $extractedText = $this->sanitizeUtf8($extractedText);
+        } catch (\Throwable $e) {   // ✅ catches \Error too, not just \Exception
+            Log::error('SmartLib AI file parse error', [
+                'file' => $file->getClientOriginalName(),
+                'exception_class' => get_class($e),
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Could not read this file. Please try another one.',
+                'message' => 'Could not read this file. It may be corrupted, password-protected, or a scanned image without selectable text.',
             ], 500);
         }
 
         // Trim so we don't blow past the model's context limits
-        $extractedText = mb_substr(trim($extractedText), 0, 12000);
+        $extractedText = mb_substr(trim($extractedText), 0, 40000);
 
-        if ($extractedText === '') {
+        if ($extractedText === '' || mb_strlen(trim($extractedText)) < 20) {
             return response()->json([
                 'success' => false,
-                'message' => 'This file appears to be empty or unreadable (maybe a scanned PDF?).',
+                'message' => 'This file appears to be a scanned image or has no readable text. Please try a PDF with selectable text.',
             ], 422);
         }
 
