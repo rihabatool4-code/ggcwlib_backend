@@ -1,0 +1,1323 @@
+{
+    "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
+    "version": "1.0.0",
+    "generatedTime": 1785421660098,
+    "data": [
+        {
+            "type": "file",
+            "name": ".editorconfig",
+            "size": 258,
+            "hash": "d9a5756ca5adea55000be0ee4f5af68946e3554c986981b7f8e35e7acaad28fa"
+        },
+        {
+            "type": "folder",
+            "name": "app"
+        },
+        {
+            "type": "file",
+            "name": "artisan",
+            "size": 1686,
+            "hash": "f5645be808d32398cd215ef933c793d806ae56796190579dde4ca8888c584c1b"
+        },
+        {
+            "type": "file",
+            "name": "README.md",
+            "size": 4158,
+            "hash": "8621e137966bdfc085ef8808b1c0777f92d77d3a2cbf14b9e5a4ba2dcb16a352"
+        },
+        {
+            "type": "folder",
+            "name": "bootstrap"
+        },
+        {
+            "type": "file",
+            "name": "composer.lock",
+            "size": 314821,
+            "hash": "af03913fe452c6d1e87d28d94c774f10545ba7e69b7aa63fff131cb010cb5d58"
+        },
+        {
+            "type": "file",
+            "name": "composer.json",
+            "size": 1957,
+            "hash": "b20a92dfcf8f5b6612c4f59d466e9a234bc34526162133b861551b842bc529ad"
+        },
+        {
+            "type": "folder",
+            "name": "config"
+        },
+        {
+            "type": "folder",
+            "name": "database"
+        },
+        {
+            "type": "file",
+            "name": "package.json",
+            "size": 226,
+            "hash": "d02e970aa83a10e0dee45e8620656a76673eef583096a4d6f2d07ff6a1680da6"
+        },
+        {
+            "type": "file",
+            "name": "phpunit.xml",
+            "size": 1146,
+            "hash": "cbd548f68a3c9dbd0b8329ef14f971a712cc430b456e6dcb4c71df52ffd1c618"
+        },
+        {
+            "type": "folder",
+            "name": "public"
+        },
+        {
+            "type": "folder",
+            "name": "resources"
+        },
+        {
+            "type": "folder",
+            "name": "routes"
+        },
+        {
+            "type": "folder",
+            "name": "storage"
+        },
+        {
+            "type": "folder",
+            "name": "tests"
+        },
+        {
+            "type": "file",
+            "name": "vite.config.js",
+            "size": 263,
+            "hash": "b79dffc57362f908a5f6a451c4c4bc1543a7f43b596300691f754f5c8b320312"
+        },
+        {
+            "type": "folder",
+            "name": "app/Console"
+        },
+        {
+            "type": "folder",
+            "name": "app/Exceptions"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http"
+        },
+        {
+            "type": "folder",
+            "name": "app/Mail"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models"
+        },
+        {
+            "type": "folder",
+            "name": "app/Providers"
+        },
+        {
+            "type": "folder",
+            "name": "app/Services"
+        },
+        {
+            "type": "folder",
+            "name": "bootstrap/cache"
+        },
+        {
+            "type": "file",
+            "name": "bootstrap/app.php",
+            "size": 1620,
+            "hash": "e346d041676171a900406bba87f0658b6d3aebef79bed7e7081213e7ac3c7951"
+        },
+        {
+            "type": "file",
+            "name": "config/app.php",
+            "size": 7787,
+            "hash": "3d2d92ab2168ea7cef7af7167a67e4ef57147f43ed5909048c3e05f7cfe687bd"
+        },
+        {
+            "type": "file",
+            "name": "config/auth.php",
+            "size": 4539,
+            "hash": "b92e630f49d9845920b85c5f5d8e0ba74304a0564eaaa05d419946d0b4fd5a87"
+        },
+        {
+            "type": "file",
+            "name": "config/broadcasting.php",
+            "size": 2091,
+            "hash": "551cef9d06710cf34fd54da3dcdabaafbf4b764e9382229b8538231884835519"
+        },
+        {
+            "type": "file",
+            "name": "config/cache.php",
+            "size": 3272,
+            "hash": "e2d326fef30064523e76cb2b52dd3d0e277b9e91af869d18daa9a88a458c2bdf"
+        },
+        {
+            "type": "file",
+            "name": "config/cors.php",
+            "size": 861,
+            "hash": "e735dd10777a9c872b52c8101397f4f6b21cf90208e38ee14082a5f556023de6"
+        },
+        {
+            "type": "file",
+            "name": "config/database.php",
+            "size": 5289,
+            "hash": "fb2684d2c3fc7e4359342a49629c08c2293ff2b6a6e55faa8368e81af13374d5"
+        },
+        {
+            "type": "file",
+            "name": "config/filesystems.php",
+            "size": 2370,
+            "hash": "16c11e34d3544712e925282c70b6c3864dc4e6ca1dda9edeaaf4154a47c0f1bb"
+        },
+        {
+            "type": "file",
+            "name": "config/hashing.php",
+            "size": 1572,
+            "hash": "6179fbf205a72d2db2f19b4787dc416811013cd05c82fb919b4d012832421ce8"
+        },
+        {
+            "type": "file",
+            "name": "config/logging.php",
+            "size": 3749,
+            "hash": "fe4edbb6f650a804262fabcb115747a3bca492c9c9a9a1bbcc3fd21ec1f4f839"
+        },
+        {
+            "type": "file",
+            "name": "config/mail.php",
+            "size": 3764,
+            "hash": "66a39f56c123026b46a64b3b3fda52bc45d976ba3578c2064a5749e86f6e4f67"
+        },
+        {
+            "type": "file",
+            "name": "config/queue.php",
+            "size": 2906,
+            "hash": "3def35ab94a40da164762d41ffe0beb1f34fee089a5292e4912cb9f74c2380a6"
+        },
+        {
+            "type": "file",
+            "name": "config/sanctum.php",
+            "size": 2294,
+            "hash": "2d0c59f68caad6a6a8e59a297bf3ef3b9fb51ad26080ba2763df815376eb3d6d"
+        },
+        {
+            "type": "file",
+            "name": "config/services.php",
+            "size": 979,
+            "hash": "76f41873f7a25f3f91bcf5e8b5fecc4655b046fdefb4ab67d6f7e7ff56e73141"
+        },
+        {
+            "type": "file",
+            "name": "config/session.php",
+            "size": 7023,
+            "hash": "fbd81b73a8af2094f9731f83ce445a124d977d1cde0963529881fab6ae3ad7a2"
+        },
+        {
+            "type": "file",
+            "name": "config/view.php",
+            "size": 1053,
+            "hash": "31296429fea0b7bc8392bdf63c5a664524c84634cdcd8d54c51d73d762c4b2ef"
+        },
+        {
+            "type": "folder",
+            "name": "database/factories"
+        },
+        {
+            "type": "folder",
+            "name": "database/migrations"
+        },
+        {
+            "type": "folder",
+            "name": "database/seeders"
+        },
+        {
+            "type": "file",
+            "name": "public/.htaccess",
+            "size": 603,
+            "hash": "42493ebc7bad9b95a90363cae9d46ca9934f2d5b4177088d7a08371d5a2623c7"
+        },
+        {
+            "type": "file",
+            "name": "public/favicon.ico",
+            "size": 0,
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+            "type": "file",
+            "name": "public/index.php",
+            "size": 1710,
+            "hash": "c96ed6bbe80f9105534af4d1510dc79f0143e6843970dba7ddd4ec7d03097cab"
+        },
+        {
+            "type": "file",
+            "name": "public/robots.txt",
+            "size": 24,
+            "hash": "e5c4b84484ee4216e9373be99380320c25dd94805f99f0a805846f087636553f"
+        },
+        {
+            "type": "folder",
+            "name": "resources/css"
+        },
+        {
+            "type": "folder",
+            "name": "resources/js"
+        },
+        {
+            "type": "folder",
+            "name": "resources/views"
+        },
+        {
+            "type": "file",
+            "name": "routes/api.php",
+            "size": 22141,
+            "hash": "e5eba78ee9c3c5874d7d32323d66e9fb239814f8d223fc472cf7d4a1a964f911"
+        },
+        {
+            "type": "file",
+            "name": "routes/channels.php",
+            "size": 558,
+            "hash": "5c776998675a7c7d3303b3cd0517e314755cd9d582c17b18238c3686b17d76ac"
+        },
+        {
+            "type": "file",
+            "name": "routes/console.php",
+            "size": 592,
+            "hash": "69ec50e361f429e7ffaf95011f9e3cab75481ad753405755580e8e89b1518b20"
+        },
+        {
+            "type": "file",
+            "name": "routes/web.php",
+            "size": 492,
+            "hash": "f30ff7da3a63fc66705eaea6b45c0e22be56f9cadb2153b71d40ad73dad5ee6d"
+        },
+        {
+            "type": "folder",
+            "name": "storage/app"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework"
+        },
+        {
+            "type": "folder",
+            "name": "storage/logs"
+        },
+        {
+            "type": "file",
+            "name": "tests/CreatesApplication.php",
+            "size": 375,
+            "hash": "ff49d2d2197546e6730769fd4f11e1acf7169b83cdeac102af5d77c07f748898"
+        },
+        {
+            "type": "folder",
+            "name": "tests/Feature"
+        },
+        {
+            "type": "folder",
+            "name": "tests/Unit"
+        },
+        {
+            "type": "file",
+            "name": "tests/TestCase.php",
+            "size": 163,
+            "hash": "fde47044bae82a492f646384cbc1e636b93c6bf0cea7047c3631e6a26736154d"
+        },
+        {
+            "type": "folder",
+            "name": "app/Console/Commands"
+        },
+        {
+            "type": "file",
+            "name": "app/Console/Kernel.php",
+            "size": 685,
+            "hash": "645d897482722acf6626069da4195ebaf0162a7b48be60ec78f58c59ae341af4"
+        },
+        {
+            "type": "file",
+            "name": "app/Exceptions/Handler.php",
+            "size": 1029,
+            "hash": "311a48a0b18b31a995ddc68df4347d7dccaa921fe39f67683d9c3e8ef6a0f220"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Kernel.php",
+            "size": 2720,
+            "hash": "fe54b7bcde53ee7f4dd4963ab9e778e2450e06e355bd59cb9906af1387a14b1d"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Middleware"
+        },
+        {
+            "type": "file",
+            "name": "app/Mail/AdminResetPasswordMail.php",
+            "size": 755,
+            "hash": "5d192293d4b6c583425c102f5743ef5a674890d27e95dc3e1296529c36ac0620"
+        },
+        {
+            "type": "file",
+            "name": "app/Mail/ContactMessageMail.php",
+            "size": 619,
+            "hash": "affedf5ed86d6081ab8d310773f771eba3e60cc5abc9653bb3e5d108d2afef66"
+        },
+        {
+            "type": "file",
+            "name": "app/Mail/NotificationMail.php",
+            "size": 867,
+            "hash": "ef4fcdebba0c29184ae63e69a9d650de46555da064c0d73864271b74bb167f81"
+        },
+        {
+            "type": "file",
+            "name": "app/Mail/StudentResetPasswordMail.php",
+            "size": 755,
+            "hash": "535c73b4ab20279403d5fe04ff2725d4d167a6bc5269909a32a13e1da3d93862"
+        },
+        {
+            "type": "file",
+            "name": "app/Mail/TeacherResetPasswordMail.php",
+            "size": 755,
+            "hash": "91c60450fcb64ba4951b652690b9734df681f6d4f8f3771d9ddb67c72f5d3b0b"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/User.php",
+            "size": 916,
+            "hash": "0b07594b69c59a3e5042a5a6f6d8d3aacd9dbce5b337c4877288a28c29505053"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/admin"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/note"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/student"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/teacher"
+        },
+        {
+            "type": "file",
+            "name": "app/Providers/AppServiceProvider.php",
+            "size": 361,
+            "hash": "caf306ef6a25a547bbb7edd5508a39b51c365083eb6dd58378cf2242018e94c7"
+        },
+        {
+            "type": "file",
+            "name": "app/Providers/AuthServiceProvider.php",
+            "size": 604,
+            "hash": "daa154ad5d3fe75d77c54c735a60e377aaf4be4164418d410cbd43ee05c9158b"
+        },
+        {
+            "type": "file",
+            "name": "app/Providers/BroadcastServiceProvider.php",
+            "size": 359,
+            "hash": "1839af2f801cb9fff772430aa25aa7529b1e7937b2441555c70af4fae1541a99"
+        },
+        {
+            "type": "file",
+            "name": "app/Providers/EventServiceProvider.php",
+            "size": 884,
+            "hash": "c0f2d7d14531d8d92edbe4f1c5ed50973213cb4a119d79f8d2c1dfaf849bba78"
+        },
+        {
+            "type": "file",
+            "name": "app/Providers/RouteServiceProvider.php",
+            "size": 1285,
+            "hash": "63a65da8a3a24b9e9318dd72cffcfff6c1643a48437a70667c56d06441418144"
+        },
+        {
+            "type": "file",
+            "name": "app/Services/ReservationExpiryService.php",
+            "size": 2182,
+            "hash": "2cc78d8601c92982fc7e0449449df7fb051de5773c7da947f055b36d2ce33a50"
+        },
+        {
+            "type": "file",
+            "name": "database/factories/LbstudentFactory.php",
+            "size": 641,
+            "hash": "9b32158d1cf4d9454cea2b04348ad4f6b947fddf3d950a4f4d38432de3c8ddbf"
+        },
+        {
+            "type": "file",
+            "name": "database/factories/UserFactory.php",
+            "size": 984,
+            "hash": "95cd894b03f761deefae877f2ad6523791bf46d014d6728c51e92f43e8e2d006"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2014_10_12_000000_create_users_table.php",
+            "size": 751,
+            "hash": "cd605d03471c325b24b8d1e4f5f44e02369636142da6060c2a26ccbf316263cf"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2014_10_12_100000_create_password_reset_tokens_table.php",
+            "size": 641,
+            "hash": "dca550bb71abdc837debddc9baa9e14f85dd121cd78dc811cdae07a54656252a"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2019_08_19_000000_create_failed_jobs_table.php",
+            "size": 768,
+            "hash": "1b2dc826a38de3e6cdd351fc5e0b96689440086e8027454453347036f1860ef3"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php",
+            "size": 856,
+            "hash": "5a9c64d94d29ec6c435625b8a4d0d3c898b9bad042b5a3ac64f11d39c2b3610f"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_22_230645_create_lbstudents_table.php",
+            "size": 1286,
+            "hash": "1fb959d86b7fc0abf2084d684ded98afa8e1b3120cc27008f82dfcf562142190"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_22_230542_create_lbadmins_table.php",
+            "size": 925,
+            "hash": "7c8e76729993c4aa76f099846834f31fde04db28e526362f1a5946637a3cb207"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_094551_create_lbnotes_table.php",
+            "size": 759,
+            "hash": "b1da77cea191e93bbaefdf2b1f75ec682aaebee5c599448bc68c33b9ca965683"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_100604_create_lbdisputes_table.php",
+            "size": 1002,
+            "hash": "799314e46b0eade0faa2704ed5a70438136ac54bef75f47413e6b1bb93eccfb2"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_101756_create_lbbookings_table.php",
+            "size": 982,
+            "hash": "2dc30ff9566135990b09e02b55540c6726eb089de184344baead3717cb53cf40"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_172049_create_lbbooks_table.php",
+            "size": 892,
+            "hash": "5ff6e34dcfe1922030d9112ae592a95067298cecc31ca91dacd1261afc2ffa57"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_172905_create_lbebooks_table.php",
+            "size": 779,
+            "hash": "b730697200663f1ee2aa265c1db5c2ec29e9b83be1bde32fcbf1cb8766650084"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_04_23_173546_create_lbteachers_table.php",
+            "size": 916,
+            "hash": "460c42136a24826854ef2e4efd1a949b7e9a4480c80e053b0de22aded6563426"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_05_20_032215_create_lbreviews_table.php",
+            "size": 840,
+            "hash": "8a09bc74299a73b36eb64776b0d15525d4e3032420ebf4af94548d95740ff3c8"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_05_22_061907_create_lbfavouritebooks_table.php",
+            "size": 816,
+            "hash": "f66b4fb322ec356edff43389b754921150d1e5c11e80afddc40052d5fa94ff9f"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_06_03_212409_create_lbnotifications_table.php",
+            "size": 1040,
+            "hash": "909177cd4f00fe09bf2edc91eaa70c9a677b1abb74ed49a266098bf14b9c9c67"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_06_08_132149_create_lbblogs_table.php",
+            "size": 743,
+            "hash": "883dd4caf0d417180c310b8eb93395e59b0d4e8dcaa3f80370f5d4a6b3e5194d"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_06_16_213115_create_lbconversations_table.php",
+            "size": 865,
+            "hash": "975ecdb069806c0f0d0f7cfeb6600ae364236d3956f37df5f8211e0c68fd22b6"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_06_16_213228_create_lbchats_table.php",
+            "size": 753,
+            "hash": "6898fdabce69ebb2f6fa6828adb6928c384d63f576b07192a6d6694a9c2cbeef"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_05_183408_create_lbflashcards_table.php",
+            "size": 900,
+            "hash": "3c88943b4f6ef56b1f391b907ea14cb6b7257e53c3608d00cf6f56ae3a96f347"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_06_093846_create_library_configs_table.php",
+            "size": 730,
+            "hash": "5d7988c728a4bad279b5d477b98d77d068193d9a8dd5557d7a31d44f3e9cad9a"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_10_172036_create_book_configurations_table.php",
+            "size": 919,
+            "hash": "5d1e5a4f1433507eba9cbcaaa38ca68f9860da34ffc806a7a209f656f5878d48"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_13_035026_create_password_resets_table.php",
+            "size": 609,
+            "hash": "34c97f371edfddcbc84db2def6485f27ee731db73a93d870776c4e84b45c18e9"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_25_061028_create_faqs_table.php",
+            "size": 572,
+            "hash": "78d768a74e41245e7213913bcaed24c397c62fb4063a6f0f472011e7f25f5e15"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_26_201501_add_notification_prefs_to_lbteachers_table.php",
+            "size": 540,
+            "hash": "61b09ae54ca9a8e86ea2c0b434ebdb2ed188bfd7c53572522865812f7ce20ec4"
+        },
+        {
+            "type": "file",
+            "name": "database/migrations/2026_07_27_044503_add_status_to_lbstudents_table.php",
+            "size": 540,
+            "hash": "5b408de356c6f859bc643850e68458e98a255821932af5e2c2cb17aa0806c535"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/DatabaseSeeder.php",
+            "size": 699,
+            "hash": "0f5dc1a1a1161d44d28a806fb7b276e08dffdb3f0082e23bf7e2cdfa670e6886"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/LbadminSeeder.php",
+            "size": 2102,
+            "hash": "af17e8838fdb616ed6e4890b4dd513ea52597541cefd0040498c429842820f1b"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/LbebookSeeder.php",
+            "size": 1424,
+            "hash": "225c51a6deb3a91609db83e48a477f418bf110644f9f376ebbf2317bf1caf1a1"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/LbnoteSeeder.php",
+            "size": 769,
+            "hash": "308533f7fb23685400acc343196fe4171ed789dacdd49d9a201359d0a1fd7e5e"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/LbstudentSeeder.php",
+            "size": 3465,
+            "hash": "4515a7a6d8cea3c67016a2be2758800d3c8180a7fb5a5dbecbbe7b70b2fff1ca"
+        },
+        {
+            "type": "file",
+            "name": "database/seeders/LbteacherSeeder.php",
+            "size": 1570,
+            "hash": "adefa83183d660d5e0752289338f88d75e534dcbf9c8073a6701c64436a32918"
+        },
+        {
+            "type": "file",
+            "name": "resources/css/app.css",
+            "size": 0,
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+            "type": "file",
+            "name": "resources/js/app.js",
+            "size": 22,
+            "hash": "cf6dab196c721f6911ff99cc4f910897f978599a2d289971a316a5fc33091f94"
+        },
+        {
+            "type": "file",
+            "name": "resources/js/bootstrap.js",
+            "size": 1248,
+            "hash": "326ba857c524b23ca3b95a34cf26e9ad2e9c9a9e7605b3bb163d96b2e2b7b2aa"
+        },
+        {
+            "type": "folder",
+            "name": "resources/views/emails"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/welcome.blade.php",
+            "size": 28608,
+            "hash": "6d3e1a02d142a877d15a6cd6afe65dc6e2236aeca5ec0dc7a78830b8c53b9706"
+        },
+        {
+            "type": "folder",
+            "name": "storage/app/public"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework/cache"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework/testing"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework/sessions"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework/views"
+        },
+        {
+            "type": "file",
+            "name": "tests/Feature/ExampleTest.php",
+            "size": 359,
+            "hash": "aaa4a192fb4aa96d4e81eda06a29968da3d9a73b71026b87a67297e66dd985b8"
+        },
+        {
+            "type": "file",
+            "name": "tests/Unit/ExampleTest.php",
+            "size": 243,
+            "hash": "ffacae5c1a2a44c809420af5b3b404910da1b12167d58764dac6d10b8ba8cfaf"
+        },
+        {
+            "type": "file",
+            "name": "app/Console/Commands/ExpireReservations.php",
+            "size": 618,
+            "hash": "e31c280f785584ab4311ce855cd2ec3f99ff2d480bf3b0ba0ab0eda1532dc158"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Api"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Controller.php",
+            "size": 299,
+            "hash": "663e9f40be59adb09c7acd871da814b78216e79120f10375da0a31a6cef968eb"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/Authenticate.php",
+            "size": 384,
+            "hash": "44cce6b95a977bd44def6c93dddee6509360d67813adeee0c882a90884a3b7cd"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/EncryptCookies.php",
+            "size": 307,
+            "hash": "958e86e38afd4321b443b8c4aaef17fc956bbac93410d54af2f74213c52e9b87"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/GuardMiddleware.php",
+            "size": 700,
+            "hash": "e58a7ed6560f32a7b7de43ed77fc124849352876998965aa7357aff1dc2309c7"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/PreventRequestsDuringMaintenance.php",
+            "size": 366,
+            "hash": "63a907517beed52be7dad5dbda73e9ecd504b1cece86a80c007526998e146974"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/RedirectIfAuthenticated.php",
+            "size": 760,
+            "hash": "8875f7d265d5222ef41ca7f401908fd600e5d831f5694e322e6ddd607a1968bb"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/TrustHosts.php",
+            "size": 379,
+            "hash": "899cfaccd4420dfa7c15c0e650e22e5397bdc699344576518b8f972be45b17dc"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/TrimStrings.php",
+            "size": 381,
+            "hash": "107bf2dc8b970b2956548ab63221b350587f1fb94792f786f047723da5e2c615"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/TrustProxies.php",
+            "size": 649,
+            "hash": "9ba084335e120f472f21ced3e062e07dca6333e8ba91029e44dfec485f9c6485"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/ValidateSignature.php",
+            "size": 460,
+            "hash": "b63174bf5ac6fbb47dc97cc29e243d68500c27fa1845961a789df1587b8a35d4"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Middleware/VerifyCsrfToken.php",
+            "size": 320,
+            "hash": "4cf686438284e60066d1851141afb196540df76bb0c923dd761d6fea82558f40"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/Lbadmin.php",
+            "size": 597,
+            "hash": "6c99dbb07c47a58d92431b6fda3a63222927fa312d2f2ae2918795a44d5b2a0b"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/Lbblog.php",
+            "size": 472,
+            "hash": "e1fd619da6e2fe4b0c53d129838f8c7486e4ab4d12f22cbf6711eb8b65c1e624"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/Lbbook.php",
+            "size": 1197,
+            "hash": "da33fe16b395b90153070ae003e0b688c2fd92c46ac0156745f7f231ead256f2"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/Lbebook.php",
+            "size": 257,
+            "hash": "aaaad0dcab2baba24e3afe9805356a83082891e27336f752ca7be83e586b815e"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/admin/LibraryConfig"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/admin/bookConfig"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/admin/faq"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/bookings"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/Lbfavouritebook.php",
+            "size": 554,
+            "hash": "83c4d99ed6f65a268de9f77bd9535953c0349e1a8f5278ab5c1b7a3f74e78f63"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/chat"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/conversation"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/dispute"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/flashcard"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/notification"
+        },
+        {
+            "type": "folder",
+            "name": "app/Models/general/reviews"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/note/Lbnote.php",
+            "size": 403,
+            "hash": "b435b8adeea7e6ee99f28c8dc26fda55d4885d36d4fc4c658dfdbef3d7d631bb"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/student/Lbstudent.php",
+            "size": 927,
+            "hash": "7e0c88a11bc116d083897db4829ec7310ebb1d2bdcb1e54eabcbf90f23e01215"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/teacher/Lbteacher.php",
+            "size": 974,
+            "hash": "0142fcaeba5fc618ddc87ff09abdaf1d1300fd8d104b1e1a0161402e83f06b66"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/emails/admin-reset-password.blade.php",
+            "size": 869,
+            "hash": "94a78d6fdc3bd6327e72d079775a684fe0376f751aba669c7330ad48250cc1f2"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/emails/contact-message.blade.php",
+            "size": 387,
+            "hash": "979f68d05180656fd6542aa01e761b9c419da0e02d333692b804ee07bc12d723"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/emails/notification.blade.php",
+            "size": 781,
+            "hash": "f3345065a1924f89b30972c270782fd5e1d020f11b334f8e689cbd7d0cdb7595"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/emails/student-reset-password.blade.php",
+            "size": 863,
+            "hash": "471d28955567e0b5d702edd2067370bf4d27719d161f81d0684d756f0afdb5d3"
+        },
+        {
+            "type": "file",
+            "name": "resources/views/emails/teacher-reset-password.blade.php",
+            "size": 869,
+            "hash": "11ca0d33e60a3ce5ee9b14ea269aed887181da304fe00add4d07bc2cb5ab94db"
+        },
+        {
+            "type": "folder",
+            "name": "storage/framework/cache/data"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Api/ContactController.php",
+            "size": 970,
+            "hash": "2d3162bf0dafb1da0a31f1ef3a007d54a8eb2008976b0b0592df2c2818ff744a"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/Booking"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/auth"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/chat"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/dashboard"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/ebooks"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/notes"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/notifications"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/Teacher/reviewController"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/AdminUserController.php",
+            "size": 3620,
+            "hash": "e1d383e9cab4402bbd198698746b19b67725e8dab1058e913c8f68b16f0dfec0"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/LibraryConfig"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/auth"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/blogs"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/bookConfig"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/bookings"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/books"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/chat"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/dashboard"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/faq"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/admin/notificaion"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/blogs"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/books"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/ebooks"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/flashcard"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/mydispute"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/general/notes"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/booking"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/auth"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/chat"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/dashboard"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/notes"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/notification"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/LibraryConfig/LibraryConfig.php",
+            "size": 385,
+            "hash": "0b01b7658185e46b64d99864a60d8b7e7429168ad09ab8a059b1428d87758703"
+        },
+        {
+            "type": "folder",
+            "name": "app/Http/Controllers/student/studentReviewController"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/faq/Lbfaq.php",
+            "size": 235,
+            "hash": "3a93c97ab036e41ade532a52d156f813b9daa5f4f67d47ac0aeb28b1135beb32"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/admin/bookConfig/LbBookconfig.php",
+            "size": 486,
+            "hash": "ec333e4f63ce003926502339f2ff14494e58766c3221f5f345af84b0069a0a15"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/chat/Lbchat.php",
+            "size": 556,
+            "hash": "1c7271a9aa3c9011ddb6ca1968e75d03f558dd1f59e5100a5cde26e719d19490"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/bookings/Lbbooking.php",
+            "size": 695,
+            "hash": "9213a70d43455d351f7b67150b32128ca2efaeee32010903aac0656e1ab21c5e"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/conversation/Lbconversation.php",
+            "size": 879,
+            "hash": "c5454e42970e3307b135a78be697878136fd1c7092705ca8b84174b8d3f59f39"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/dispute/Lbdispute.php",
+            "size": 746,
+            "hash": "291c951ae099ab31df996f4cd4ad6621e186710223fd469e501b25c8378a3a80"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/flashcard/Lbflashcard.php",
+            "size": 325,
+            "hash": "6c21d4de830996887829f3afab28acf21cbb35cda88bdfe98fa4a4be02865402"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/notification/Lbnotification.php",
+            "size": 789,
+            "hash": "8ca701d7b840bcdf45ef2346c14894d9ebd8f7fe2ddfe7c52f1dd01e3890220c"
+        },
+        {
+            "type": "file",
+            "name": "app/Models/general/reviews/LbReview.php",
+            "size": 608,
+            "hash": "99d461cffe4515633036b3319185fafcad364ede2624a8c8fd9b3f96c6c606cf"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/Booking/TeacherBookingController.php",
+            "size": 4071,
+            "hash": "52bef8773c27b460c126afd198308bf56473f4ee4479157b330291b0c9470525"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/auth/TeacherAuthController.php",
+            "size": 8100,
+            "hash": "d8cc8dd03e927c26b5459da1e8086f2ce37b884455295da501b36a2e4a18e3c1"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/chat/TeacherChatController.php",
+            "size": 12304,
+            "hash": "e6f737ed8319a0707ad6fe47927f6cf90f3bd7bfcdff295ebd4c7540a52cbe5e"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/dashboard/TeacherDashboardController.php",
+            "size": 4593,
+            "hash": "160fc86a514d8a8662d9eb770eedf02b2b844c06b8d6edf79a2f4298a7b12797"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/ebooks/TeacherSavedPdfsController.php",
+            "size": 2411,
+            "hash": "eedb0c7d2d83bbe7887b596684a82ec2f891602deb794137be1377ef6fdb4e5d"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/notes/TeacherNotesController.php",
+            "size": 3736,
+            "hash": "c53c565e964fa466ac6cecd13410fb90fad04d162e5bf05f9fa7dcad8d0bb925"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/notifications/TeacherNotificationController.php",
+            "size": 5081,
+            "hash": "b3e29be7baba86e00a38c500938f8d9160b725d945e546bd9fa04a6b897cc217"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/Teacher/reviewController/ReviewController.php",
+            "size": 3749,
+            "hash": "fc709ead2d8cbfdc76818da7978f972f3f5d5f34c2e527e6ec55206083880e46"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/LibraryConfig/LibraryConfigController.php",
+            "size": 2121,
+            "hash": "3cff7033004874afd5ae58bcb61e425d4bf99fd4a68539860888c83841a4eb5e"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/auth/AdminAuthController.php",
+            "size": 7255,
+            "hash": "7ca441fcf42ed9a20df18f79cd942efece2daf5259658ca1c60fca93c3f99b25"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/blogs/AdminBlogsController.php",
+            "size": 3833,
+            "hash": "f42933ea7ba274d75caca7e35cf04f03131b1ac44527a75482ed31a0c4b635da"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/bookConfig/BookConfigController.php",
+            "size": 1795,
+            "hash": "7452fd935cc52ed61c2bce877e9b47872219bb64723a652f8f5fc04f6ce40569"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/bookings/AdminBookingsController.php",
+            "size": 19858,
+            "hash": "006e1177c235e68ec1d0622c40982899b6196a7c7ff0b9b2b2bfb6aa4e2f8eb2"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/bookings/AdminDigiBooksController.php",
+            "size": 3849,
+            "hash": "d51fc95351066b1ca0892d068ad4f63e2ba5a3069700eb51c454881129c2b4af"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/books/AdminBookController.php",
+            "size": 5280,
+            "hash": "523474850093d232498e73d62ace9704bfe3d1ada4c9af535cbbfc233ca6033e"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/chat/AdminChatController.php",
+            "size": 2216,
+            "hash": "0c0c4964364aff8b9805da8a982220db99b5d4943b0adf1618b6137e045e24a8"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/dashboard/AdminDashboardController.php",
+            "size": 8570,
+            "hash": "1061f5b893211cae7904ab4b5fdb31be4f9e218c18d445f4dc8120815afe4d3d"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/faq/FaqController.php",
+            "size": 3170,
+            "hash": "998a47a6a93e71662550fdb87d6894adc45bcb034f2b91c50c21f67647037fbd"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/admin/notificaion/AdminNotificationController.php",
+            "size": 5012,
+            "hash": "338c5880531cd876e3b13271f2a4e7b04b15a88a888f720366cb74d420a0b5a3"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/blogs/PublicBlogsController.php",
+            "size": 655,
+            "hash": "a082ecfea20e78b7b49652a89a6a56b3f728ef548fa6664baf460411107b0c66"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/books/PublicBooksController.php",
+            "size": 683,
+            "hash": "41e0bf8dd2e0972913494da298abe18649a1d4120592766d78bf044be9c8c2fc"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/ebooks/PublicEbooksController.php",
+            "size": 593,
+            "hash": "cecd409de496e171a8bd9e9ed1805942239c1e1ec18c233428adf37f59765faa"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/flashcard/StudentFlashcardController.php",
+            "size": 2030,
+            "hash": "f287473d23444fbbc9c4b20533baeefa4c1dca25cf8f8703bbd48b44bca82ac1"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/flashcard/TeacherFlashcardController.php",
+            "size": 2033,
+            "hash": "02b4479129728cb0a6d88d102ebf88e76f234312a37f2d8275c13fc45e03e912"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/mydispute/AdminDisputeController.php",
+            "size": 3863,
+            "hash": "385a0e1e652aac3c9c9cc412c6fecb184a32bbe2d89ddc65b779cdda201ca281"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/mydispute/MyDisputeController.php",
+            "size": 3786,
+            "hash": "b369cdac223ba1a189c679ba7bfaae99051687719211940b875a046255dd5b32"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/mydispute/StaffDisputeController.php",
+            "size": 2739,
+            "hash": "82c39b2ed6f1e6d7756dd43c41f9a2334b8f1bd7c12e0c2b3dadca8bb780ba8b"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/booking/StudentBookingController.php",
+            "size": 4532,
+            "hash": "d020e5bd88e5c0954b31af935a8b8a4f71fa5dfd0dbd2c6e7991b65e884a85e0"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/auth/StudentAuthController.php",
+            "size": 11100,
+            "hash": "7b5b5bd64be4a40b60b5348f49e6b4c92f7aee8a447125b2d1d06d3f2aa7b8c3"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/general/notes/PublicNotesController.php",
+            "size": 637,
+            "hash": "ef125b8e748bf9d81e77c1bfd041329824eeeb27e349ac8e566e7cf288483b4b"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/chat/StudentChatController.php",
+            "size": 12959,
+            "hash": "83b0198d9592bf9120f501109f2762273e98d3b35a45e4f4729348bba0531582"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/dashboard/StudentDashboardController.php",
+            "size": 5935,
+            "hash": "d89fb13556233b84bbd615e94ff6dc87fc6a5d95d353830e0764536fd428ffad"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/notes/StudentSavedNotesController.php",
+            "size": 4910,
+            "hash": "f6cc30dd99c3317829eef42827b781f19bcfefac80341b792a076cb6bb89738d"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/notification/StudentNotificationController.php",
+            "size": 5722,
+            "hash": "6b7f077e06dd1f66c7e0b7155d2f194ba014427c893a6f419c8b6a7bbfae9061"
+        },
+        {
+            "type": "file",
+            "name": "app/Http/Controllers/student/studentReviewController/StudentReviewController.php",
+            "size": 824,
+            "hash": "b4cbabfe35cac52d6b17003288c3c78d85b3f9be164311e8ccbe4a6bd0ba734f"
+        }
+    ]
+}

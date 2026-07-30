@@ -2,16 +2,16 @@
 
 use App\Http\Controllers\admin\AdminUserController;
 use App\Http\Controllers\admin\auth\AdminAuthController;
-use App\Http\Controllers\Admin\blogs\AdminBlogsController;
+use App\Http\Controllers\admin\blogs\AdminBlogsController;
 
 use App\Http\Controllers\admin\bookings\AdminBookingsController;
-use App\Http\Controllers\Admin\bookings\AdminDigiBooksController;
+use App\Http\Controllers\admin\bookings\AdminDigiBooksController;
 
 // use App\Http\Controllers\admin\AdminBookController;
 
 use App\Http\Controllers\admin\books\AdminBookController;
 
-use App\Http\Controllers\Admin\chat\AdminChatController;
+use App\Http\Controllers\admin\chat\AdminChatController;
 use App\Http\Controllers\admin\notificaion\AdminNotificationController;
 use App\Http\Controllers\admin\dashboard\AdminDashboardController;
 
@@ -30,7 +30,7 @@ use App\Http\Controllers\general\flashcard\StudentFlashCardController;
 use App\Http\Controllers\Teacher\auth\TeacherAuthController;
 use App\Http\Controllers\Teacher\Booking\TeacherBookingController;
 use App\Http\Controllers\Teacher\chat\TeacherChatController;
-use App\Http\Controllers\teacher\ebooks\TeacherSavedPdfsController;
+use App\Http\Controllers\Teacher\ebooks\TeacherSavedPdfsController;
 use App\Http\Controllers\Teacher\notes\TeacherNotesController;
 use App\Http\Controllers\general\mydispute\StaffDisputeController;
 use App\Http\Controllers\Teacher\dashboard\TeacherDashboardController;
@@ -45,7 +45,7 @@ use App\Http\Controllers\student\notes\StudentSavedNotesController;
 use App\Http\Controllers\Teacher\notifications\TeacherNotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\LibraryConfig\LibraryConfigController;
+use App\Http\Controllers\admin\LibraryConfig\LibraryConfigController;
 use App\Http\Controllers\admin\bookConfig\BookConfigController;
 use App\Http\Controllers\admin\faq\FaqController;
 use App\Http\Controllers\Api\ContactController;
