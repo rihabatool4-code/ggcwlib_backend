@@ -90,7 +90,9 @@ Route::middleware(['auth:Lbstudent', 'guard:student'])->group(function () {
     Route::post('/student/dashboard/fetchStudentReturnAlerts', [StudentDashboardController::class, 'fetchStudentReturnAlerts']);
 
 
-    // Student Notification
+    // Student Notification/////////////////
+
+    
     Route::post("/student/notification/fetchAllNotifications", [StudentNotificationController::class, "fetchAllNotifications"]);
     Route::post("/student/notification/markAllAsRead", [StudentNotificationController::class, "markAllAsRead"]);
 
